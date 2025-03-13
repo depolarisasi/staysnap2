@@ -5,6 +5,14 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\DashboardController;
+
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomPhotoController;
+use App\Http\Controllers\AmenityController;
+use App\Http\Controllers\RoomPolicyController;
+use App\Http\Controllers\RoomPriceController;
+use App\Http\Controllers\RoomAvailabilityController;
+
 use Illuminate\Support\Facades\Route; 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +26,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [DashboardController::class, 'index'])->middleware('auth');  
+Route::get('/', [DashboardController::class, 'index']);  
 
 Route::middleware('auth')->group(function () {
     Route::prefix('management')->group(function () {  
-    Route::get('/', [DashboardController::class, 'dashboard']);
+        Route::get('/', [DashboardController::class, 'dashboard']);
         Route::prefix('user')->group(function () { 
             Route::get('/', [UserController::class, 'index']); 
             Route::get('/edit/{id}', [UserController::class, 'edit']); 
@@ -54,7 +62,56 @@ Route::middleware('auth')->group(function () {
                 Route::get('/delete/{id}', [BranchController::class, 'destroy']); 
             });
         });
-    });
+
+        //Amenities
+        Route::resource('amenities', AmenityController::class)->except(['show']);
+        Route::get('amenities/datatable', [AmenityController::class, 'datatable'])
+            ->name('amenities.datatable');
+
+        //Room Policy
+        Route::resource('room-policies', RoomPolicyController::class)->except(['show']);
+        Route::get('room-policies/datatable', [RoomPolicyController::class, 'datatable'])
+        ->name('room-policies.datatable');
+
+            // Room Management
+        Route::resource('rooms', RoomController::class)->except(['show']);
+        
+        // Room Photos
+        Route::post('rooms/{room}/photos', [RoomPhotoController::class, 'store'])
+            ->name('rooms.photos.store');
+        Route::put('photos/{photo}', [RoomPhotoController::class, 'update'])
+            ->name('rooms.photos.update');
+        Route::delete('photos/{photo}', [RoomPhotoController::class, 'destroy'])
+            ->name('rooms.photos.destroy');
+
+        // Pricing Management
+        Route::prefix('rooms/{room}')->group(function() {
+            Route::get('prices', [RoomPriceController::class, 'index'])->name('prices.index');
+            Route::post('prices/bulk-update', [RoomPriceController::class, 'bulkUpdate'])->name('prices.bulk-update');
+            Route::get('prices/events', [RoomPriceController::class, 'getCalendarEvents'])->name('prices.events');
+            Route::delete('prices/{price}', [RoomPriceController::class, 'destroy'])->name('prices.destroy');
+            Route::delete('prices/bulk-delete', [PriceController::class, 'bulkDelete'])->name('prices.bulk-delete');
+        });
+
+
+        // Availability Management
+        Route::get('rooms/{room}/availability', [RoomAvailabilityController::class, 'index'])
+            ->name('availability.index');
+        Route::post('rooms/{room}/availability/bulk', [RoomAvailabilityController::class, 'bulkUpdate'])
+            ->name('availability.bulk-update');
+        Route::delete('availability/{availability}', [RoomAvailabilityController::class, 'destroy'])
+            ->name('availability.destroy');
+        });
+
+        Route::post('rooms/datatable', [RoomController::class, 'datatable'])
+        ->name('rooms.datatable');
+ 
+});
+ 
+// Frontend Routes
+Route::controller(RoomController::class)->group(function () {
+    Route::get('/rooms', 'index')->name('frontend.rooms.index');
+    Route::get('/rooms/{room}', 'show')->name('frontend.rooms.show');
 });
 
 require __DIR__.'/auth.php';

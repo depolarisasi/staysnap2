@@ -81,7 +81,7 @@ class UserController extends Controller
             $user->syncRoles($data['role']);
         } catch (\Exception $e) {
             alert()->error('Error', $e->getMessage());
-            return $request;
+            return redirect('management/user');
         } 
 
         alert()->success('Success','Added Successfully');

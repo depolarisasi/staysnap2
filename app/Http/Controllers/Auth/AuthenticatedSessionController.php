@@ -29,7 +29,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Ambil user yang sudah login
+        $user = $request->user();
+        
+        // Cek role dan redirect sesuai kondisi
+        if($user->hasRole('Customer')) {
+            return redirect()->to('/');
+        }
+        
+        return redirect('/management');
     }
 
     /**

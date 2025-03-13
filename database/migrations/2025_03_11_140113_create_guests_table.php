@@ -12,11 +12,14 @@ return new class extends Migration
      * @return void
      */
     public function up()
-    { 
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->nullable();       
-            $table->string('profile_picture')->nullable(); 
-            $table->string('phone_number')->nullable();  
+    {
+        Schema::create('guests', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('transaction_id')->constrained();
+            $table->string('name');
+            $table->string('phone');
+            $table->string('nationality');
+            $table->boolean('is_primary')->default(false);
         });
     }
 
@@ -27,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('user', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('guests');
     }
 };

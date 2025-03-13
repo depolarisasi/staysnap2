@@ -12,11 +12,13 @@ return new class extends Migration
      * @return void
      */
     public function up()
-    { 
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->nullable();       
-            $table->string('profile_picture')->nullable(); 
-            $table->string('phone_number')->nullable();  
+    {
+        Schema::create('room_photos', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('room_id')->constrained();
+            $table->string('path');
+            $table->integer('order')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -27,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('user', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('room_photos');
     }
 };
