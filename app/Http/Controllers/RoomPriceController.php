@@ -54,7 +54,7 @@ class RoomPriceController extends Controller
                 return [
                     'id' => $price->id, // Tambahkan ID untuk operasi delete
                     'room_id' => $room->id, 
-                    'title' => 'IDR '.number_format($price->price),
+                    'title' => 'Rp '.number_format($price->price),
                     'start' => $price->date->format('Y-m-d'),
                     'color' => $price->price > $room->base_price ? '#f56565' : '#48bb78',
                     'extendedProps' => [
@@ -94,8 +94,8 @@ class RoomPriceController extends Controller
 
         // Cek data sebelum delete
         $prices = $room->prices()
-        ->where('start_date', '<=', $request->end_date)
-        ->where('end_date', '>=', $request->start_date)
+        ->where('date', '<=', $request->end_date)
+        ->where('date', '>=', $request->start_date)
         ->get();
 
         if ($prices->isEmpty()) {
@@ -103,8 +103,45 @@ class RoomPriceController extends Controller
         }
 
         $room->prices()
-            ->where('start_date', '<=', $request->end_date)
-            ->where('end_date', '>=', $request->start_date)
+            ->where('date', '<=', $request->end_date)
+            ->where('date', '>=', $request->start_date)
+            ->delete();
+
+        return response()->json(['message' => 'Harga berhasil dihapus']);
+    }
+
+    public function updateSingle(Room $room, Request $request)
+    {
+        $request->validate([
+            'date' => 'required|date',
+            'price' => 'required|numeric|min:' . $room->base_price
+        ]);
+
+        $room->prices()->updateOrCreate(
+            ['date' => $request->date, 'date' => $request->date],
+            ['price' => $request->price]
+        );
+
+        return response()->noContent();
+    }
+
+    public function checkExisting(Room $room, Request $request)
+    {
+        $exists = $room->prices()
+            ->where('date', '<=', $request->end_date)
+            ->where('date', '>=', $request->start_date)
+            ->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
+
+    public function deleteSingle(Room $room, Request $request)
+    {
+        $request->validate(['date' => 'required|date']);
+        
+        $room->prices()
+            ->where('date', '<=', $request->date)
+            ->where('date', '>=', $request->date)
             ->delete();
 
         return response()->json(['message' => 'Harga berhasil dihapus']);

@@ -54,7 +54,7 @@
                                         <input type="number" name="price" class="form-control" 
                                                min="{{ $room->base_price }}" 
                                                value="{{ $room->base_price }}" required>
-                                        <small class="text-muted">Harga dasar: IDR {{ number_format($room->base_price) }}</small>
+                                        <small class="text-muted">Harga dasar: Rp {{ number_format($room->base_price) }}</small>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -66,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+ 
 			<!--end::Row--> 
 		    </div>
 		<!--end::Container-->
@@ -79,6 +80,7 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <script>
+    const room = @json($room); 
     document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('priceCalendar');
         const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -88,14 +90,112 @@
                 center: 'title',
                 right: 'dayGridMonth,dayGridWeek'
             },
-            selectable: true, // [!] Enable date selection
+            selectable: true,
             selectMirror: true,
+            selectMinDistance: 5, // Beda antara click dan drag
             events: "{{ route('prices.events', $room) }}",
+            // Handle bulk select (drag or multi-date)
             select: function(info) {
+                const endDate = info.endStr.split('T')[0];
+                const isSingleDay = info.startStr === endDate;
+                const end = isSingleDay ? 
+                    info.startStr : 
+                    new Date(info.end.getTime() - 86400000).toISOString().split('T')[0];
+                
+                $('#bulkUpdateModal input[name="start_date"]').val(info.startStr);
+                $('#bulkUpdateModal input[name="end_date"]').val(end);
+                
+                // Cek apakah ada harga di range ini
+                $.ajax({
+                    url: "{{ route('prices.check-existing', $room) }}",
+                    data: {
+                        start_date: info.startStr,
+                        end_date: end
+                    },
+                    success: function(response) {
+                        $('#bulkDeleteBtn').toggle(response.exists); // Tampil jika ada
+                    },
+                    error: function() {
+                        $('#bulkDeleteBtn').hide();
+                    }
+                });
+                
                 $('#bulkUpdateModal').modal('show');
-                $('input[name="start_date"]').val(info.startStr);
-                $('input[name="end_date"]').val(info.endStr);
-                calendar.unselect(); // Reset selection
+                calendar.unselect();
+            },
+            // Handle klik tanggal (single date)
+            dateClick: function(info) {
+                $('#bulkUpdateModal input[name="start_date"]').val(info.dateStr);
+                $('#bulkUpdateModal input[name="end_date"]').val(info.dateStr);
+
+                // Cek apakah ada harga di tanggal ini
+                $.ajax({
+                    url: "{{ route('prices.check-existing', $room) }}",
+                    data: {
+                        start_date: info.dateStr,
+                        end_date: info.dateStr
+                    },
+                    success: function(response) {
+                        $('#bulkDeleteBtn').toggle(response.exists);
+                    }
+                });
+                
+                $('#bulkUpdateModal').modal('show');
+            },
+            // Handle klik event harga existing
+            eventClick: function(info) {
+                const price = parseFloat(info.event.title.replace(/[^0-9]/g, ''));
+                Swal.fire({
+                    title: 'Kelola Harga',
+                    html: `
+                        <p>Tanggal: ${info.event.startStr}</p>
+                        <input id="swalPrice" type="number" class="form-control mt-3" 
+                           value="${price}" min="${room.base_price}">
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: 'Update Harga',
+                    cancelButtonText: 'Hapus Harga',
+                    reverseButtons: true,
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        return {
+                            price: document.getElementById('swalPrice').value
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Update harga
+                        $.ajax({
+                            url: "{{ route('prices.update-single', $room) }}",
+                            method: 'PUT',
+                            headers: {
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            },
+                            data: {
+                                date: info.event.startStr,
+                                price: result.value.price
+                            },
+                            success: () => {
+                                info.event.setProp('title', 'Rp ' + result.value.price);
+                                toastr.success('Harga diperbarui');
+                            }
+                        });
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // Hapus harga
+                        $.ajax({
+                            url: "{{ route('prices.delete-single', $room) }}",
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            },
+                            data: { date: info.event.startStr },
+                            success: () => {
+                                info.event.remove();
+                                toastr.success('Harga dihapus');
+                            }
+                        });
+                    }
+                });
             },
             eventDidMount: function(info) {
                 if(info.event.extendedProps.type === 'custom_price') {
@@ -103,104 +203,57 @@
                 }
             }
         });
-
+    
         calendar.render();
-
-        // Handle bulk update form
+    
+        // Handle bulk update
         $('#bulkUpdateForm').submit(function(e) {
             e.preventDefault();
-            
             $.ajax({
                 url: "{{ route('prices.bulk-update', $room) }}",
                 method: 'POST',
-                headers: { // [+] Tambahkan header CSRF
-                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                headers: { 
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 data: $(this).serialize(),
                 success: function() {
                     calendar.refetchEvents();
                     $('#bulkUpdateModal').modal('hide');
                     toastr.success('Harga berhasil diperbarui');
-                },
-                error: function(xhr) {
-                    toastr.error(xhr.responseJSON.message);
                 }
             });
         });
-        calendar.setOption('eventClick', function(info) {
-            const roomId = info.event.extendedProps.room_id;
-            const priceId = info.event.id;
-
-            const priceDate = info.event.startStr;
-            const priceValue = info.event.title.replace(/[^0-9]/g, '');
+    
+        // Handle bulk delete
+        $('#bulkDeleteBtn').click(function() {
+            const start = $('input[name="start_date"]').val();
+            const end = $('input[name="end_date"]').val();
             
             Swal.fire({
-                title: 'Kelola Harga',
-                html: `<p>Tanggal: ${priceDate}</p>
-                    <p>Harga Saat Ini: ${info.event.title}</p>`,
+                title: 'Hapus Harga?',
+                text: `Hapus harga dari ${start} hingga ${end}?`,
+                icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Hapus Harga',
-                cancelButtonText: 'Tutup',
-                reverseButtons: true
+                confirmButtonColor: '#d33'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ url('management/rooms') }}/" + roomId + "/prices/" + priceId,
+                        url: "{{ route('prices.bulk-delete', $room) }}",
                         method: 'DELETE',
-                        data: { 
-                            'priceId': priceId,
-                            _token: "{{ csrf_token() }}"
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
                         },
-                        success: function() {
-                            info.event.remove();
-                            toastr.success('Harga berhasil dihapus');
-                        },
-                        error: function(xhr) {
-                            toastr.error(xhr.responseJSON.message); 
+                        data: { start_date: start, end_date: end },
+                        success: () => {
+                            calendar.refetchEvents();
+                            $('#bulkUpdateModal').modal('hide');
+                            toastr.success('Harga dihapus');
                         }
                     });
                 }
             });
         });
-
-        $('#bulkDeleteBtn').click(function() {
-        const startDate = $('input[name="start_date"]').val();
-        const endDate = $('input[name="end_date"]').val();
-        
-        Swal.fire({
-            title: 'Hapus Harga',
-            html: `Hapus semua harga dari <b>${startDate}</b> hingga <b>${endDate}</b>?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, Hapus!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "{{ route('prices.bulk-delete', $room) }}",
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    data: {
-                        start_date: startDate,
-                        end_date: endDate
-                    },
-                    success: function() {
-                        calendar.refetchEvents();
-                        $('#bulkUpdateModal').modal('hide');
-                        toastr.success('Harga berhasil dihapus');
-                    },
-                    error: function(xhr) {
-                        toastr.error(xhr.responseJSON?.message || 'Error');
-                    }
-                });
-            }
-        });
     });
- 
-    });
-      
-</script>
+    </script>
+    
 @endsection

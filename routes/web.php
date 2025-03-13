@@ -86,11 +86,13 @@ Route::middleware('auth')->group(function () {
 
         // Pricing Management
         Route::prefix('rooms/{room}')->group(function() {
-            Route::get('prices', [RoomPriceController::class, 'index'])->name('prices.index');
-            Route::post('prices/bulk-update', [RoomPriceController::class, 'bulkUpdate'])->name('prices.bulk-update');
+            Route::get('prices', [RoomPriceController::class, 'index'])->name('prices.index'); 
             Route::get('prices/events', [RoomPriceController::class, 'getCalendarEvents'])->name('prices.events');
-            Route::delete('prices/{price}', [RoomPriceController::class, 'destroy'])->name('prices.destroy');
-            Route::delete('prices/bulk-delete', [PriceController::class, 'bulkDelete'])->name('prices.bulk-delete');
+            Route::post('prices/bulk-update', [RoomPriceController::class, 'bulkUpdate'])->name('prices.bulk-update');
+            Route::put('prices/update-single', [RoomPriceController::class, 'updateSingle'])->name('prices.update-single');
+            Route::delete('prices/bulk-delete', [RoomPriceController::class, 'bulkDelete'])->name('prices.bulk-delete');
+            Route::delete('prices/delete-single', [RoomPriceController::class, 'deleteSingle'])->name('prices.delete-single');
+            Route::get('prices/check-existing', [RoomPriceController::class, 'checkExisting'])->name('prices.check-existing');
         });
 
 
