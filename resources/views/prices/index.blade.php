@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Amenities')  
+@section('title', 'Room Price')  
 @section('styles') 
 <style>
     .fc-event {

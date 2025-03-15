@@ -93,7 +93,11 @@ Route::middleware('auth')->group(function () {
             Route::delete('prices/bulk-delete', [RoomPriceController::class, 'bulkDelete'])->name('prices.bulk-delete');
             Route::delete('prices/delete-single', [RoomPriceController::class, 'deleteSingle'])->name('prices.delete-single');
             Route::get('prices/check-existing', [RoomPriceController::class, 'checkExisting'])->name('prices.check-existing');
+             
         });
+        Route::get('/rooms/dynamic-pricing', [RoomPriceController::class, 'dynamicPricing'])->name('prices.dynamic-pricing');
+        Route::get('/rooms/weekly', [RoomPriceController::class, 'weekly'])->name('prices.weekly');
+        Route::get('/rooms/calendar', [RoomPriceController::class, 'calendar'])->name('prices.calendar');
 
 
         // Availability Management
