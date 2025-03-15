@@ -22,8 +22,10 @@
 		<link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
 		<!--end::Vendor Stylesheets-->
 		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+		
+		<link href="{{asset('assets/css/custom.css')}}" rel="stylesheet" type="text/css" />  
 		<link href="{{asset('assets/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
-		<link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />  
+		<link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />   
         @yield('styles')
 		<!--end::Global Stylesheets Bundle--> 
 	</head>
@@ -92,6 +94,21 @@
 		<!--end::Javascript--> 
         @yield('scripts')
 		@include('sweetalert::alert')
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				let branchToggle = document.getElementById("branchToggle");
+				let branchMenu = document.getElementById("branchMenu");
+			
+				branchToggle.addEventListener("click", function () {
+					if (branchMenu.classList.contains("show")) {
+						branchMenu.classList.remove("show"); // Close the menu
+					} else {
+						branchMenu.classList.add("show"); // Open the menu
+					}
+				});
+			});
+			</script>
+			
 	</body>
 	<!--end::Body-->
  

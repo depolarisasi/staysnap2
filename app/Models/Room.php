@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class Room extends Model
 {
@@ -58,5 +60,54 @@ class Room extends Model
     {
         return $query->join('branches', 'branches.id', '=', 'rooms.branch_id')
             ->select('rooms.*', 'branches.name as branch_name');
+    }
+
+    protected static function booted()
+{
+    static::created(function (Room $room) {
+        $room->generateInitialAvailability();
+    });
+}
+
+public function generateInitialAvailability()
+{
+    $startDate = now()->startOfDay();
+    $endDate = now()->addYear()->endOfDay();
+    
+    $this->generateAvailability($startDate, $endDate);
+}
+
+    public function generateAvailability(Carbon $startDate, Carbon $endDate)
+    {
+   
+        $period = new \DatePeriod(
+            $startDate,
+            new \DateInterval('P1D'),
+            $endDate
+        );
+    
+        $existingDates = $this->availabilities()
+            ->whereBetween('date', [$startDate, $endDate])
+            ->pluck('date')
+            ->map(fn ($date) => $date->format('Y-m-d'))
+            ->toArray();
+    
+        $availabilityData = [];
+        foreach ($period as $date) {
+            $dateString = $date->format('Y-m-d');
+            
+            if (!in_array($dateString, $existingDates)) {
+                $availabilityData[] = [
+                    'room_id' => $this->id,
+                    'date' => $dateString,
+                    'available' => $this->stock,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
+            }
+        }
+    
+        // Gunakan insert untuk skip duplicate
+        RoomAvailability::insertOrIgnore($availabilityData);
     }
 }

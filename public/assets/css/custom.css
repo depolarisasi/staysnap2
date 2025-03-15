@@ -1,0 +1,93 @@
+.aside { 
+    background-color: #fff !important; 
+}
+.header .header-brand { 
+    background-color: #fff !important;
+  }
+
+.aside-menu .menu .menu-item .menu-link .menu-title {
+    color: #0d121c !important;
+  }
+
+  .aside-menu .menu .menu-item .menu-link .menu-icon i {
+    color: #2563d2;
+  }
+ 
+  .menu-link:hover .menu-icon i {
+    color: #2563d2 !important;
+}
+
+.menu-link:hover .menu-icon i {
+    color: #2563d2 !important;
+}
+.menu-link:hover {
+    color: inherit !important; /* Keeps text color unchanged */
+}
+.menu-item .menu-link:hover .menu-icon i {
+    color: #2563d2 !important;
+}
+
+.aside-menu .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon,
+.aside-menu .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon .svg-icon,
+.aside-menu .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-icon i {
+    color: #2563d2 !important;
+}
+
+.aside-menu .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-bullet,
+.aside-menu .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-bullet,
+.aside-menu .menu .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) .menu-bullet {
+    color: #2563d2 !important;
+}
+ 
+
+.aside-menu .menu .menu-item .menu-link .menu-icon, .aside-menu .menu .menu-item .menu-link .menu-icon .svg-icon, .aside-menu .menu .menu-item .menu-link .menu-icon i {
+    color: #2563d2 !important;
+  } 
+
+  .branch-selector {
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.branch-header {
+    padding: 5px;
+    border-radius: 12px;
+}
+
+.branch-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #6ABF69; /* Green Icon Background */
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.menu-item {
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.menu-link {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    font-weight: 500;
+}
+
+.menu-link:hover {
+    color: #000;
+}
+
+.bi-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+[aria-expanded="true"] .bi-chevron-down {
+    transform: rotate(180deg);
+}

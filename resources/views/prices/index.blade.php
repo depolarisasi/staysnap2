@@ -24,6 +24,11 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Dynamic Pricing - {{ $room->name }}</h3>
+                            <div class="card-toolbar">
+                                <a href="{{ url('management/rooms/') }}" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-arrow-left"></i> Kembali
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div id="priceCalendar"></div>

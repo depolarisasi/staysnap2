@@ -17,10 +17,10 @@
                         <!--begin::Info-->
                         <div class="flex-grow-1 me-2">
                             <!--begin::Username-->
-                            <a href="#" class="text-white text-hover-primary fs-6 fw-bold">{{Auth::user()->name}}</a>
+                            <a href="#" class="text-dark text-hover-primary fs-6 fw-bold">{{Auth::user()->name}}</a>
                             <!--end::Username-->
                             <!--begin::Description-->
-                            <span class="text-gray-600 fw-semibold d-block fs-8 mb-1">{{Auth::user()->role}}</span>
+                            <span class="text-dark fw-semibold d-block fs-8 mb-1">{{Auth::user()->role}}</span>
                             <!--end::Description-->
                              
                         </div>
@@ -46,8 +46,8 @@
                                         <!--end::Avatar-->
                                         <!--begin::Username-->
                                         <div class="d-flex flex-column">
-                                            <div class="fw-bold d-flex align-items-center fs-5">{{Auth::user()->name}}
-                                            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{Auth::user()->role}}</span></div>
+                                            <div class="fw-bold d-flex align-items-center fs-5">{{Auth::user()->name}} </div> 
+                                            <span class="badge badge-light-success fw-bold fs-8">{{Auth::user()->role}}</span>
                                             <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{Auth::user()->email}}</a>
                                         </div>
                                         <!--end::Username-->
@@ -90,27 +90,127 @@
             </div>
             <!--end::User--> 
             <!--end::Aside user-->
+            
         </div>
         <!--end::Aside Toolbarl-->
         <!--begin::Aside menu-->
         <div class="aside-menu flex-column-fluid">
+            
             <!--begin::Aside Menu-->
             <div class="hover-scroll-overlay-y mx-3 my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="{default: '#kt_aside_toolbar, #kt_aside_footer', lg: '#kt_header, #kt_aside_toolbar, #kt_aside_footer'}" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="5px">
-                <!--begin::Menu-->
-                <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
                  
+                <!--begin::Menu-->
+                <div class="menu menu-column menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-dark-500" id="#kt_aside_menu" data-kt-menu="true">
+                 <!--begin: Branch Selector -->
+                <div class="branch-selector card p-2 m-2 shadow-sm">
+                    <div class="d-flex align-items-center justify-content-between branch-header" id="branchToggle">
+                        <!-- Branch Icon -->
+                        <div class="d-flex align-items-center">
+                            <div class="branch-icon d-flex align-items-center justify-content-center">
+                                <span class="fw-bold text-white">G</span>
+                            </div>
+                            <div class="ms-2">
+                                <div class="fw-bold">Grand Sylhet Hotel</div> 
+                            </div>
+                        </div>
+                        <!-- Dropdown Arrow -->
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+
+                    <!-- Menu Items (Collapsible) -->
+                    <div id="branchMenu" class="collapse mt-2">
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{url('management/rooms')}}">
+                                    <span class="menu-title">Rooms</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{url('management/rooms/dynamic-pricing')}}">
+                                    <span class="menu-title">Room Pricing</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{url('management/vouchers')}}">
+                                    <span class="menu-title">Voucher</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end: Branch Selector -->
+
+                    <!--begin:Menu item-->
+                 <div class="menu-item pt-5">
+                    <!--begin:Menu content-->
+                    <div class="menu-content">
+                        <span class="menu-heading text-dark fw-bold text-uppercase fs-7">Management</span>
+                    </div>
+                    <!--end:Menu content-->
+                 </div>
                 <!--end:Menu item-->
+                
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{url('management')}}">
+                            <span class="menu-icon">
+                                <i class="ki-outline ki-home fs-2"></i>
+                            </span>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item-->
                     <!--begin:Menu item-->
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-abstract-28 fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
+                                <i class="ki-outline ki-book fs-2"></i>
                             </span>
-                            <span class="menu-title">User Management</span>
+                            <span class="menu-title">Reservations</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <!--end:Menu link-->
+                        <!--begin:Menu sub-->
+                        <div class="menu-sub menu-sub-accordion">
+                             <!--begin:Menu item-->
+                             <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{url('management/front-desk')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Front Desk</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <!--begin:Menu item-->
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{url('management/reservation')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Web Reservation</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <!--end:Menu item-->  
+                        </div>
+                        <!--end:Menu sub-->
+                    </div>
+                    <!--end:Menu item-->
+
+                    <!--begin:Menu item-->
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <!--begin:Menu link-->
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-outline ki-element-9 fs-2"></i>
+                            </span>
+                            <span class="menu-title">Room & Operation</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <!--end:Menu link-->
@@ -119,11 +219,11 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="{{url('management/user')}}">
+                                <a class="menu-link" href="{{url('management/rooms')}}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">User</span>
+                                    <span class="menu-title">Rooms</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -131,11 +231,24 @@
                              <!--begin:Menu item-->
                              <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="{{url('management/role')}}">
+                                <a class="menu-link" href="{{url('management/rooms/dynamic-pricing')}}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Roles</span>
+                                    <span class="menu-title">Room Pricing</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <!--end:Menu item-->
+                            
+                             <!--begin:Menu item-->
+                             <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{url('management/rooms/availability')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Room Availability</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -143,11 +256,11 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="{{url('management/permission')}}">
+                                <a class="menu-link" href="{{url('management/vouchers')}}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Permissions</span>
+                                    <span class="menu-title">Voucher</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -156,17 +269,42 @@
                         <!--end:Menu sub-->
                     </div>
                     <!--end:Menu item-->
+                    
+                     
+                   
+                  <!--begin:Menu item-->
+                  <div class="menu-item">
+                    <!--begin:Menu link-->
+                    <a class="menu-link" href="{{url('management/guest')}}">
+                        <span class="menu-icon">
+                            <i class="ki-outline ki-user fs-2"></i>
+                        </span>
+                        <span class="menu-title">Guest</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+                <!--end:Menu item-->
+                 
+                  <!--begin:Menu item-->
+                  <div class="menu-item">
+                    <!--begin:Menu link-->
+                    <a class="menu-link" href="{{url('management/transaction')}}">
+                        <span class="menu-icon">
+                            <i class="ki-outline ki-two-credit-cart fs-2"></i>
+                        </span>
+                        <span class="menu-title">Transaction</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+                <!--end:Menu item-->
                     <!--begin:Menu item-->
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-abstract-38 fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
+                                <i class="ki-outline ki-chart-simple-2 fs-2"></i>
                             </span>
-                            <span class="menu-title">Customers</span>
+                            <span class="menu-title">Report</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <!--end:Menu link-->
@@ -175,11 +313,11 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/customers/getting-started.html">
+                                <a class="menu-link" href="{{url('management/reservation-report')}}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Getting Started</span>
+                                    <span class="menu-title">Reservation Report</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -187,11 +325,11 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/customers/list.html">
+                                <a class="menu-link" href="{{url('management/transaction-report')}}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Customer Listing</span>
+                                    <span class="menu-title">Transaction Report</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -199,11 +337,11 @@
                             <!--begin:Menu item-->
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/customers/view.html">
+                                <a class="menu-link" href="{{url('management/guest-report')}}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Customer Details</span>
+                                    <span class="menu-title">Guest Report</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
@@ -213,85 +351,34 @@
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div class="menu-item">
                         <!--begin:Menu link-->
-                        <span class="menu-link">
+                        <a class="menu-link" href="{{url('management/calendar')}}">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-map fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
+                                <i class="ki-outline ki-calendar fs-2"></i>
                             </span>
-                            <span class="menu-title">Bookings</span>
-                            <span class="menu-arrow"></span>
-                        </span>
+                            <span class="menu-title">Calendar</span>
+                        </a>
                         <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/subscriptions/getting-started.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Getting Started</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/subscriptions/list.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Subscription List</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/subscriptions/add.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Add Subscription</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/subscriptions/view.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">View Subscription</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                        </div>
-                        <!--end:Menu sub-->
                     </div>
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <div class="menu-item pt-5">
+                        <!--begin:Menu content-->
+                        <div class="menu-content">
+                            <span class="menu-heading text-dark fw-bold text-uppercase fs-7">Help</span>
+                        </div>
+                        <!--end:Menu content-->
+                    </div>
+                    <!--end:Menu item-->
+                     <!--begin:Menu item-->
+                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <!--begin:Menu link-->
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-credit-cart fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
+                                <i class="ki-outline ki-switch fs-2"></i>
                             </span>
-                            <span class="menu-title">Invoice Manager</span>
+                            <span class="menu-title">Configuration</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <!--end:Menu link-->
@@ -304,7 +391,7 @@
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">View Invoices</span>
+                                    <span class="menu-title">Staff & Roles</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <!--end:Menu link-->
@@ -313,11 +400,11 @@
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
-                                        <a class="menu-link" href="apps/invoices/view/invoice-1.html">
+                                        <a class="menu-link" href="{{url('management/user')}}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Invoice 1</span>
+                                            <span class="menu-title">Staff Management</span>
                                         </a>
                                         <!--end:Menu link-->
                                     </div>
@@ -325,11 +412,11 @@
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
-                                        <a class="menu-link" href="apps/invoices/view/invoice-2.html">
+                                        <a class="menu-link" href="{{url('management/role')}}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Invoice 2</span>
+                                            <span class="menu-title">Roles</span>
                                         </a>
                                         <!--end:Menu link-->
                                     </div>
@@ -337,11 +424,11 @@
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
-                                        <a class="menu-link" href="apps/invoices/view/invoice-3.html">
+                                        <a class="menu-link" href="{{url('management/permission')}}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Invoice 3</span>
+                                            <span class="menu-title">Permission</span>
                                         </a>
                                         <!--end:Menu link-->
                                     </div>
@@ -349,253 +436,71 @@
                                 </div>
                                 <!--end:Menu sub-->
                             </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/invoices/create.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Create Invoice</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
+                            <!--end:Menu item--> 
                         </div>
                         <!--end:Menu sub-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-switch fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Configuration</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
                         <!--begin:Menu sub-->
                         <div class="menu-sub menu-sub-accordion">
                             <!--begin:Menu item-->
-                            <div class="menu-item">
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="{{url('management/config/branches')}}">
+                                <span class="menu-link">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">Hotel Branches</span>
-                                </a>
+                                    <span class="menu-title">System Configuration</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
                                 <!--end:Menu link-->
+                                <!--begin:Menu sub-->
+                                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link" href="{{url('management/system-setting')}}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Hotel System Config</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link" href="{{url('management/branch')}}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Branch Management</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                     
+                                </div>
+                                <!--end:Menu sub-->
                             </div>
                             <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/file-manager/files.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Files</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/file-manager/blank.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Blank Directory</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/file-manager/settings.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Settings</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
+                             
                         </div>
                         <!--end:Menu sub-->
                     </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-sms fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Inbox</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/inbox/listing.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Messages</span>
-                                    <span class="menu-badge">
-                                        <span class="badge badge-success">3</span>
-                                    </span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/inbox/compose.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Compose</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/inbox/reply.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">View & Reply</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                        </div>
-                        <!--end:Menu sub-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                        <!--begin:Menu link-->
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-message-text-2 fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Chat</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <!--end:Menu link-->
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/chat/private.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Private Chat</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/chat/group.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Group Chat</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                            <!--begin:Menu item-->
-                            <div class="menu-item">
-                                <!--begin:Menu link-->
-                                <a class="menu-link" href="apps/chat/drawer.html">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Drawer Chat</span>
-                                </a>
-                                <!--end:Menu link-->
-                            </div>
-                            <!--end:Menu item-->
-                        </div>
-                        <!--end:Menu sub-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="apps/calendar.html">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-calendar-8 fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                    <span class="path4"></span>
-                                    <span class="path5"></span>
-                                    <span class="path6"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Calendar</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <!--end:Menu item-->
-                    <!--begin:Menu item-->
-                    <div class="menu-item pt-5">
-                        <!--begin:Menu content-->
-                        <div class="menu-content">
-                            <span class="menu-heading fw-bold text-uppercase fs-7">Help</span>
-                        </div>
-                        <!--end:Menu content-->
-                    </div>
-                    <!--end:Menu item-->
+                    <!--end:Menu item--> 
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
                         <a class="menu-link" href="https://gawe.agency" target="_blank">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-rocket fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
+                                <i class="ki-outline ki-abstract-35 fs-2"></i>
                             </span>
                             <span class="menu-title">Help & Support</span>
                         </a>
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item-->
-                     
-                   
-                    
+                      
                 </div>
                 <!--end::Menu-->
             </div>

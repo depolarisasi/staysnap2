@@ -13,7 +13,13 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Edit Amenity - {{ $amenity->name }}</h3>
+                            <div class="card-toolbar">
+                                <a href="{{ url('management/rooms/dynamic-pricing') }}" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-arrow-left"></i> Kembali
+                                </a>
+                            </div>
                         </div>
+                        
                         <div class="card-body">
                             <form action="{{ route('amenities.update', $amenity) }}" method="POST">
                                 @csrf

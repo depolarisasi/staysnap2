@@ -93,20 +93,16 @@ Route::middleware('auth')->group(function () {
             Route::delete('prices/bulk-delete', [RoomPriceController::class, 'bulkDelete'])->name('prices.bulk-delete');
             Route::delete('prices/delete-single', [RoomPriceController::class, 'deleteSingle'])->name('prices.delete-single');
             Route::get('prices/check-existing', [RoomPriceController::class, 'checkExisting'])->name('prices.check-existing');
-             
+            Route::get('availability', [RoomAvailabilityController::class, 'index'])->name('availability.index');
+            Route::post('availability/bulk-update', [RoomAvailabilityController::class, 'bulkUpdate'])->name('availability.bulk-update');
+            Route::get('availability/events', [RoomAvailabilityController::class, 'getCalendarEvents'])->name('availability.events');
         });
         Route::get('/rooms/dynamic-pricing', [RoomPriceController::class, 'dynamicPricing'])->name('prices.dynamic-pricing');
         Route::get('/rooms/weekly', [RoomPriceController::class, 'weekly'])->name('prices.weekly');
         Route::get('/rooms/calendar', [RoomPriceController::class, 'calendar'])->name('prices.calendar');
 
-
-        // Availability Management
-        Route::get('rooms/{room}/availability', [RoomAvailabilityController::class, 'index'])
-            ->name('availability.index');
-        Route::post('rooms/{room}/availability/bulk', [RoomAvailabilityController::class, 'bulkUpdate'])
-            ->name('availability.bulk-update');
-        Route::delete('availability/{availability}', [RoomAvailabilityController::class, 'destroy'])
-            ->name('availability.destroy');
+        Route::get('/rooms/availability', [RoomAvailabilityController::class, 'allRooms'])->name('availability.all');
+        Route::get('/rooms/availability/events', [RoomAvailabilityController::class, 'getAllCalendarEvents'])->name('availability.all-events');
         });
 
         Route::post('rooms/datatable', [RoomController::class, 'datatable'])
