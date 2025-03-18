@@ -4,7 +4,7 @@
         <div class="aside-toolbar flex-column-auto" id="kt_aside_toolbar">
             <!--begin::Aside user-->
             <!--begin::User-->
-            <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
+            <div class="aside-user d-flex align-items-sm-center justify-content-center py-5" style="border: none !important;">
                 <!--begin::Symbol-->
                 <div class="symbol symbol-50px">
                     <img src="{{asset('storage/'.Auth::user()->profile_picture)}}" alt="" />
@@ -382,8 +382,11 @@
                             <span class="menu-arrow"></span>
                         </span>
                         <!--end:Menu link-->
+                        <!--begin:Menu item-->
+                         
                         <!--begin:Menu sub-->
                         <div class="menu-sub menu-sub-accordion">
+                            
                             <!--begin:Menu item-->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <!--begin:Menu link-->
@@ -437,55 +440,41 @@
                                 <!--end:Menu sub-->
                             </div>
                             <!--end:Menu item--> 
-                        </div>
-                        <!--end:Menu sub-->
-                        <!--begin:Menu sub-->
-                        <div class="menu-sub menu-sub-accordion">
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">System Configuration</span>
-                                    <span class="menu-arrow"></span>
+                             <!--end:Menu sub-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{url('management/config/')}}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
                                 </span>
-                                <!--end:Menu link-->
-                                <!--begin:Menu sub-->
-                                <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                    <!--begin:Menu item-->
-                                    <div class="menu-item">
-                                        <!--begin:Menu link-->
-                                        <a class="menu-link" href="{{url('management/config')}}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Hotel System Config</span>
-                                        </a>
-                                        <!--end:Menu link-->
-                                    </div>
-                                    <!--end:Menu item-->
-                                    <!--begin:Menu item-->
-                                    <div class="menu-item">
-                                        <!--begin:Menu link-->
-                                        <a class="menu-link" href="{{url('management/config/branch')}}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Branch Management</span>
-                                        </a>
-                                        <!--end:Menu link-->
-                                    </div>
-                                    <!--end:Menu item-->
-                                     
-                                </div>
-                                <!--end:Menu sub-->
-                            </div>
-                            <!--end:Menu item-->
-                             
+                                <span class="menu-title">System Configuration</span>
+                            </a>
+                            <!--end:Menu link-->
                         </div>
-                        <!--end:Menu sub-->
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{url('management/config/branch')}}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Branch Management</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <!--begin:Menu item-->
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{url('management/config/slider')}}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Home Slider</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        </div>
+                          
                     </div>
                     <!--end:Menu item--> 
                     <!--begin:Menu item-->

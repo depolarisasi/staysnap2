@@ -5,6 +5,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\HomeSliderController;
 
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomPhotoController;
@@ -53,6 +55,22 @@ Route::middleware('auth')->group(function () {
             Route::get('/delete/{id}', [PermissionController::class, 'destroy']); 
         });
         Route::prefix('config')->group(function () { 
+            Route::get('/', [SettingController::class, 'index'])->name('setting.index'); 
+            Route::get('/new', [SettingController::class, 'create'])->name('setting.create');  
+            Route::get('/edit/{id}', [SettingController::class, 'edit'])->name('setting.edit'); 
+            Route::put('/update/{setting}', [SettingController::class, 'update'])->name('setting.update'); 
+            Route::post('/store', [SettingController::class, 'store'])->name('setting.store'); 
+            Route::get('/delete/{id}', [SettingController::class, 'destroy'])->name('setting.delete'); 
+
+            Route::prefix('slider')->group(function () { 
+                Route::get('/', [HomeSliderController::class, 'index']); 
+                Route::get('/new', [HomeSliderController::class, 'create']); 
+                Route::get('/detail/{slider}', [HomeSliderController::class, 'show']); 
+                Route::get('/edit/{id}', [HomeSliderController::class, 'edit']); 
+                Route::put('/update/{slider}', [HomeSliderController::class, 'update'])->name('slider.update'); 
+                Route::post('/store', [HomeSliderController::class, 'store']); 
+                Route::get('/delete/{id}', [HomeSliderController::class, 'destroy']); 
+            });
             Route::prefix('branch')->group(function () { 
                 Route::get('/', [BranchController::class, 'index']); 
                 Route::get('/new', [BranchController::class, 'create']); 

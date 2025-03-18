@@ -294,7 +294,7 @@
     <nav class="navbar navbar-expand-lg bg-white fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="https://booking.sahidhotels.com/images/logo.png" alt="Sahid Hotels" height="40">
+                <img src="{{asset(setting('site_logo', '#'))}}" alt="Sahid Hotels" height="40">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>

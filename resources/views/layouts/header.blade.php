@@ -1,10 +1,10 @@
 <!--begin::Header-->
 <div id="kt_header" style="" class="header align-items-stretch">
     <!--begin::Brand-->
-    <div class="header-brand">
+    <div class="header-brand" style="border:none !important">
         <!--begin::Logo-->
         <a href="{{url('/')}}">
-            <img alt="Logo" src="{{asset('assets/media/logos/logo-color.svg')}}" class="h-25px h-lg-25px" />
+            <img alt="Logo" src="{{asset(setting('site_logo', '#'))}}" class="h-25px h-lg-25px" />
         </a>
         <!--end::Logo-->
         <!--begin::Aside minimize-->
