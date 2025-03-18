@@ -15,7 +15,7 @@ trait HandlesImageUploads
     protected function validateImage($request, $rules = [])
     {
         $defaultRules = [
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048|dimensions:max_width=2000,max_height=2000'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ];
 
         return $request->validate(array_merge($defaultRules, $rules));
@@ -77,7 +77,7 @@ trait HandlesImageUploads
     protected function imageValidationRules()
 {
     return [
-        $this->imageFieldName => 'nullable|image|mimes:jpeg,png,webp|max:2048|dimensions:max_width=2000,max_height=2000'
+        $this->imageFieldName => 'nullable|image|mimes:jpeg,png,webp'
     ];
 }
 }

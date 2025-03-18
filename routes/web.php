@@ -53,11 +53,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/delete/{id}', [PermissionController::class, 'destroy']); 
         });
         Route::prefix('config')->group(function () { 
-            Route::prefix('branches')->group(function () { 
+            Route::prefix('branch')->group(function () { 
                 Route::get('/', [BranchController::class, 'index']); 
-                Route::get('/detail/{id}', [BranchController::class, 'show']); 
+                Route::get('/new', [BranchController::class, 'create']); 
+                Route::get('/detail/{branch}', [BranchController::class, 'show']); 
                 Route::get('/edit/{id}', [BranchController::class, 'edit']); 
-                Route::post('/update', [BranchController::class, 'update']); 
+                Route::put('/update/{branch}', [BranchController::class, 'update'])->name('branch.update'); 
                 Route::post('/store', [BranchController::class, 'store']); 
                 Route::get('/delete/{id}', [BranchController::class, 'destroy']); 
             });
@@ -65,13 +66,11 @@ Route::middleware('auth')->group(function () {
 
         //Amenities
         Route::resource('amenities', AmenityController::class)->except(['show']);
-        Route::get('amenities/datatable', [AmenityController::class, 'datatable'])
-            ->name('amenities.datatable');
+        Route::get('amenities/datatable', [AmenityController::class, 'datatable'])->name('amenities.datatable');
 
         //Room Policy
         Route::resource('room-policies', RoomPolicyController::class)->except(['show']);
-        Route::get('room-policies/datatable', [RoomPolicyController::class, 'datatable'])
-        ->name('room-policies.datatable');
+        Route::get('room-policies/datatable', [RoomPolicyController::class, 'datatable'])->name('room-policies.datatable');
 
             // Room Management
         Route::resource('rooms', RoomController::class)->except(['show']);

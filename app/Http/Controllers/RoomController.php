@@ -53,7 +53,7 @@ class RoomController extends Controller
             'policies' => 'nullable|array',
             'policies.*' => 'exists:room_policies,id', // Validasi ID policy
             'photos' => 'nullable|array',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048|dimensions:max_width=2000,max_height=2000'
+            'photos.*' => 'image|mimes:jpeg,png,jpg,webp'
         ], [
             'photos.*.image' => 'File harus berupa gambar',
             'photos.*.max' => 'Ukuran gambar maksimal 2MB',
@@ -122,7 +122,7 @@ class RoomController extends Controller
             'policies' => 'nullable|array',
             'policies.*' => 'exists:room_policies,id',
             'photos' => 'nullable|array',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048|dimensions:max_width=2000,max_height=2000',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,webp',
             'deleted_photos' => 'nullable|array',
             'deleted_photos.*' => 'exists:room_photos,id'
         ]);

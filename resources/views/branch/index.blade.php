@@ -23,10 +23,9 @@
 							  <!--begin::Toolbar-->
 							  <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base"> 
 								 <!--begin::Add user-->
-								 <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
-								 data-bs-target="#modal_add_user">
+								 <a href="{{url('management/config/branch/new')}}" class="btn btn-primary">
 								 <i class="ki-duotone ki-plus fs-2"></i>Add Branch
-								 </button>
+							  </a>
 								 <!--end::Add user-->
 							  </div>
 							  <!--end::Toolbar-->    
@@ -77,17 +76,17 @@
 													data-kt-menu="true"> 
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="{{url('management/config/branches/detail/'.$branch->id)}}" class="menu-link px-3">Detail</a>
+														<a href="{{url('management/config/branch/detail/'.$branch->id)}}" class="menu-link px-3">Detail</a>
 													</div>
 													<!--end::Menu item--> 
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="{{url('management/config/branches/edit/'.$branch->id)}}" class="menu-link px-3">Edit</a>
+														<a href="{{url('management/config/branch/edit/'.$branch->id)}}" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item--> 
 													<!--begin::Menu item--> 
 													<div class="menu-item px-3">
-														<a href="#"><span href="{{url('management/config/branches/delete/'.$branch->id)}}" class="delete menu-link px-3"> Delete</span></a>
+														<a href="#"><span href="{{url('management/config/branch/delete/'.$branch->id)}}" class="delete menu-link px-3"> Delete</span></a>
 													</div>
 													<!--end::Menu item-->
 												</div>
@@ -119,135 +118,7 @@
 	<!--end::Post-->
 </div>
 <!--end::Content-->
-
-<!-- Modal Edit -->
-<div  class="modal fade" id="modal_add_user" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered mw-650px">
-		<div class="modal-content rounded">
-			<div class="modal-header pb-0 border-0 justify-content-end">
-				<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-					<i class="ki-duotone ki-cross fs-1">
-						<span class="path1"></span>
-						<span class="path2"></span>
-					</i>
-				</div>
-			</div>
-			
-			<div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-				<form action="{{url('management/config/branches/store')}}" method="POST" enctype="multipart/form-data">
-					@csrf
-					<div class="mb-13 text-center">
-						<h1 class="mb-3">Add Branch</h1>
-						<div class="text-muted fw-semibold fs-5">
-							Add new Branch
-						</div>
-					</div>
-					 
-					<!-- Name Input -->
-					<div class="d-flex flex-column mb-8 fv-row">
-						<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-							<span class="required">Branch Name </span>
-						</label>
-						<input 
-							type="text"  name="branch_name"
-							class="form-control form-control-solid" 
-							placeholder="Hotel A"
-						/> 
-					</div>
-
-					<!-- Email Input -->
-					<div class="d-flex flex-column mb-8 fv-row">
-						<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-							<span class="required">Branch Adress</span>
-						</label>
-						<input 
-							type="text" name="branch_address" 
-							class="form-control form-control-solid" 
-							placeholder="Masukkan alamat email"
-						/> 
-					</div>
-
-					<!-- Password Input -->
-					<div class="d-flex flex-column mb-8 fv-row">
-						<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-							<span>Branch Phone</span> 
-						</label>
-						<input 
-							type="text"  name="branch_phone"
-							class="form-control form-control-solid" 
-							placeholder="Masukkan Nomor Telepon Hotel"
-						/> 
-					</div>
-
-					<div class="d-flex flex-column mb-8 fv-row">
-						<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-							<span>Branch Website</span> 
-						</label>
-						<input 
-							type="text"  name="branch_web"
-							class="form-control form-control-solid" 
-							placeholder="Masukkan Website Hotel"
-						/> 
-					</div>
-  
-					<div class="fv-row mb-7">
-						<label class="d-block fw-semibold fs-6 mb-5">Hotel Logo</label> 
-						<!-- Image container -->
-						<div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true">
-							<!-- Preview area -->
-							<div class="image-input-wrapper img-fluid" 
-								 style="background-image: url({{asset('assets/media/logos/logo-color.svg')}})">
-							</div>
-					
-							<!-- Change Button -->
-							<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" 
-								   data-kt-image-input-action="change" 
-								   data-bs-toggle="tooltip" 
-								   title="Change logo">
-								<i class="ki-solid ki-pencil fs-7"></i>
-								<input type="file" 
-									   name="branch_logo" 
-									   accept=".png, .jpg, .jpeg" 
-									   class="d-none">
-								<input type="hidden" name="logo_remove">
-							</label>
-					
-							<!-- Cancel Button -->
-							<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" 
-								  data-kt-image-input-action="cancel" 
-								  data-bs-toggle="tooltip" 
-								  title="Cancel logo">
-								  <i class="ki-solid ki-cross"></i>
-							</span>
-					
-							<!-- Remove Button -->
-							<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" 
-								  data-kt-image-input-action="remove" 
-								  data-bs-toggle="tooltip" 
-								  title="Remove logo">
-								  <i class="ki-solid ki-cross"></i>
-							</span>
-						</div>
-						
-						<div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-					</div>
-					<div class="text-center">
-						<button 
-							type="button" 
-							class="btn btn-light me-3" 
-							data-bs-dismiss="modal"
-						>
-							Batal
-						</button>
-						<button type="submit" class="btn btn-primary">
-							<span class="indicator-label">Submit</span> 
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+ 
 @endsection
 @section('scripts') 
 <!--begin::Vendors Javascript(used for this page only)-->

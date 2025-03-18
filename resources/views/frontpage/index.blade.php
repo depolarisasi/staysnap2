@@ -1,377 +1,660 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-	<head>
-		<title>Metronic - The World's #1 Selling Bootstrap Admin Template by KeenThemes</title>
-		<meta charset="utf-8" />
-		<meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
-		<meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta property="og:locale" content="en_US" />
-		<meta property="og:type" content="article" />
-		<meta property="og:title" content="Metronic - The World's #1 Selling Bootstrap Admin Template by KeenThemes" />
-		<meta property="og:url" content="https://keenthemes.com/metronic" />
-		<meta property="og:site_name" content="Metronic by Keenthemes" />
-		<link rel="canonical" href="http://preview.keenthemes.comlanding.html" />
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
-		<!--begin::Fonts(mandatory for all pages)-->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-		<!--end::Fonts-->
-		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-		<!--end::Global Stylesheets Bundle--> 
-	</head>
-	<!--end::Head-->
-	<!--begin::Body-->
-	<body id="kt_body" data-bs-spy="scroll" data-bs-target="#kt_landing_menu" class="bg-body position-relative">
-		 
-		<!--begin::Main-->
-		<!--begin::Root-->
-		<div class="d-flex flex-column flex-root">
-			<!--begin::Header Section-->
-			<div class="mb-0" id="home">
-				<!--begin::Wrapper-->
-				<div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg" style="background-image: url(assets/media/svg/illustrations/landing.svg)">
-					<!--begin::Header-->
-					<div class="landing-header" data-kt-sticky="true" data-kt-sticky-name="landing-header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
-						<!--begin::Container-->
-						<div class="container">
-							<!--begin::Wrapper-->
-							<div class="d-flex align-items-center justify-content-between">
-								<!--begin::Logo-->
-								<div class="d-flex align-items-center flex-equal">
-									<!--begin::Mobile menu toggle-->
-									<button class="btn btn-icon btn-active-color-primary me-3 d-flex d-lg-none" id="kt_landing_menu_toggle">
-										<i class="ki-duotone ki-abstract-14 fs-2hx">
-											<span class="path1"></span>
-											<span class="path2"></span>
-										</i>
-									</button>
-									<!--end::Mobile menu toggle-->
-									<!--begin::Logo image-->
-									<a href="landing.html">
-										<img alt="Logo" src="assets/media/logos/landing.svg" class="logo-default h-25px h-lg-30px" />
-										<img alt="Logo" src="assets/media/logos/landing-dark.svg" class="logo-sticky h-20px h-lg-25px" />
-									</a>
-									<!--end::Logo image-->
-								</div>
-								<!--end::Logo--> 
-								<!--begin::Toolbar-->
-								<div class="flex-equal text-end ms-1">
-									<a href="authentication/layouts/corporate/sign-in.html" class="btn btn-success">Sign In</a>
-								</div>
-								<!--end::Toolbar-->
-							</div>
-							<!--end::Wrapper-->
-						</div>
-						<!--end::Container-->
-					</div>
-					<!--end::Header-->
-					<!--begin::Landing hero-->
-					<div class="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9">
-						<!--begin::Heading-->
-						<div class="text-center mb-5 mb-lg-10 py-10 py-lg-20">
-							<!--begin::Title-->
-							<h1 class="text-white lh-base fw-bold fs-2x fs-lg-3x mb-15">Build An Outstanding Solutions 
-							<br />with 
-							<span style="background: linear-gradient(to right, #12CE5D 0%, #FFD80C 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
-								<span id="kt_landing_hero_text">The Best Theme Ever</span>
-							</span></h1>
-							<!--end::Title-->
-							<!--begin::Action-->
-							<a href="index.html" class="btn btn-primary">Try Metronic</a>
-							<!--end::Action-->
-						</div>
-						<!--end::Heading--> 
-					</div>
-					<!--end::Landing hero-->
-				</div>
-				<!--end::Wrapper--> 
-			</div>
-			<!--end::Header Section-->
-			<!--begin::How It Works Section-->
-			<div class="py-10 py-lg-20">
-				<!--begin::Container-->
-				<div class="container">
-					<!--begin::Heading-->
-					<div class="text-center mb-17">
-						<!--begin::Title-->
-						<h3 class="fs-2hx text-gray-900 mb-5" id="how-it-works" data-kt-scroll-offset="{default: 100, lg: 150}">How it Works</h3>
-						<!--end::Title-->
-						<!--begin::Text-->
-						<div class="fs-5 text-muted fw-bold">Save thousands to millions of bucks by using single tool 
-						<br />for different amazing and great useful admin</div>
-						<!--end::Text-->
-					</div>
-					<!--end::Heading-->
-					<!--begin::Row-->
-					<div class="row w-100 gy-10 mb-md-20">
-						<!--begin::Col-->
-						<div class="col-md-4 px-5">
-							<!--begin::Story-->
-							<div class="text-center mb-10 mb-md-0">
-								<!--begin::Illustration-->
-								<img src="assets/media/illustrations/sketchy-1/2.png" class="mh-125px mb-9" alt="" />
-								<!--end::Illustration-->
-								<!--begin::Heading-->
-								<div class="d-flex flex-center mb-5">
-									<!--begin::Badge-->
-									<span class="badge badge-circle badge-light-success fw-bold p-5 me-3 fs-3">1</span>
-									<!--end::Badge-->
-									<!--begin::Title-->
-									<div class="fs-5 fs-lg-3 fw-bold text-gray-900">Jane Miller</div>
-									<!--end::Title-->
-								</div>
-								<!--end::Heading-->
-								<!--begin::Description-->
-								<div class="fw-semibold fs-6 fs-lg-4 text-muted">Save thousands to millions of bucks 
-								<br />by using single tool for different 
-								<br />amazing and great</div>
-								<!--end::Description-->
-							</div>
-							<!--end::Story-->
-						</div>
-						<!--end::Col-->
-						<!--begin::Col-->
-						<div class="col-md-4 px-5">
-							<!--begin::Story-->
-							<div class="text-center mb-10 mb-md-0">
-								<!--begin::Illustration-->
-								<img src="assets/media/illustrations/sketchy-1/8.png" class="mh-125px mb-9" alt="" />
-								<!--end::Illustration-->
-								<!--begin::Heading-->
-								<div class="d-flex flex-center mb-5">
-									<!--begin::Badge-->
-									<span class="badge badge-circle badge-light-success fw-bold p-5 me-3 fs-3">2</span>
-									<!--end::Badge-->
-									<!--begin::Title-->
-									<div class="fs-5 fs-lg-3 fw-bold text-gray-900">Setup Your App</div>
-									<!--end::Title-->
-								</div>
-								<!--end::Heading-->
-								<!--begin::Description-->
-								<div class="fw-semibold fs-6 fs-lg-4 text-muted">Save thousands to millions of bucks 
-								<br />by using single tool for different 
-								<br />amazing and great</div>
-								<!--end::Description-->
-							</div>
-							<!--end::Story-->
-						</div>
-						<!--end::Col-->
-						<!--begin::Col-->
-						<div class="col-md-4 px-5">
-							<!--begin::Story-->
-							<div class="text-center mb-10 mb-md-0">
-								<!--begin::Illustration-->
-								<img src="assets/media/illustrations/sketchy-1/12.png" class="mh-125px mb-9" alt="" />
-								<!--end::Illustration-->
-								<!--begin::Heading-->
-								<div class="d-flex flex-center mb-5">
-									<!--begin::Badge-->
-									<span class="badge badge-circle badge-light-success fw-bold p-5 me-3 fs-3">3</span>
-									<!--end::Badge-->
-									<!--begin::Title-->
-									<div class="fs-5 fs-lg-3 fw-bold text-gray-900">Enjoy Nautica App</div>
-									<!--end::Title-->
-								</div>
-								<!--end::Heading-->
-								<!--begin::Description-->
-								<div class="fw-semibold fs-6 fs-lg-4 text-muted">Save thousands to millions of bucks 
-								<br />by using single tool for different 
-								<br />amazing and great</div>
-								<!--end::Description-->
-							</div>
-							<!--end::Story-->
-						</div>
-						<!--end::Col-->
-					</div>
-					<!--end::Row--> 
-				</div>
-				<!--end::Container-->
-			</div>
-			<!--end::How It Works Section--> 
-			<!--begin::Footer Section-->
-			<div class="mb-0"> 
-				<!--begin::Wrapper-->
-				<div class="landing-dark-bg">
-					<!--begin::Container-->
-					<div class="container">
-						<!--begin::Row-->
-						<div class="row py-10 py-lg-20">
-							<!--begin::Col-->
-							<div class="col-lg-6 pe-lg-16 mb-10 mb-lg-0">
-								<!--begin::Block-->
-								<div class="rounded landing-dark-border p-9 mb-10">
-									<!--begin::Title-->
-									<h2 class="text-white">Would you need a Custom License?</h2>
-									<!--end::Title-->
-									<!--begin::Text-->
-									<span class="fw-normal fs-4 text-gray-700">Email us to 
-									<a href="https://keenthemes.com/support" class="text-white opacity-50 text-hover-primary">support@keenthemes.com</a></span>
-									<!--end::Text-->
-								</div>
-								<!--end::Block-->
-								<!--begin::Block-->
-								<div class="rounded landing-dark-border p-9">
-									<!--begin::Title-->
-									<h2 class="text-white">How About a Custom Project?</h2>
-									<!--end::Title-->
-									<!--begin::Text-->
-									<span class="fw-normal fs-4 text-gray-700">Use Our Custom Development Service. 
-									<a href="pages/user-profile/overview.html" class="text-white opacity-50 text-hover-primary">Click to Get a Quote</a></span>
-									<!--end::Text-->
-								</div>
-								<!--end::Block-->
-							</div>
-							<!--end::Col-->
-							<!--begin::Col-->
-							<div class="col-lg-6 ps-lg-16">
-								<!--begin::Navs-->
-								<div class="d-flex justify-content-center">
-									<!--begin::Links-->
-									<div class="d-flex fw-semibold flex-column me-20">
-										<!--begin::Subtitle-->
-										<h4 class="fw-bold text-gray-500 mb-6">More for Metronic</h4>
-										<!--end::Subtitle-->
-										<!--begin::Link-->
-										<a href="https://keenthemes.com/faqs" class="text-white opacity-50 text-hover-primary fs-5 mb-6">FAQ</a>
-										<!--end::Link-->
-										<!--begin::Link-->
-										<a href="https://preview.keenthemes.com/html/metronic/docs" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Documentaions</a>
-										<!--end::Link-->
-										<!--begin::Link-->
-										<a href="https://www.youtube.com/c/KeenThemesTuts/videos" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Video Tuts</a>
-										<!--end::Link-->
-										<!--begin::Link-->
-										<a href="https://preview.keenthemes.com/html/metronic/docs/getting-started/changelog" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Changelog</a>
-										<!--end::Link-->
-										<!--begin::Link-->
-										<a href="https://devs.keenthemes.com/" class="text-white opacity-50 text-hover-primary fs-5 mb-6">Support Forum</a>
-										<!--end::Link-->
-										<!--begin::Link-->
-										<a href="https://keenthemes.com/blog" class="text-white opacity-50 text-hover-primary fs-5">Blog</a>
-										<!--end::Link-->
-									</div>
-									<!--end::Links-->
-									<!--begin::Links-->
-									<div class="d-flex fw-semibold flex-column ms-lg-20">
-										<!--begin::Subtitle-->
-										<h4 class="fw-bold text-gray-500 mb-6">Stay Connected</h4>
-										<!--end::Subtitle-->
-										<!--begin::Link-->
-										<a href="https://www.facebook.com/keenthemes" class="mb-6">
-											<img src="assets/media/svg/brand-logos/facebook-4.svg" class="h-20px me-2" alt="" />
-											<span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Facebook</span>
-										</a>
-										<!--end::Link-->
-										<!--begin::Link-->
-										<a href="https://github.com/KeenthemesHub" class="mb-6">
-											<img src="assets/media/svg/brand-logos/github.svg" class="h-20px me-2" alt="" />
-											<span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Github</span>
-										</a>
-										<!--end::Link-->
-										<!--begin::Link-->
-										<a href="https://twitter.com/keenthemes" class="mb-6">
-											<img src="assets/media/svg/brand-logos/twitter.svg" class="h-20px me-2" alt="" />
-											<span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Twitter</span>
-										</a>
-										<!--end::Link-->
-										<!--begin::Link-->
-										<a href="https://dribbble.com/keenthemes" class="mb-6">
-											<img src="assets/media/svg/brand-logos/dribbble-icon-1.svg" class="h-20px me-2" alt="" />
-											<span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Dribbble</span>
-										</a>
-										<!--end::Link-->
-										<!--begin::Link-->
-										<a href="https://www.instagram.com/keenthemes" class="mb-6">
-											<img src="assets/media/svg/brand-logos/instagram-2-1.svg" class="h-20px me-2" alt="" />
-											<span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Instagram</span>
-										</a>
-										<!--end::Link-->
-									</div>
-									<!--end::Links-->
-								</div>
-								<!--end::Navs-->
-							</div>
-							<!--end::Col-->
-						</div>
-						<!--end::Row-->
-					</div>
-					<!--end::Container-->
-					<!--begin::Separator-->
-					<div class="landing-dark-separator"></div>
-					<!--end::Separator-->
-					<!--begin::Container-->
-					<div class="container">
-						<!--begin::Wrapper-->
-						<div class="d-flex flex-column flex-md-row flex-stack py-7 py-lg-10">
-							<!--begin::Copyright-->
-							<div class="d-flex align-items-center order-2 order-md-1">
-								<!--begin::Logo-->
-								<a href="landing.html">
-									<img alt="Logo" src="assets/media/logos/landing.svg" class="h-15px h-md-20px" />
-								</a>
-								<!--end::Logo image-->
-								<!--begin::Logo image-->
-								<span class="mx-5 fs-6 fw-semibold text-gray-600 pt-1" href="https://keenthemes.com">&copy; 2024 Keenthemes Inc.</span>
-								<!--end::Logo image-->
-							</div>
-							<!--end::Copyright-->
-							<!--begin::Menu-->
-							<ul class="menu menu-gray-600 menu-hover-primary fw-semibold fs-6 fs-md-5 order-1 mb-5 mb-md-0">
-								<li class="menu-item">
-									<a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
-								</li>
-								<li class="menu-item mx-5">
-									<a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a>
-								</li>
-								<li class="menu-item">
-									<a href="" target="_blank" class="menu-link px-2">Purchase</a>
-								</li>
-							</ul>
-							<!--end::Menu-->
-						</div>
-						<!--end::Wrapper-->
-					</div>
-					<!--end::Container-->
-				</div>
-				<!--end::Wrapper-->
-			</div>
-			<!--end::Footer Section-->
-			<!--begin::Scrolltop-->
-			<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
-				<i class="ki-duotone ki-arrow-up">
-					<span class="path1"></span>
-					<span class="path2"></span>
-				</i>
-			</div>
-			<!--end::Scrolltop-->
-		</div>
-		<!--end::Root-->
-		<!--end::Main-->
-		<!--begin::Scrolltop-->
-		<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
-			<i class="ki-duotone ki-arrow-up">
-				<span class="path1"></span>
-				<span class="path2"></span>
-			</i>
-		</div>
-		<!--end::Scrolltop-->
-		<!--begin::Javascript-->
-		<script>var hostUrl = "assets/";</script>
-		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-		<script src="assets/plugins/global/plugins.bundle.js"></script>
-		<script src="assets/js/scripts.bundle.js"></script>
-		<!--end::Global Javascript Bundle-->
-		<!--begin::Vendors Javascript(used for this page only)-->
-		<script src="assets/plugins/custom/fslightbox/fslightbox.bundle.js"></script>
-		<script src="assets/plugins/custom/typedjs/typedjs.bundle.js"></script>
-		<!--end::Vendors Javascript-->
-		<!--begin::Custom Javascript(used for this page only)-->
-		<script src="assets/js/custom/landing.js"></script>
-		<script src="assets/js/custom/pages/pricing/general.js"></script>
-		<!--end::Custom Javascript-->
-		<!--end::Javascript-->
-	</body>
-	<!--end::Body-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahid Hotels Booking Clone</title>
+    <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+                /* Reset and base styles */
+        :root {
+            --primary-color: #1a4b84;
+            --secondary-color: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            padding-top: 76px;
+        }
+
+        /* Hero Section with Carousel */
+        .hero-section {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+        }
+
+        .hero-carousel {
+            height: 100%;
+        }
+
+        .hero-carousel .item {
+            height: 80vh;
+            position: relative;
+        }
+
+        .hero-carousel .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 2;
+            width: 80%;
+        }
+
+        .hero-carousel .item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Booking Form */
+        .booking-form-section {
+            margin-top: -100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .booking-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-label i {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+
+        .custom-select select,
+        .date-input-group input,
+        .guests-select-group select,
+        #hotelSelector {
+            height: 50px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0 15px;
+            font-size: 1rem;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .custom-select select:focus,
+        .date-input-group input:focus,
+        .guests-select-group select:focus,
+        #hotelSelector:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(26, 75, 132, 0.25);
+        }
+
+        /* Hotel Modal Styles */
+        .hotel-search {
+            position: relative;
+        }
+
+        .hotel-search input {
+            padding-left: 40px;
+            height: 45px;
+        }
+
+        .hotel-search::before {
+            content: '\f002';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .hotel-card-modal {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+
+        .hotel-card-modal:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .hotel-card-modal.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(26, 75, 132, 0.05);
+        }
+
+        .hotel-card-modal img {
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* Date Picker Customization */
+        .flatpickr-calendar {
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .flatpickr-day.selected {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .flatpickr-day.selected:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* Featured Hotels */
+        .hotel-card {
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hotel-card img {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* Custom Button Styles */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 12px 30px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #123a6a;
+            border-color: #123a6a;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .booking-form-section {
+                margin-top: -50px;
+            }
+
+            .booking-card {
+                padding: 15px;
+            }
+
+            .carousel-content h1 {
+                font-size: 2rem;
+            }
+
+            .carousel-content p {
+                font-size: 1rem;
+            }
+
+            .custom-select select,
+            .date-input-group input,
+            .guests-select-group select,
+            #hotelSelector {
+                height: 45px;
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            margin-top: 50px;
+        }
+
+        footer a {
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+
+        /* Owl Carousel Custom Styles */
+        .owl-dots {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .owl-dot span {
+            background: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .owl-dot.active span {
+            background: white !important;
+        }
+
+        .owl-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+        }
+
+        .owl-prev, .owl-next {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3) !important;
+            width: 40px;
+            height: 40px;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .owl-prev {
+            left: 20px;
+        }
+
+        .owl-next {
+            right: 20px;
+        }
+
+        .owl-prev:hover, .owl-next:hover {
+            background: rgba(255, 255, 255, 0.5) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://booking.sahidhotels.com/images/logo.png" alt="Sahid Hotels" height="40">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hotels</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Carousel -->
+    <section class="hero-section">
+        <div class="owl-carousel hero-carousel owl-theme">
+            <div class="item">
+                <img src="https://picsum.photos/1920/1080?random=1" alt="Hotel View 1">
+                <div class="carousel-content">
+                    <h1 class="display-4">Welcome to Sahid Hotels</h1>
+                    <p class="lead">Discover comfort and luxury at our premium locations</p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="https://picsum.photos/1920/1080?random=2" alt="Hotel View 2">
+                <div class="carousel-content">
+                    <h1 class="display-4">Luxury Accommodations</h1>
+                    <p class="lead">Experience world-class hospitality</p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="https://picsum.photos/1920/1080?random=3" alt="Hotel View 3">
+                <div class="carousel-content">
+                    <h1 class="display-4">Perfect Locations</h1>
+                    <p class="lead">Prime destinations across Indonesia</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section class="booking-form-section">
+        <div class="container">
+            <div class="card booking-card shadow">
+                <div class="card-body">
+                    <form id="bookingForm">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="hotel-select-wrapper">
+                                    <label class="form-label"><i class="fas fa-hotel"></i> Select Hotel</label>
+                                    <div class="custom-select">
+                                        <input type="text" class="form-control" id="hotelSelector" readonly placeholder="Choose your destination" data-bs-toggle="modal" data-bs-target="#hotelModal">
+                                        <input type="hidden" id="selectedHotel" name="hotel" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="date-picker-wrapper">
+                                    <label class="form-label"><i class="fas fa-calendar"></i> Check In - Check Out</label>
+                                    <div class="date-input-group">
+                                        <input type="text" class="form-control" id="dateRange" placeholder="Select dates" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="guests-wrapper">
+                                    <label class="form-label"><i class="fas fa-user"></i> Guests</label>
+                                    <div class="guests-select-group">
+                                        <select class="form-select" id="guests" required>
+                                            <option value="1">1 Adult</option>
+                                            <option value="2">2 Adults</option>
+                                            <option value="3">3 Adults</option>
+                                            <option value="4">4 Adults</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-search me-2"></i>Check Availability
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hotel Selection Modal -->
+    <div class="modal fade" id="hotelModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Your Hotel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="hotel-search mb-4">
+                        <input type="text" class="form-control" id="hotelSearch" placeholder="Search hotels...">
+                    </div>
+                    <div class="row g-4" id="hotelList">
+                        <!-- Hotel cards will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Hotels -->
+    <section class="featured-hotels py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Featured Hotels</h2>
+            <div class="row g-4" id="featuredHotels">
+                <!-- Hotels will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>About Sahid Hotels</h5>
+                    <p>Experience luxury and comfort at our premium locations across Indonesia.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Our Hotels</a></li>
+                        <li><a href="#" class="text-white">Special Offers</a></li>
+                        <li><a href="#" class="text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Info</h5>
+                    <ul class="list-unstyled">
+                        <li>Email: info@sahidhotels.com</li>
+                        <li>Phone: +62 21 123456</li>
+                        <li>Address: Jakarta, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>// Sample hotel data
+        const hotels = [
+            {
+                id: 1,
+                name: "Sahid Jakarta",
+                location: "Jakarta",
+                price: "$100",
+                image: "https://picsum.photos/800/600?random=1",
+                rating: 4.5,
+                description: "Luxury hotel in the heart of Jakarta"
+            },
+            {
+                id: 2,
+                name: "Sahid Sudirman",
+                location: "Jakarta",
+                price: "$120",
+                image: "https://picsum.photos/800/600?random=2",
+                rating: 4.6,
+                description: "Modern comfort in Sudirman business district"
+            },
+            {
+                id: 3,
+                name: "Sahid Bali",
+                location: "Bali",
+                price: "$150",
+                image: "https://picsum.photos/800/600?random=3",
+                rating: 4.8,
+                description: "Beachfront resort in beautiful Bali"
+            },
+            {
+                id: 4,
+                name: "Sahid Kuta",
+                location: "Bali",
+                price: "$130",
+                image: "https://picsum.photos/800/600?random=4",
+                rating: 4.7,
+                description: "Experience the vibrant Kuta lifestyle"
+            },
+            {
+                id: 5,
+                name: "Sahid Yogyakarta",
+                location: "Yogyakarta",
+                price: "$90",
+                image: "https://picsum.photos/800/600?random=5",
+                rating: 4.3,
+                description: "Cultural heritage meets modern luxury"
+            }
+        ];
+        
+        // Initialize the booking form and carousel
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Owl Carousel
+            $('.hero-carousel').owlCarousel({
+                items: 1,
+                loop: true,
+                nav: true,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                animateOut: 'fadeOut',
+                navText: [
+                    '<i class="fas fa-chevron-left"></i>',
+                    '<i class="fas fa-chevron-right"></i>'
+                ]
+            });
+        
+            // Initialize Flatpickr date range picker
+            flatpickr("#dateRange", {
+                mode: "range",
+                minDate: "today",
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "F j, Y",
+                showMonths: 2,
+                static: true
+            });
+        
+            // Initialize hotel modal functionality
+            initializeHotelModal();
+        
+            // Handle form submission
+            document.getElementById('bookingForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    hotel: document.getElementById('selectedHotel').value,
+                    dates: document.getElementById('dateRange').value,
+                    guests: document.getElementById('guests').value
+                };
+        
+                console.log('Booking details:', formData);
+                alert('Booking search initiated! Check console for details.');
+            });
+        
+            // Display featured hotels
+            displayFeaturedHotels();
+        });
+        
+        // Function to initialize hotel modal
+        function initializeHotelModal() {
+            const hotelList = document.getElementById('hotelList');
+            const hotelSearch = document.getElementById('hotelSearch');
+            const hotelSelector = document.getElementById('hotelSelector');
+            const selectedHotelInput = document.getElementById('selectedHotel');
+        
+            // Populate hotel cards in modal
+            function populateHotelCards(hotelsToShow = hotels) {
+                hotelList.innerHTML = '';
+                hotelsToShow.forEach(hotel => {
+                    const hotelCard = document.createElement('div');
+                    hotelCard.className = 'col-md-6 mb-4';
+                    hotelCard.innerHTML = `
+                        <div class="card hotel-card-modal" data-hotel-id="${hotel.id}">
+                            <img src="${hotel.image}" class="card-img-top" alt="${hotel.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${hotel.name}</h5>
+                                <p class="card-text">
+                                    <i class="fas fa-map-marker-alt"></i> ${hotel.location}<br>
+                                    <small>${hotel.description}</small><br>
+                                    <span class="text-primary">${hotel.price}</span> / night
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                    hotelList.appendChild(hotelCard);
+        
+                    // Add click event to hotel card
+                    hotelCard.querySelector('.hotel-card-modal').addEventListener('click', function() {
+                        const hotelId = this.dataset.hotelId;
+                        const selectedHotel = hotels.find(h => h.id === parseInt(hotelId));
+                        
+                        // Update the hotel selector input
+                        hotelSelector.value = selectedHotel.name;
+                        selectedHotelInput.value = hotelId;
+        
+                        // Remove selected class from all cards and add to clicked card
+                        document.querySelectorAll('.hotel-card-modal').forEach(card => {
+                            card.classList.remove('selected');
+                        });
+                        this.classList.add('selected');
+        
+                        // Close the modal
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('hotelModal'));
+                        modal.hide();
+                    });
+                });
+            }
+        
+            // Initialize hotel search functionality
+            hotelSearch.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const filteredHotels = hotels.filter(hotel => 
+                    hotel.name.toLowerCase().includes(searchTerm) ||
+                    hotel.location.toLowerCase().includes(searchTerm) ||
+                    hotel.description.toLowerCase().includes(searchTerm)
+                );
+                populateHotelCards(filteredHotels);
+            });
+        
+            // Initial population of hotel cards
+            populateHotelCards();
+        }
+        
+        // Function to display featured hotels
+        function displayFeaturedHotels() {
+            const container = document.getElementById('featuredHotels');
+            
+            hotels.slice(0, 3).forEach(hotel => {
+                const hotelCard = document.createElement('div');
+                hotelCard.className = 'col-md-4';
+                hotelCard.innerHTML = `
+                    <div class="card hotel-card">
+                        <img src="${hotel.image}" class="card-img-top" alt="${hotel.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${hotel.name}</h5>
+                            <p class="card-text">
+                                <i class="fas fa-map-marker-alt"></i> ${hotel.location}<br>
+                                <span class="text-primary">${hotel.price}</span> / night<br>
+                                Rating: ${hotel.rating}/5
+                            </p>
+                            <button class="btn btn-primary w-100">View Details</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(hotelCard);
+            });
+        }
+        
+        // Add smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
 </html>

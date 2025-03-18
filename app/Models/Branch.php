@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\HasMany; 
+use App\Models\BranchPhoto;
 class Branch extends Model
 {
     use HasFactory;
@@ -15,8 +16,22 @@ class Branch extends Model
      *
      * @var array
      */    
-    protected $fillable = ['branch_name', 'branch_address', 'branch_logo', 'branch_phone', 'branch_web',]; 
+     
+    protected $fillable = ['branch_name', 'branch_address', 'branch_logo', 'branch_phone', 'branch_web','branch_star','branch_maps_link','branch_province','branch_city','branch_thumbnail']; 
 
-     // Accessor untuk URL logo lengkap
+    public function photos()
+    {
+        return $this->hasMany(BranchPhoto::class, 'branch_id'); // Pastikan foreign key sesuai
+    }
+
+    // Gunakan event deleting untuk menghapus otomatis `branch_photos`
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($branch) {
+            $branch->photos()->delete();
+        });
+    }
       
 }
