@@ -43,7 +43,7 @@ class SettingController extends Controller
             'value' => 'nullable|string',
         ]);
 
-        $setting->update($request->only('value'));
+        $setting->update($request->only('key','value'));
 
         alert()->success('Success', 'Config Berhasil Diubah');
         return redirect()->route('setting.index');
