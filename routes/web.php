@@ -11,9 +11,12 @@ use App\Http\Controllers\HomeSliderController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomPhotoController;
 use App\Http\Controllers\AmenityController;
+use App\Http\Controllers\BranchFacilitiesController;
+use App\Http\Controllers\BranchTagController;
 use App\Http\Controllers\RoomPolicyController;
 use App\Http\Controllers\RoomPriceController;
 use App\Http\Controllers\RoomAvailabilityController;
+use App\Http\Controllers\LocationController;
 
 use Illuminate\Support\Facades\Route; 
 /*
@@ -79,9 +82,17 @@ Route::middleware('auth')->group(function () {
                 Route::put('/update/{branch}', [BranchController::class, 'update'])->name('branch.update'); 
                 Route::post('/store', [BranchController::class, 'store']); 
                 Route::get('/delete/{id}', [BranchController::class, 'destroy']); 
+                Route::get('/tags/search', [BranchTagController::class, 'searchTags']);
+                Route::resource('facilities', BranchFacilitiesController::class)->except(['show']);
+                Route::get('facilities/datatable', [BranchFacilitiesController::class, 'datatable'])->name('facilities.datatable');
+
+                Route::resource('tags', BranchTagController::class)->except(['show']);
+                Route::get('tags/search', [BranchTagController::class, 'searchTags']);
+                Route::get('tags/datatable', [BranchTagController::class, 'datatable'])->name('tags.datatable');
+                
             });
         });
-
+         
         //Amenities
         Route::resource('amenities', AmenityController::class)->except(['show']);
         Route::get('amenities/datatable', [AmenityController::class, 'datatable'])->name('amenities.datatable');
@@ -132,5 +143,8 @@ Route::controller(RoomController::class)->group(function () {
     Route::get('/rooms', 'index')->name('frontend.rooms.index');
     Route::get('/rooms/{room}', 'show')->name('frontend.rooms.show');
 });
+
+Route::get('/provinces', [LocationController::class, 'getProvinces']);
+Route::get('/regencies/{province_id}', [LocationController::class, 'getRegencies']);
 
 require __DIR__.'/auth.php';

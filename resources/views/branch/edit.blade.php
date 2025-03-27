@@ -1,5 +1,34 @@
 @extends('layouts.app')
 @section('title', 'Edit Branch') 
+@section('styles')
+<link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/> 
+<style>
+	.select2-container--disabled {
+			background-color: #f8f9fa;
+			opacity: 1;
+		}
+		.select2-container--default .select2-selection--multiple {
+		border: 1px solid #ced4da;
+		min-height: 38px;
+	}
+	
+	.select2-container--default .select2-selection--multiple .select2-selection__choice {
+		background-color: #e9ecef;
+		border-color: #dee2e6;
+		color: #212529;
+	}
+	
+	select2-container--default .select2-selection--multiple .select2-selection__choice {
+		background-color: #e4e6ef;
+		border: 1px solid #ddd;
+		color: #333;
+	}
+	
+	.select2-container--default .select2-results__option[aria-disabled=true] {
+		display: none;
+	}
+		</style>
+@endsection
 @section('content') 
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -25,7 +54,7 @@
 							  <!--begin::Toolbar-->
 							  <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base"> 
 								 <!--begin::Add user-->
-								 <a class="btn btn-secondary" href="{{url('management/config/branch')}}">
+								 <a class="btn btn-sm btn-secondary" href="{{url('management/config/branch')}}">
 								 <i class="ki-solid ki-left fs-2"></i>Kembali</a>
 								 <!--end::Add user-->
 							  </div>
@@ -75,11 +104,15 @@
 									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 										<span class="required">Branch Province</span>
 									</label>
-									<input 
-										type="text" name="branch_province" 
-										class="form-control form-control-solid" 
-										value="{{$branch->branch_province}}"
-									/> 
+									<select class="form-control select2-province" id="province" name="branch_province">
+										@if($branch->province)
+											<option value="{{ $branch->branch_province }}" selected>{{ $branch->province->province }}</option>
+										@endif
+									</select>
+									<div id="province-loading" class="text-muted small mt-1" style="display: none;">
+										<i class="fas fa-spinner fa-spin"></i> Loading provinces...
+									</div>
+									<div id="province-error" class="text-danger small mt-1"></div>
 								</div>
 
 								<!-- Email Input -->
@@ -87,11 +120,15 @@
 									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 										<span class="required">Branch City</span>
 									</label>
-									<input 
-										type="text" name="branch_city" 
-										class="form-control form-control-solid" 
-										value="{{$branch->branch_city}}"
-									/> 
+									<select class="form-control select2-regency" id="regency" name="branch_city">
+										@if($branch->regency)
+											<option value="{{ $branch->branch_city }}" selected>{{ $branch->regency->regency }}</option>
+										@endif
+									</select>
+									<div id="regency-loading" class="text-muted small mt-1" style="display: none;">
+										<i class="fas fa-spinner fa-spin"></i> Loading cities...
+									</div>
+									<div id="regency-error" class="text-danger small mt-1"></div>
 								</div>
 
 								<!-- Email Input -->
@@ -142,7 +179,30 @@
 										value="{{$branch->branch_maps_link}}"
 									/> 
 								</div> 
+
+								<div class="d-flex flex-column mb-8 fv-row">
+									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+										<span class="required">Branch Description</span>
+									</label>
+									<textarea required name="branch_description" class="form-control form-control form-control-solid"> {{$branch->branch_description}}</textarea> 
+								</div>
 							
+
+								<div class="d-flex flex-column mb-8 fv-row">
+									<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+										<span class="required">Branch Tag</span>
+									</label>
+									<select name="tags[]" class="form-control select2-tags" multiple="multiple">
+										{{-- Untuk Edit Form --}}
+										@isset($branch)
+											@foreach($branch->tags as $tag)
+												<option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+											@endforeach
+										@endisset
+									</select>
+								</div>
+
+
 								<div class="fv-row mb-7">
 									<label class="d-block fw-semibold fs-6 mb-5">Hotel Logo</label> 
 									<!-- Image container -->
@@ -245,6 +305,37 @@
 									   @enderror
 								</div>
 
+								  <!-- Amenities Selection -->
+								  <div class="mb-5 fv-row mt-5">
+									<label class="form-label">Branch Facilities</label>
+									<div class="row g-4">
+										@foreach($facilities as $facility)
+										<div class="col-md-4">
+											<div class="form-check form-check-custom form-check-solid">
+												<input class="form-check-input" 
+													type="checkbox" 
+													name="facilities[]" 
+													value="{{ $facility->id }}" 
+													id="facility-{{ $facility->id }}"
+													@if(isset($branch) && $branch->facilities->contains($facility->id)) checked @endif
+													@if(in_array($facility->id, old('facilities', []))) checked @endif>
+												<label class="form-check-label" for="facility-{{ $facility->id }}">
+													@if($facility->path)
+													<img src="{{ Storage::url($facility->path) }}" 
+														class="img-thumbnail mb-2"
+														style="width: 60px; height: 60px; object-fit: cover;">
+													@endif
+													{{ $facility->name }}
+												</label>
+											</div>
+										</div>
+										@endforeach
+										@error('facilities')
+										<div class="invalid-feedback">{{ $message }}</div>
+										@enderror
+									</div>
+								</div>
+
 								@if(isset($branch) && $branch->photos->count() > 0)
 								<div class="fv-row mb-5">
 									<h5>Existing Photos</h5>
@@ -291,48 +382,8 @@
 <!--end::Content--> 
 @endsection
 @section('scripts') 
-<!--begin::Vendors Javascript(used for this page only)-->
-<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-<!--end::Vendors Javascript-->
-<!--begin::Custom Javascript(used for this page only)-->
-
-<script> 
-    $(document).ready(function() {
-    $('#table_user').DataTable({
-        "paging":   true,
-        "ordering": true,
-    } );
-} );
-$(".delete").on('click', function(event){
-    event.stopPropagation();
-    event.stopImmediatePropagation(); 
-    var href = $(this).attr('href');
-           Swal.fire({
-       title: 'Yakin untuk menghapus data ini ? ',
-       text: 'Data ini akan dihapus dan tidak dapat dikembalikan!',
-       icon: 'warning',
-       showCancelButton: true,
-       confirmButtonColor: '#95000c',
-       confirmButtonText: 'Ya, Hapus!',
-       cancelButtonText: 'Tidak, batalkan'
-     }).then((result) => {
-       if (result.value) {
-          window.location.href = href;
-
-       //  For more information about handling dismissals please visit
-       // https://sweetalert2.github.io/#handling-dismissals
-       } else if (result.dismiss === Swal.DismissReason.cancel) {
-         Swal.fire(
-           'Dibatalkan',
-           'Data tidak jadi dihapus',
-           'error'
-         )
-       }
-     });
-
-});
-</script> 
-
+<script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script> 
+ 
 
 <script>
    document.getElementById('branch-logo-input').addEventListener('change', function(event) {
@@ -357,5 +408,186 @@ document.getElementById('branch-thumbnail-input').addEventListener('change', fun
     }
 });
  
+	</script>
+
+<script>
+	$(document).ready(function() {
+		// Initialize Province Select2 dengan data existing
+		var provinceSelect = $('.select2-province');
+		var initialProvinceId = {{ $branch->branch_province ?? 'null' }};
+		
+		provinceSelect.select2({
+			placeholder: 'Cari Provinsi...',
+			allowClear: true,
+			ajax: {
+				url: '/provinces',
+				dataType: 'json',
+				delay: 300,
+				data: function(params) {
+					return { search: params.term };
+				},
+				processResults: function(data) {
+					return {
+						results: $.map(data, function(item) {
+							return {
+								id: item.id,
+								text: item.province
+							}
+						})
+					};
+				}
+			}
+		});
+	
+		// Jika ada data existing, trigger load regencies
+		if(initialProvinceId) {
+			// Load regencies untuk province yang dipilih
+			$.ajax({
+				url: '/regencies/' + initialProvinceId,
+				type: "GET",
+				dataType: "json",
+				beforeSend: function() {
+					$('#regency').prop('disabled', true);
+					$('#regency-loading').show();
+				},
+				success: function(data) {
+					var regencySelect = $('#regency');
+					regencySelect.empty();
+					
+					// Tambahkan option existing
+					regencySelect.append(
+						`<option value="{{ $branch->branch_city }}" selected>{{ $branch->regency->regency }}</option>`
+					);
+					
+					// Tambahkan data lain
+					$.each(data, function(key, value) {
+						if(value.id != {{ $branch->branch_city }}) {
+							regencySelect.append(
+								`<option value="${value.id}">${value.regency}</option>`
+							);
+						}
+					});
+					
+					regencySelect.prop('disabled', false);
+					regencySelect.trigger('change');
+				},
+				complete: function() {
+					$('#regency-loading').hide();
+				}
+			});
+		}
+	
+		// Initialize Regency Select2
+		var regencySelect = $('.select2-regency').select2({
+			placeholder: 'Pilih Kabupaten/Kota',
+			allowClear: true
+		});
+	
+		// Province Change Handler
+		$('#province').on('change', function() {
+        var provinceID = $(this).val();
+        var $regency = $('#regency');
+        
+        if(provinceID) {
+            $regency.prop('disabled', true); 
+            $('#regency-error').hide();
+
+            $.ajax({
+                url: '/regencies/' + provinceID,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $regency.empty().append('<option value="">Select Regency</option>');
+                    $.each(data, function(key, value) {
+                        $regency.append(
+                            `<option value="${value.id}">${value.regency}</option>`
+                        );
+                    });
+                    $regency.prop('disabled', false).trigger('change');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('#regency-error').html('Failed to load regencies. Please try again.').show();
+                    $regency.empty().append('<option value="">Error loading data</option>');
+                },
+                 
+            });
+        } else {
+            $regency.empty().append('<option value="">Select Province First</option>');
+            $regency.prop('disabled', true);
+        }
+    });
+
+    // Initialize Regency Select2
+    $('.select2-regency').select2({
+        placeholder: 'Select City / Regency',
+        allowClear: true
+    });
+});
+	</script>
+
+
+
+<script>
+	$(document).ready(function() {
+		// Province Select2
+		$('.select2-province').select2({
+			ajax: {
+				url: '/provinces',
+				dataType: 'json',
+				processResults: function(data) {
+					return {
+						results: data.map(function(province) {
+							return {
+								id: province.id,
+								text: province.province
+							}
+						})
+					};
+				}
+			}
+		});
+	
+		// Regency Select2
+		$('.select2-regency').select2({
+			ajax: {
+				url: function() {
+					const provinceId = $('.select2-province').val();
+					return `/regencies/${provinceId}`;
+				},
+				dataType: 'json',
+				processResults: function(data) {
+					return {
+						results: data.map(function(regency) {
+							return {
+								id: regency.id,
+								text: regency.regency
+							}
+						})
+					};
+				}
+			}
+		});
+	
+		// Tags Select2
+		$('.select2-tags').select2({
+        tags: false, // Pastikan ini false
+        ajax: {
+            url: '/management/config/branch/tags/search',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    search: params.term
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: data.results
+                };
+            }
+        },
+        minimumInputLength: 1 // User harus mengetik minimal 1 karakter
+    });
+	});
 	</script>
 @endsection

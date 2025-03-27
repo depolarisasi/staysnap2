@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Amenity')   
+@section('title', 'Create Branch Tag')   
 @section('content') 
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -12,17 +12,21 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Amenity - {{ $amenity->name }}</h3>
+                            <h3 class="card-title">Create New Branch Tag</h3>
+                            <div class="card-toolbar">
+                                <a href="{{ url('management/config/branch/tags/') }}" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-arrow-left"></i> Kembali
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('amenities.update', $amenity) }}" method="POST"  enctype="multipart/form-data">
+                            <form action="{{ route('tags.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                @method('PUT')
-                                @include('amenities.partials.form')
+                                @include('branch-tag.partials.form')
                                 
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save"></i> Update Amenity
+                                        <i class="fas fa-save"></i> Save Tag
                                     </button>
                                 </div>
                             </form>
@@ -41,5 +45,5 @@
 
  
 @section('scripts')
-    @include('amenities.partials.scripts')
+    @include('branch-tag.partials.scripts')
 @endsection

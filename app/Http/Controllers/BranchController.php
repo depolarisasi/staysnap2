@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Branch;
-use App\Models\BranchPhotos;
+use App\Models\BranchPhotos; 
+use App\Models\BranchTag; 
+use App\Models\BranchFacilities;
 use Illuminate\Database\QueryException as QE;
-
+use Illuminate\Support\Arr;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -26,36 +28,63 @@ class BranchController extends Controller
     protected $imageFieldName = 'branch_logo';
      
     public function index(){
-        $branch = Branch::get();
+        $branch = Branch::with('province')->with('regency')->get();
         return view('branch.index', compact('branch')); 
     }
 
     public function create(){ 
-        return view('branch.create');
+        
+    // Kirim branch kosong untuk form create
+    $branch = new Branch();
+    
+    // Ambil semua tags existing (opsional)
+    $existingTags = BranchTag::all()->pluck('name');
+        $facilities = BranchFacilities::all();
+        return view('branch.create')->with(compact('facilities','existingTags','branch'));
     }
 
     public function edit($id){
-        $branch = Branch::find($id); 
-        return view('branch.edit', compact('branch'));
+        $branch = Branch::with([
+            'facilities',
+            'province',
+            'regency',
+            'photos',
+            'tags' => function($query) {
+                $query->withTimestamps(); // Pastikan mengambil timestamp
+            }
+        ])->findOrFail($id);
+    
+        $facilities = BranchFacilities::all();
+        return view('branch.edit', compact('branch','facilities'));
     }
 
     public function show($branch){
-        $branch =  Branch::with('photos')->findOrFail($branch);
+        $branch = Branch::with('facilities')->with('province')->with('regency')->with('tags')->with('photos')->findOrFail($branch); 
         return view('branch.show')->with(compact('branch'));
     }
+    
     public function detail($id){
-        $branch = Branch::find($id); 
+        $branch = Branch::with('facilities')->with('province')->with('regency')->with('photos')->find($id); 
         return view('branch.detail', compact('branch'));
     }
 
     public function store(Request $request){
-      
-         
+       
         $validated = $request->validate([
             'branch_name' => 'required|min:3|max:100',
             'branch_address' => 'required|min:3|max:255',
-            'branch_phone' => 'nullable|regex:/^\+?[0-9\s\-]{7,15}$/',
-            'branch_web' => 'nullable|url|max:100',
+            'branch_province' => 'required',
+            'branch_city' => 'required',
+            'branch_star' => 'required',
+            'branch_maps_link' => 'required',
+            'branch_description' => 'nullable|max:1000',
+            'tags' => 'sometimes|array',
+            'tags.*' => [
+                'required',
+                'string',
+                'max:255',
+                'exists:branch_tags,id' // Pastikan tag sudah ada di database
+            ],
             'branch_logo' => 'nullable|image|mimes:jpeg,png,webp', 
             'branch_photos' => 'nullable|array',
             'branch_photos.*' => 'nullable|image|mimes:jpeg,png,jpg,webp' 
@@ -65,8 +94,12 @@ class BranchController extends Controller
         try { 
             
             DB::beginTransaction();
+            
+     $branch = Branch::create(Arr::except($validated, ['tags']));
 
-            $branch = Branch::create($validated);
+          
+            $branch->tags()->sync($validated['tags']); 
+            $branch->facilities()->sync($request->facilities ?? []);
             
             if ($request->hasFile('branch_logo')) {  
                 $branch->branch_logo = $this->processAndStoreImage($request->file('branch_logo'), 'branch_logos', 'branch_logo');
@@ -112,6 +145,9 @@ class BranchController extends Controller
             'branch_city' => 'required',
             'branch_star' => 'required',
             'branch_maps_link' => 'required',
+            'branch_description' => 'nullable|max:1000',
+            'tags' => 'sometimes|array',
+            'tags.*' => 'required|string|max:255|exists:branch_tags,id',
             'branch_phone' => 'nullable|regex:/^\+?[0-9\s\-]{7,15}$/',
             'branch_web' => 'nullable|url|max:100',
             'branch_logo' => 'nullable|image|mimes:jpeg,png,webp', 
@@ -128,7 +164,10 @@ class BranchController extends Controller
             DB::beginTransaction();
 
             $branch->update($validated);
- 
+            $branch->facilities()->sync($request->facilities ?? []);
+
+            // Sync tags
+            $branch->tags()->sync($request->tags ?? []);
 
             if ($request->hasFile('branch_logo')) {
                 $this->deleteOldImage($branch->{'branch_logo'}); 
@@ -141,6 +180,7 @@ class BranchController extends Controller
                 $branch->branch_thumbnail = $this->processAndStoreImage($request->file('branch_thumbnail'), 'branch_thumbnail', 'branch_thumbnail');
                 $branch->save();
             }
+            
 
             // Handle deleted photos
             if ($request->filled('deleted_photos')) {

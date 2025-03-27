@@ -1,0 +1,362 @@
+ 
+/* Reset and base styles */
+:root {
+    /* Primary colors */
+    --bs-primary: #2563ea;
+    --bs-primary-rgb: 37, 99, 234;
+    --bs-primary-light: #4a7ef0;
+    --bs-primary-lighter: #7396f5;
+    --bs-primary-lightest: #e0e7fd;
+    --bs-primary-dark: #1a4bbd;
+    --bs-primary-darker: #133990;
+    
+    /* Theme colors */
+    --bs-secondary: #475569;
+    --bs-secondary-rgb: 71, 85, 105;
+    --bs-success: #10b981;
+    --bs-success-rgb: 16, 185, 129;
+    --bs-success-light: #a7f3d0;
+    --bs-info: #0ea5e9;
+    --bs-info-rgb: 14, 165, 233;
+    --bs-info-light: #bae6fd;
+    --bs-warning: #f59e0b;
+    --bs-warning-rgb: 245, 158, 11;
+    --bs-warning-light: #fde68a;
+    --bs-danger: #ef4444;
+    --bs-danger-rgb: 239, 68, 68;
+    --bs-danger-light: #fecaca;
+    
+    /* Neutral colors */
+    --bs-white: #ffffff;
+    --bs-white-rgb: 255, 255, 255;
+    --bs-black: #020617;
+    --bs-black-rgb: 2, 6, 23;
+    
+    /* Gray scale */
+    --bs-gray-50: #f8fafc;
+    --bs-gray-100: #f1f5f9;
+    --bs-gray-200: #e2e8f0;
+    --bs-gray-300: #cbd5e1;
+    --bs-gray-400: #94a3b8;
+    --bs-gray-500: #64748b;
+    --bs-gray-600: #475569;
+    --bs-gray-700: #334155;
+    --bs-gray-800: #1e293b;
+    --bs-gray-900: #0f172a;
+    
+    /* Light and dark variants */
+    --bs-light: #f1f5f9;
+    --bs-light-rgb: 241, 245, 249;
+    --bs-dark: #1e293b;
+    --bs-dark-rgb: 30, 41, 59;
+    
+    /* Body */
+    --bs-body-color: #0f172a;
+    --bs-body-color-rgb: 15, 23, 42;
+    --bs-body-bg: #ffffff;
+    --bs-body-bg-rgb: 255, 255, 255;
+    
+    /* Border and component colors */
+    --bs-border-color: #e2e8f0;
+    --bs-border-width: 1px;
+    --bs-border-radius: 0.375rem;
+    --bs-border-radius-sm: 0.25rem;
+    --bs-border-radius-lg: 0.5rem;
+    --bs-border-radius-xl: 0.75rem;
+    --bs-border-radius-2xl: 1rem;
+    --bs-border-radius-pill: 50rem;
+    
+    /* Focus ring */
+    --bs-focus-ring-color: rgba(37, 99, 234, 0.25);
+    --bs-focus-ring-width: 0.25rem;
+    
+    /* Component specific */
+    --bs-link-color: #2563ea;
+    --bs-link-hover-color: #1a4bbd;
+    --bs-code-color: #d63384;
+    
+    /* Form states */
+    --bs-form-valid-color: #10b981;
+    --bs-form-valid-border-color: #10b981;
+    --bs-form-invalid-color: #ef4444;
+    --bs-form-invalid-border-color: #ef4444;
+    
+    /* Box shadows */
+    --bs-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --bs-box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --bs-box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+  }
+   
+
+body {
+    font-family: 'Inter', sans-serif;
+    padding-top: 76px;
+}
+
+/* Hero Section with Carousel */
+.hero-section {
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+    margin-top: -20px;
+}
+
+.hero-carousel {
+    height: 100%;
+}
+
+.hero-carousel .item {
+    height: 80vh;
+    position: relative;
+}
+
+.hero-carousel .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+    width: 80%;
+}
+
+.hero-carousel .item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; 
+}
+
+/* Booking Form */
+.booking-form-section {
+    margin-top: -100px;
+    position: relative;
+    z-index: 10;
+}
+
+.booking-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.form-label i {
+    color: var(--bs-primary);
+    margin-right: 8px;
+}
+
+.custom-select select,
+.date-input-group input,
+.guests-select-group select,
+#hotelSelector {
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0 15px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.custom-select select:focus,
+.date-input-group input:focus,
+.guests-select-group select:focus,
+#hotelSelector:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(26, 75, 132, 0.25);
+}
+
+/* Hotel Modal Styles */
+.hotel-search {
+    position: relative;
+}
+
+.hotel-search input {
+    padding-left: 40px;
+    height: 45px;
+}
+
+.hotel-search::before {
+    content: '\f002';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.hotel-card-modal {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    height: 100%;
+}
+
+.hotel-card-modal:hover {
+    border-color: var(--bs-primary);
+    transform: translateY(-5px);
+}
+
+.hotel-card-modal.selected {
+    border-color: var(--bs-primary);
+    background-color: rgba(26, 75, 132, 0.05);
+}
+
+.hotel-card-modal img {
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Date Picker Customization */
+.flatpickr-calendar {
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.flatpickr-day.selected {
+    background: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.flatpickr-day.selected:hover {
+    background: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* Featured Hotels */
+.hotel-card {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+}
+
+.hotel-card img {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Custom Button Styles */
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    padding: 12px 30px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1a4bbd;
+    border-color: #1a4bbd;
+    transform: translateY(-2px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .booking-form-section {
+margin-top: -50px;
+    }
+
+    .booking-card {
+padding: 15px;
+    }
+
+    .carousel-content h1 {
+font-size: 2rem;
+    }
+
+    .carousel-content p {
+font-size: 1rem;
+    }
+
+    .custom-select select,
+    .date-input-group input,
+    .guests-select-group select,
+    #hotelSelector {
+height: 45px;
+    }
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 50px;
+}
+
+footer a {
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+footer a:hover {
+    opacity: 0.8;
+}
+
+/* Owl Carousel Custom Styles */
+.owl-dots {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.owl-dot span {
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+
+.owl-dot.active span {
+    background: white !important;
+}
+
+.owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+}
+
+.owl-prev, .owl-next {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3) !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.owl-prev {
+    left: 20px;
+}
+
+.owl-next {
+    right: 20px;
+}
+
+.owl-prev:hover, .owl-next:hover {
+    background: rgba(255, 255, 255, 0.5) !important;
+} 

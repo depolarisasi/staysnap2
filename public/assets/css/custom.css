@@ -91,3 +91,7 @@
 [aria-expanded="true"] .bi-chevron-down {
     transform: rotate(180deg);
 }
+
+.menu-state-bg-light-primary .menu-item:not(.here) .menu-link:hover:not(.disabled):not(.active):not(.here) { 
+    background-color: transparent !important;
+  }

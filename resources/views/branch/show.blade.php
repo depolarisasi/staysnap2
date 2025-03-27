@@ -62,14 +62,14 @@
 												<div class="d-flex align-items-center">
 												Branch Province</div>
 											</td>
-											<td class="fw-bold">{{$branch->branch_province}}</td>
+											<td class="fw-bold">{{$branch->province->province}}</td>
 										</tr>
 										<tr>
 											<td>
 												<div class="d-flex align-items-center">
 												Branch City</div>
 											</td>
-											<td class="fw-bold">{{$branch->branch_city}}</td>
+											<td class="fw-bold">{{$branch->regency->regency}}</td>
 										</tr>
 										<tr>
 											<td>
@@ -92,6 +92,51 @@
 												Branch Map Link</div>
 											</td>
 											<td class="fw-bold">{{$branch->branch_maps_link}}</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="d-flex align-items-center">
+												Branch Description</div>
+											</td>
+											<td class="fw-bold">{{$branch->branch_description}}</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="d-flex align-items-center">
+												Branch Tags</div>
+											</td>
+											<td class="fw-bold">@foreach($branch->tags as $tag)
+												<span class="badge badge-secondary">{{$tag->name}}</span></option>
+											@endforeach
+										</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="d-flex align-items-center">
+												Branch Facilities</div>
+											</td>
+											<td class="fw-bold">
+												<div class="row">
+													<!-- Kolom Pertama -->
+													<div class="col-md-6">
+														<ul>
+															@foreach($branch->facilities->take(15) as $facility)
+																<li>{{ $facility->name }}</li>
+															@endforeach
+														</ul>
+													</div>
+												
+													<!-- Kolom Kedua (jika ada lebih dari 15 item) -->
+													@if($branch->facilities->count() > 15)
+													<div class="col-md-6">
+														<ul>
+															@foreach($branch->facilities->slice(15) as $facility)
+																<li>{{ $facility->name }}</li>
+															@endforeach
+														</ul>
+													</div>
+													@endif
+												</div></td>
 										</tr>
 										<tr>
 											<td>
@@ -175,13 +220,7 @@
 
 <!--begin::Custom Javascript(used for this page only)-->
 
-<script> 
-    $(document).ready(function() {
-    $('#table_user').DataTable({
-        "paging":   true,
-        "ordering": true,
-    } );
-} );
+<script>  
 $(".delete").on('click', function(event){
     event.stopPropagation();
     event.stopImmediatePropagation(); 

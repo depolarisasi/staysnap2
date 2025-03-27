@@ -131,6 +131,16 @@
                                 </a>
                             </div>
                             <div class="menu-item">
+                                <a class="menu-link" href="{{url('management/amenities')}}">
+                                    <span class="menu-title">Room Amenities</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{url('management/room-policies')}}">
+                                    <span class="menu-title">Room Policy</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
                                 <a class="menu-link" href="{{url('management/vouchers')}}">
                                     <span class="menu-title">Voucher</span>
                                 </a>
@@ -251,6 +261,23 @@
                                     <span class="menu-title">Room Availability</span>
                                 </a>
                                 <!--end:Menu link-->
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{url('management/amenities')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Room Amenities</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{url('management/room-policies')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Room Policy</span>
+                                </a>
                             </div>
                             <!--end:Menu item-->
                             <!--begin:Menu item-->
@@ -459,6 +486,26 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Branch Management</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{url('management/config/branch/facilities')}}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Branch Facilities</span>
+                            </a>
+                            <!--end:Menu link-->
+                        </div>
+                        <div class="menu-item">
+                            <!--begin:Menu link-->
+                            <a class="menu-link" href="{{url('management/config/branch/tags')}}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Branch Tags</span>
                             </a>
                             <!--end:Menu link-->
                         </div>

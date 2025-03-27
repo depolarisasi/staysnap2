@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider; 
+use App\Models\Province;
+use App\Models\Regency;
+use App\Observers\ProvinceObserver;
+use App\Observers\RegencyObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Province::observe(ProvinceObserver::class);
+        Regency::observe(RegencyObserver::class);
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Amenity')   
+@section('title', 'Edit Facility')   
 @section('content') 
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -12,17 +12,22 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Amenity - {{ $amenity->name }}</h3>
+                            <h3 class="card-title">Edit Facility - {{ $facility->name }}</h3>
+                            <div class="card-toolbar">
+                                <a href="{{ url('management/config/branch/facilities/') }}" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-arrow-left"></i> Kembali
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('amenities.update', $amenity) }}" method="POST"  enctype="multipart/form-data">
+                            <form action="{{ route('facilities.update', $facility) }}" method="POST"  enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-                                @include('amenities.partials.form')
+                                @include('branch-facilities.partials.form')
                                 
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save"></i> Update Amenity
+                                        <i class="fas fa-save"></i> Update Facility
                                     </button>
                                 </div>
                             </form>
