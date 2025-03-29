@@ -22,3 +22,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/rooms/{room}/prices', [RoomPriceController::class, 'apiPrices']);
     Route::get('/rooms/{room}/availability', [RoomAvailabilityController::class, 'apiAvailability']);
 });
+
+Route::get('/branches', [App\Http\Controllers\Api\BranchController::class, 'index']);
+Route::get('/branches/{branchId}/room-prices', [App\Http\Controllers\Api\BranchController::class, 'getRoomPrices']);

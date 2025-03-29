@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Livewire;
 
-use Illuminate\Http\Request;
-use App\Models\HomeSlider;
+use Livewire\Component;
 use App\Models\Branch;
 use App\Models\Room;
 
-class DashboardController extends Controller
+class HotelBranchFront extends Component
 {
-    public function index(){
-        $branches = Branch::all()->map(function($branch) {
+    public $branches = [];
+    
+    public function mount() {
+        $this->branches = Branch::all()->map(function($branch) {
             $lowestPrice = Room::where('branch_id', $branch->id)
                 ->get()
                 ->min(function($room) {
@@ -22,17 +23,15 @@ class DashboardController extends Controller
             return $branch;
         });
     
-        $branches = $branches->map(function($branch) {
+        $this->branches = $this->branches->map(function($branch) {
             $branch->lowest_price = $branch->lowest_price ?? 0;
             return $branch;
         });
 
-        $slider = HomeSlider::get();
-        return view('frontpage.index')->with(compact('branches','slider'));
     }
-
-    public function dashboard(){
-        return view('index');
+    public function render()
+    {
+        
+        return view('livewire.hotel-branch-front');
     }
-    
 }

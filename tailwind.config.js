@@ -1,20 +1,19 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+import tailwindForms from '@tailwindcss/forms'; // Jika menggunakan plugin
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-    content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
-    ],
-
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
-        },
-    },
-
-    plugins: [require('@tailwindcss/forms')],
-};
+export default {
+  content: [
+    "./resources/**/*.blade.php",
+    "./resources/**/*.js",
+    "./resources/**/*.vue",
+    "./app/Http/Livewire/**/*.php",
+    "./vendor/livewire/livewire/**/*.blade.php",
+    "./vendor/livewire/flux/stubs/**/*.blade.php",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [
+    tailwindForms, // Sesuaikan dengan plugin yang digunakan 
+  ],
+}

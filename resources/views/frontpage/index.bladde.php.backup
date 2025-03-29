@@ -21,41 +21,6 @@
     box-shadow: none !important;
   }
 
-  /* Menyesuaikan posisi kalender */
-  .flatpickr-months {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .flatpickr-month {
-    width: 100%;
-    text-align: center;
-  }
-
-  .flatpickr-current-month {
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    padding: 0 !important;
-  }
-  
-  .flatpickr-prev-month, .flatpickr-next-month {
-    padding: 10px !important;
-  }
-  
-  /* Mengatur lebar container bulan */
-  .flatpickr-rContainer, 
-  .flatpickr-days,
-  .dayContainer {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  
-  /* Memastikan grid bulan sejajar dengan baik */
-  .flatpickr-days .flatpickr-day {
-    max-width: none !important;
-  }
-
   /* Style untuk tanggal pada calendar */
   .flatpickr-day {
     width: 14.2857% !important; 
@@ -96,7 +61,7 @@
   .flatpickr-day.selected .day-price {
     color: white !important;
   }
-
+  
   /* Modal styles */
   .modal {
     display: none;
@@ -111,48 +76,6 @@
   .modal.show {
     display: block;
   }
-
-  .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-  }
-  
-  .modal-dialog {
-    position: relative;
-    z-index: 30;
-    pointer-events: auto;
-  }
-  
-  .modal-content {
-    background: white;
-    pointer-events: auto;
-  }
-  
-  /* Style untuk search form pada tampilan mobile */
-  @media (max-width: 768px) {
-    .search-form-text {
-      font-size: 0.85rem !important;
-    }
-    .search-form-label {
-      font-size: 0.65rem !important;
-    }
-    .search-form-container {
-      margin-bottom: 4rem;
-    }
-  }
-
-  /* Ukuran teks pada search form */
-  .search-form-text {
-    font-size: 0.95rem;
-  }
-  .search-form-label {
-    font-size: 0.7rem;
-  }
 </style>
 
 @endsection
@@ -163,48 +86,48 @@
         <livewire:slider-front />  
         
         <!-- Search Form -->
-        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-full max-w-7xl px-4">
-            <div class="bg-white rounded-3xl shadow-2xl overflow-visible border border-gray-200 search-form-container">
-                <div class="p-4 md:p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 items-center">
-                <!-- 1) Input Hotel -->
-                        <div class="md:col-span-3">
-                            <button id="openHotelModal" class="w-full border border-gray-300 rounded-xl px-3 py-2 md:px-4 md:py-3 text-left focus:outline-none hover:bg-gray-100 transition duration-200">
-                                <span class="block text-xs text-gray-500 uppercase tracking-wider search-form-label">Hotel</span>
-                                <span class="block mt-1 font-semibold search-form-text" id="selectedHotelText">Pilih Hotel</span>
-                  </button>
-                </div>
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-full max-w-5xl px-4">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-visible border border-gray-200">
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                        <!-- 1) Input Hotel -->
+                        <div>
+                            <button id="openHotelModal" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-left focus:outline-none hover:bg-gray-100 transition duration-200">
+                                <span class="block text-xs text-gray-500 uppercase tracking-wider">Hotel</span>
+                                <span class="block mt-1 text-lg font-semibold" id="selectedHotelText">Pilih Hotel</span>
+                            </button>
+                        </div>
                         
-                <!-- 2) Input Date Range -->
-                        <div class="md:col-span-3">
-                            <button id="openDateModal" class="w-full border border-gray-300 rounded-xl px-3 py-2 md:px-4 md:py-3 text-left focus:outline-none hover:bg-gray-100 transition duration-200">
-                                <span class="block text-xs text-gray-500 uppercase tracking-wider search-form-label">Date Range</span>
-                                <span class="block mt-1 font-semibold search-form-text" id="selectedDateText">Pilih Tanggal</span>
-                  </button>
-                </div>
+                        <!-- 2) Input Date Range -->
+                        <div>
+                            <button id="openDateModal" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-left focus:outline-none hover:bg-gray-100 transition duration-200">
+                                <span class="block text-xs text-gray-500 uppercase tracking-wider">Date Range</span>
+                                <span class="block mt-1 text-lg font-semibold" id="selectedDateText">Pilih Tanggal</span>
+                            </button>
+                        </div>
                         
-                <!-- 3) Input Jumlah Tamu -->
-                        <div class="md:col-span-2">
-                            <button id="openGuestModal" class="w-full border border-gray-300 rounded-xl px-3 py-2 md:px-4 md:py-3 text-left focus:outline-none hover:bg-gray-100 transition duration-200">
-                                <span class="block text-xs text-gray-500 uppercase tracking-wider search-form-label">Guests</span>
-                                <span class="block mt-1 font-semibold search-form-text" id="selectedGuestText">1 Adult, 0 Kids</span>
-                  </button>
-                </div>
+                        <!-- 3) Input Jumlah Tamu -->
+                        <div>
+                            <button id="openGuestModal" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-left focus:outline-none hover:bg-gray-100 transition duration-200">
+                                <span class="block text-xs text-gray-500 uppercase tracking-wider">Guests</span>
+                                <span class="block mt-1 text-lg font-semibold" id="selectedGuestText">1 Adult, 0 Kids</span>
+                            </button>
+                        </div>
                         
-                <!-- 4) Input Kode Voucher -->
-                        <div class="md:col-span-2">
-                            <input type="text" id="voucherInput" class="w-full border border-gray-300 rounded-xl px-3 py-2 md:px-4 md:py-3 focus:outline-none hover:bg-gray-100 transition duration-200 text-base" placeholder="Voucher Code">
-                </div>
+                        <!-- 4) Input Kode Voucher -->
+                        <div>
+                            <input type="text" id="voucherInput" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none hover:bg-gray-100 transition duration-200" placeholder="Voucher Code">
+                        </div>
                         
-                <!-- 5) Tombol Check Availability -->
-                        <div class="md:col-span-2">
-                            <button id="checkAvailability" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl px-3 py-2 md:px-4 md:py-3 font-bold transition duration-200 shadow text-base">
-                    Check Availability
-                  </button>
+                        <!-- 5) Tombol Check Availability -->
+                        <div>
+                            <button id="checkAvailability" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl px-4 py-3 font-bold transition duration-200 shadow">
+                                Check Availability
+                            </button>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
     </div>  
 
@@ -216,16 +139,16 @@
         </div>
     </section>
     
-  <!-- Modal Hotel -->
+    <!-- Modal Hotel -->
     <div id="hotelModal" class="modal fade-in">
-        <div class="modal-backdrop" id="hotelModalBackdrop"></div>
-        <div class="fixed inset-0 flex items-center justify-center p-4 modal-dialog">
-            <div class="bg-white rounded-2xl w-full max-w-3xl h-3/4 shadow-xl overflow-hidden flex flex-col modal-content">
+        <div class="fixed inset-0 bg-black/50"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl w-full max-w-3xl h-3/4 shadow-xl overflow-hidden flex flex-col">
                 <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200">
                     <h2 class="text-xl font-bold">Pilih Hotel</h2>
                     <button id="closeHotelModal" class="text-red-500 font-semibold">Tutup</button>
                 </div>
-                    
+                
                 <!-- Search & Filter -->
                 <div class="px-6 py-4 border-b border-gray-200">
                     <div class="flex flex-col md:flex-row md:items-center gap-4">
@@ -236,7 +159,7 @@
                         </div>
                     </div>
                 </div>
-                    
+                
                 <!-- List Hotel -->
                 <div class="flex-1 p-6 overflow-y-auto">
                     <div id="hotelList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -249,25 +172,18 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Modal Date Range -->
     <div id="dateModal" class="modal fade-in">
-        <div class="modal-backdrop" id="dateModalBackdrop"></div>
-        <div class="fixed inset-0 flex items-center justify-center p-4 modal-dialog">
-            <div class="bg-white rounded-2xl w-full max-w-3xl shadow-xl overflow-hidden modal-content">
+        <div class="fixed inset-0 bg-black/50"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl w-full max-w-3xl shadow-xl overflow-hidden">
                 <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200">
                     <h2 class="text-xl font-bold">Pilih Tanggal</h2>
                     <button id="closeDateModal" class="text-red-500 font-semibold">Tutup</button>
                 </div>
                 <div class="p-6">
                     <div id="datepicker" class="mx-auto"></div>
-                    <div id="loadingState" class="mt-4 p-4 bg-gray-100 text-gray-500 rounded-lg hidden">
-                        <p>Loading tanggal dan harga kamar...</p>
-                    </div>
-                    <div id="dateInfo" class="mt-4 p-3 bg-blue-50 text-blue-700 rounded-lg hidden">
-                        <p class="font-medium text-sm" id="dateRangeSummary"></p>
-                        <span class="inline-flex items-center px-2 py-1 mt-1 rounded text-xs font-medium bg-blue-100 text-blue-800" id="nightsBadge"></span>
-                    </div>
                     <div id="dateWarning" class="mt-4 p-4 bg-yellow-50 text-yellow-700 rounded-lg">
                         <p>Silakan pilih hotel terlebih dahulu untuk melihat harga kamar.</p>
                     </div>
@@ -275,12 +191,12 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Modal Guest -->
     <div id="guestModal" class="modal fade-in">
-        <div class="modal-backdrop" id="guestModalBackdrop"></div>
-        <div class="fixed inset-0 flex items-center justify-center p-4 modal-dialog">
-            <div class="bg-white rounded-2xl w-full max-w-sm shadow-xl overflow-hidden modal-content">
+        <div class="fixed inset-0 bg-black/50"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl w-full max-w-sm shadow-xl overflow-hidden">
                 <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200">
                     <h2 class="text-xl font-bold">Jumlah Tamu</h2>
                     <button id="closeGuestModal" class="text-red-500 font-semibold">Tutup</button>
@@ -340,14 +256,6 @@
                 regencies = data.regencies;
                 renderHotels(hotels);
                 renderCityFilters(regencies);
-                
-                // Set hotel pertama sebagai default jika ada
-                if (hotels && hotels.length > 0) {
-                    const defaultHotel = hotels[0];
-                    selectedHotelId = defaultHotel.id;
-                    selectedHotelName = defaultHotel.branch_name;
-                    document.getElementById('selectedHotelText').textContent = selectedHotelName;
-                }
             } catch (error) {
                 console.error('Error fetching hotels:', error);
                 document.getElementById('hotelList').innerHTML = '<div class="col-span-2 text-center py-8 text-red-500">Gagal memuat data hotel.</div>';
@@ -438,11 +346,11 @@
             });
         }
 
-        // Fungsi untuk toggle modal yang diperbaiki
+        // Fungsi untuk toggle modal
         function toggleModal(modalId, show = true) {
             const modal = document.getElementById(modalId);
             
-            // Tutup semua modal terlebih dahulu jika membuka modal baru
+            // Tutup semua modal terlebih dahulu
             if (show) {
                 document.querySelectorAll('.modal').forEach(m => {
                     if (m.id !== modalId) {
@@ -455,7 +363,7 @@
                 modal.classList.add('show');
                 
                 if (modalId === 'dateModal') {
-      if (!datepickerInstance) {
+                    if (!datepickerInstance) {
                         initDatepicker();
                     } else {
                         // Perbarui tampilan berdasarkan status pemilihan hotel
@@ -481,35 +389,28 @@
         function initDatepicker() {
             const datepickerElement = document.getElementById('datepicker');
             const dateWarning = document.getElementById('dateWarning');
-            const loadingState = document.getElementById('loadingState');
             
             // Periksa apakah hotel sudah dipilih
             if (!selectedHotelId) {
                 // Jika hotel belum dipilih, sembunyikan datepicker dan tampilkan peringatan
                 datepickerElement.style.display = 'none';
                 dateWarning.style.display = 'block';
-                loadingState.style.display = 'none';
                 return; // Hentikan fungsi di sini
             }
             
-            // Jika hotel sudah dipilih, tampilkan loading state
-            datepickerElement.style.display = 'none';
+            // Jika hotel sudah dipilih, tampilkan datepicker dan sembunyikan peringatan
+            datepickerElement.style.display = 'block';
             dateWarning.style.display = 'none';
-            loadingState.style.display = 'block';
             
             // Ambil data harga kamar dari API
             fetchRoomPrices(selectedHotelId)
                 .then(() => {
                     // Inisialisasi flatpickr setelah data harga diambil
-                    loadingState.style.display = 'none';
-                    datepickerElement.style.display = 'block';
                     initializeFlatpickr();
                 })
                 .catch(error => {
                     console.error('Error fetching room prices:', error);
                     // Tetap inisialisasi flatpickr meskipun ada error
-                    loadingState.style.display = 'none';
-                    datepickerElement.style.display = 'block';
                     initializeFlatpickr();
                 });
         }
@@ -518,11 +419,11 @@
         async function fetchRoomPrices(hotelId) {
             try {
                 const today = new Date();
-                const oneYearLater = new Date();
-                oneYearLater.setFullYear(today.getFullYear() + 1);
+                const thirtyDaysLater = new Date();
+                thirtyDaysLater.setDate(today.getDate() + 30);
                 
                 const startDateParam = today.toISOString().split('T')[0];
-                const endDateParam = oneYearLater.toISOString().split('T')[0];
+                const endDateParam = thirtyDaysLater.toISOString().split('T')[0];
                 
                 const response = await fetch(`/api/branches/${hotelId}/room-prices?start_date=${startDateParam}&end_date=${endDateParam}`);
                 const data = await response.json();
@@ -538,138 +439,47 @@
             }
         }
         
-        // Fungsi untuk format harga ke format K dan M
-        function formatPrice(price) {
-            if (!price || price === '-') return '-';
-            
-            // Konversi ke angka jika string
-            let numPrice = 0;
-            if (typeof price === 'string') {
-                // Hapus semua karakter non-digit dan konversi ke integer
-                numPrice = parseInt(price.replace(/[^\d]/g, ''));
-            } else {
-                numPrice = parseInt(price);
-            }
-
-            // Validasi untuk memastikan numPrice adalah angka valid
-            if (isNaN(numPrice)) return '-';
-            
-            if (numPrice >= 1000000) {
-                return Math.floor(numPrice / 1000000) + 'M';
-            } else if (numPrice >= 1000) {
-                return Math.floor(numPrice / 1000) + 'K';
-            } else {
-                return numPrice.toString();
-            }
-        }
-
-        // Fungsi untuk format tanggal dengan nama hari dan bulan
-        function formatDateWithDay(dateStr) {
-            const date = new Date(dateStr);
-            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            
-            return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
-        }
-
-        // Fungsi untuk menghitung jumlah malam
-        function calculateNights(startDate, endDate) {
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-            const diffTime = Math.abs(end - start);
-            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        }
-
-        // Fungsi untuk update informasi tanggal
-        function updateDateInfo(startDate, endDate) {
-            const dateInfo = document.getElementById('dateInfo');
-            const dateRangeSummary = document.getElementById('dateRangeSummary');
-            const nightsBadge = document.getElementById('nightsBadge');
-            
-            if (startDate && endDate) {
-                const formattedStartDate = formatDateWithDay(startDate);
-                const formattedEndDate = formatDateWithDay(endDate);
-                const nights = calculateNights(startDate, endDate);
-                
-                dateRangeSummary.textContent = `${formattedStartDate} - ${formattedEndDate}`;
-                nightsBadge.textContent = `${nights} night${nights > 1 ? 's' : ''}`;
-                
-                dateInfo.classList.remove('hidden');
-            } else {
-                dateInfo.classList.add('hidden');
-            }
-        }
-
         // Fungsi untuk inisialisasi flatpickr
         function initializeFlatpickr() {
-            // Deteksi perangkat mobile
-            const isMobile = window.innerWidth < 768;
-            
-        datepickerInstance = flatpickr("#datepicker", {
-          mode: "range",
-          inline: true,
+            datepickerInstance = flatpickr("#datepicker", {
+                mode: "range",
+                inline: true,
                 minDate: "today",
-                showMonths: isMobile ? 1 : 2, // Tampilkan 1 bulan di mobile, 2 di desktop
-          dateFormat: "Y-m-d",
+                showMonths: 2,
+                dateFormat: "Y-m-d",
                 onChange: function(selectedDates, dateStr, instance) {
-            if (selectedDates.length === 2) {
+                    if (selectedDates.length === 2) {
                         startDate = instance.formatDate(selectedDates[0], "Y-m-d");
                         endDate = instance.formatDate(selectedDates[1], "Y-m-d");
-                        
-                        // Update informasi tanggal
-                        updateDateInfo(startDate, endDate);
-                        
-                        // Update teks di tombol daterange
                         document.getElementById('selectedDateText').textContent = startDate + " - " + endDate;
-                        
-                        // Tutup modal secara otomatis setelah pemilihan tanggal
-                        setTimeout(() => toggleModal('dateModal', false), 1000);
-            }
-          },
-          onDayCreate: function(dObj, dStr, fp, dayElem) {
-            if (dayElem.dateObj) {
-              let dayDate = new Date(dayElem.dateObj.getTime());
-              dayDate.setHours(0,0,0,0);
-              let today = new Date();
-              today.setHours(0,0,0,0);
+                        setTimeout(() => toggleModal('dateModal', false), 500);
+                    }
+                },
+                onDayCreate: function(dObj, dStr, fp, dayElem) {
+                    if (dayElem.dateObj) {
+                        let dayDate = new Date(dayElem.dateObj.getTime());
+                        dayDate.setHours(0,0,0,0);
+                        let today = new Date();
+                        today.setHours(0,0,0,0);
 
-              if (dayDate >= today) {
+                        if (dayDate >= today) {
                             // Format tanggal ke YYYY-MM-DD
                             const dateKey = dayDate.toISOString().split('T')[0];
                             
-                            // Ambil harga dari data API jika tersedia, atau tampilkan base price dari Rooms
+                            // Ambil harga dari data API jika tersedia, atau tampilkan "-"
                             let price = "-";
                             if (roomPrices[dateKey] && roomPrices[dateKey].lowest) {
-                                // Format harga ke K dan M
-                                price = formatPrice(roomPrices[dateKey].lowest);
-                            } else if (roomPrices.room_base_price) {
-                                // Gunakan room_base_price jika tidak ada harga spesifik
-                                price = formatPrice(roomPrices.room_base_price);
+                                price = new Intl.NumberFormat('id-ID').format(roomPrices[dateKey].lowest);
                             }
                             
                             // Simpan nomor hari
-                let dayNumber = dayElem.innerHTML;
-                dayElem.innerHTML = `
-                  <span class="day-number">${dayNumber}</span>
-                  <span class="day-price">${price}</span>
-                `;
-              }
-            }
-          }
-        });
-            
-            // Tambahkan event listener untuk perubahan ukuran layar
-            window.addEventListener('resize', function() {
-                if (datepickerInstance) {
-                    // Update jumlah bulan yang ditampilkan berdasarkan ukuran layar
-                    const shouldShowOneMonth = window.innerWidth < 768;
-                    if (shouldShowOneMonth && datepickerInstance.config.showMonths !== 1) {
-                        datepickerInstance.set('showMonths', 1);
-                        datepickerInstance.redraw();
-                    } else if (!shouldShowOneMonth && datepickerInstance.config.showMonths !== 2) {
-                        datepickerInstance.set('showMonths', 2);
-        datepickerInstance.redraw();
-      }
+                            let dayNumber = dayElem.innerHTML;
+                            dayElem.innerHTML = `
+                                <span class="day-number">${dayNumber}</span>
+                                <span class="day-price">${price}</span>
+                            `;
+                        }
+                    }
                 }
             });
         }
@@ -728,28 +538,28 @@
         });
 
         // Event untuk jumlah tamu
-  document.getElementById('increaseAdult').addEventListener('click', () => {
-    adultCount++;
-    document.getElementById('adultCount').textContent = adultCount;
-  });
-  document.getElementById('decreaseAdult').addEventListener('click', () => {
+        document.getElementById('increaseAdult').addEventListener('click', () => {
+            adultCount++;
+            document.getElementById('adultCount').textContent = adultCount;
+        });
+        document.getElementById('decreaseAdult').addEventListener('click', () => {
             if (adultCount > 1) {
-      adultCount--;
-      document.getElementById('adultCount').textContent = adultCount;
-    }
-  });
-  document.getElementById('increaseKids').addEventListener('click', () => {
-    kidsCount++;
-    document.getElementById('kidsCount').textContent = kidsCount;
-  });
-  document.getElementById('decreaseKids').addEventListener('click', () => {
+                adultCount--;
+                document.getElementById('adultCount').textContent = adultCount;
+            }
+        });
+        document.getElementById('increaseKids').addEventListener('click', () => {
+            kidsCount++;
+            document.getElementById('kidsCount').textContent = kidsCount;
+        });
+        document.getElementById('decreaseKids').addEventListener('click', () => {
             if (kidsCount > 0) {
-      kidsCount--;
-      document.getElementById('kidsCount').textContent = kidsCount;
-    }
-  });
-  document.getElementById('saveGuest').addEventListener('click', () => {
-    document.getElementById('selectedGuestText').textContent = adultCount + " Adult, " + kidsCount + " Kids";
+                kidsCount--;
+                document.getElementById('kidsCount').textContent = kidsCount;
+            }
+        });
+        document.getElementById('saveGuest').addEventListener('click', () => {
+            document.getElementById('selectedGuestText').textContent = adultCount + " Adult, " + kidsCount + " Kids";
             toggleModal('guestModal', false);
         });
 
@@ -770,16 +580,31 @@
             window.location.href = `/search-rooms?hotel_id=${selectedHotelId}&start_date=${startDate}&end_date=${endDate}&adults=${adultCount}&kids=${kidsCount}&voucher=${voucher}`;
         });
 
-        // Event listener untuk menutup modal dengan backdrop
-        document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-            backdrop.addEventListener('click', function() {
-                const modalId = this.closest('.modal').id;
-                toggleModal(modalId, false);
-    });
-  });
+        // Event listener untuk menutup modal dengan tombol Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const openModals = document.querySelectorAll('.modal.show');
+                if (openModals.length > 0) {
+                    const modalId = openModals[openModals.length - 1].id;
+                    toggleModal(modalId, false);
+                }
+            }
+        });
+
+        // Event listener untuk menutup modal ketika mengklik di luar modal
+        document.addEventListener('click', function(event) {
+            const modalContainers = document.querySelectorAll('.modal .fixed.inset-0.bg-black\\/50');
+            
+            modalContainers.forEach(container => {
+                if (event.target === container) {
+                    const modalId = container.parentElement.id;
+                    toggleModal(modalId, false);
+                }
+            });
+        });
 
         // Load hotels on page load
         fetchHotels();
-  });
+    });
 </script>
 @endsection

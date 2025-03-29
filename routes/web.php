@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [DashboardController::class, 'index']);  
+Route::get('/', [DashboardController::class, 'index'])->name('frontpage');  
 
 Route::middleware('auth')->group(function () {
     Route::prefix('management')->group(function () {  
@@ -146,5 +146,7 @@ Route::controller(RoomController::class)->group(function () {
 
 Route::get('/provinces', [LocationController::class, 'getProvinces']);
 Route::get('/regencies/{province_id}', [LocationController::class, 'getRegencies']);
+
+Route::get('/search-rooms', [App\Http\Controllers\SearchController::class, 'index'])->name('search.rooms');
 
 require __DIR__.'/auth.php';
