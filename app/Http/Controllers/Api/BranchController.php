@@ -41,55 +41,90 @@ class BranchController extends Controller
      */
     public function getRoomPrices(Request $request, $branchId)
     {
-        // Validasi input
-        $request->validate([
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-        ]);
-        
-        // Ambil tanggal mulai dan akhir dari request, atau default ke rentang 30 hari
-        $startDate = $request->input('start_date', Carbon::now()->format('Y-m-d'));
-        $endDate = $request->input('end_date', Carbon::parse($startDate)->addDays(30)->format('Y-m-d'));
-        
-        // Dapatkan semua kamar untuk branch tersebut
-        $rooms = Room::where('branch_id', $branchId)->get();
-        
-        // Inisialisasi array untuk menyimpan harga
-        $prices = [];
-        
-        // Bentuk rentang tanggal
-        $period = Carbon::parse($startDate)->daysUntil($endDate);
-        
-        // Untuk setiap tanggal dalam rentang
-        foreach ($period as $date) {
-            $formattedDate = $date->format('Y-m-d');
-            $prices[$formattedDate] = [];
+        try {
+            // Validasi input
+            $request->validate([
+                'start_date' => 'nullable|date',
+                'end_date' => 'nullable|date|after_or_equal:start_date',
+            ]);
             
-            // Untuk setiap kamar, dapatkan harga pada tanggal tersebut
-            foreach ($rooms as $room) {
-                // Cari harga kustom untuk tanggal ini
-                $customPrice = RoomPrices::where('room_id', $room->id)
-                    ->where('date', $formattedDate)
-                    ->first();
-                
-                // Jika ada harga kustom, gunakan itu. Jika tidak, gunakan harga dasar
-                $price = $customPrice ? $customPrice->price : $room->base_price;
-                
-                // Simpan harga terendah untuk tanggal ini
-                if (!isset($prices[$formattedDate]['lowest']) || $price < $prices[$formattedDate]['lowest']) {
-                    $prices[$formattedDate]['lowest'] = $price;
-                }
-                
-                // Simpan harga per kamar
-                $prices[$formattedDate]['rooms'][$room->id] = $price;
+            // Ambil tanggal mulai dan akhir dari request, atau default ke rentang 30 hari
+            $startDate = $request->input('start_date', Carbon::now()->format('Y-m-d'));
+            $endDate = $request->input('end_date', Carbon::parse($startDate)->addDays(30)->format('Y-m-d'));
+            
+            // Dapatkan semua kamar untuk branch tersebut
+            $rooms = Room::where('branch_id', $branchId)->get();
+            
+            if ($rooms->isEmpty()) {
+                \Log::warning("No rooms found for branch ID: {$branchId}");
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tidak ada kamar yang tersedia untuk hotel ini',
+                    'prices' => [],
+                    'room_base_price' => null
+                ]);
             }
+            
+            // Hitung harga dasar terendah dari semua kamar
+            $roomBasePrice = $rooms->min('base_price');
+            
+            // Inisialisasi array untuk menyimpan harga
+            $prices = [];
+            
+            // Bentuk rentang tanggal
+            $period = Carbon::parse($startDate)->daysUntil($endDate);
+            
+            // Untuk setiap tanggal dalam rentang
+            foreach ($period as $date) {
+                $formattedDate = $date->format('Y-m-d');
+                $prices[$formattedDate] = [];
+                
+                // Untuk setiap kamar, dapatkan harga pada tanggal tersebut
+                foreach ($rooms as $room) {
+                    // Cari harga kustom untuk tanggal ini
+                    $customPrice = RoomPrices::where('room_id', $room->id)
+                        ->where('date', $formattedDate)
+                        ->first();
+                    
+                    // Jika ada harga kustom, gunakan itu. Jika tidak, gunakan harga dasar
+                    $price = $customPrice ? $customPrice->price : $room->base_price;
+                    
+                    // Simpan harga terendah untuk tanggal ini
+                    if (!isset($prices[$formattedDate]['lowest']) || $price < $prices[$formattedDate]['lowest']) {
+                        $prices[$formattedDate]['lowest'] = $price;
+                    }
+                    
+                    // Simpan harga per kamar
+                    $prices[$formattedDate]['rooms'][$room->id] = $price;
+                }
+            }
+            
+            \Log::info("Successfully fetched prices for branch ID: {$branchId}", [
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'room_count' => $rooms->count(),
+                'price_dates' => count($prices),
+                'base_price' => $roomBasePrice
+            ]);
+            
+            return response()->json([
+                'status' => 'success',
+                'prices' => $prices,
+                'room_base_price' => $roomBasePrice
+            ]);
+            
+        } catch (\Exception $e) {
+            \Log::error("Error fetching room prices for branch ID: {$branchId}", [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat mengambil data harga',
+                'prices' => [],
+                'room_base_price' => null
+            ], 500);
         }
-        
-        return response()->json([
-            'branch_id' => $branchId,
-            'start_date' => $startDate,
-            'end_date' => $endDate,
-            'prices' => $prices
-        ]);
     }
 } 

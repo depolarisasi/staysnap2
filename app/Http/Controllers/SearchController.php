@@ -25,7 +25,7 @@ class SearchController extends Controller
         }
         
         // Ambil data hotel
-        $hotel = Branch::with('regency')->find($hotelId);
+        $hotel = Branch::with(['regency', 'province'])->find($hotelId);
         if (!$hotel) {
             return redirect('/')->with('error', 'Hotel tidak ditemukan.');
         }

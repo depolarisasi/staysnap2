@@ -17,6 +17,8 @@ use App\Http\Controllers\RoomPolicyController;
 use App\Http\Controllers\RoomPriceController;
 use App\Http\Controllers\RoomAvailabilityController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 
 use Illuminate\Support\Facades\Route; 
 /*
@@ -35,27 +37,27 @@ Route::get('/', [DashboardController::class, 'index'])->name('frontpage');
 
 Route::middleware('auth')->group(function () {
     Route::prefix('management')->group(function () {  
-        Route::get('/', [DashboardController::class, 'dashboard']);
+        Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
         Route::prefix('user')->group(function () { 
-            Route::get('/', [UserController::class, 'index']); 
-            Route::get('/edit/{id}', [UserController::class, 'edit']); 
+            Route::get('/', [UserController::class, 'index'])->name('users.index'); 
+            Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit'); 
             Route::put('/update/{user}', [UserController::class, 'update'])->name('users.update'); 
-            Route::post('/store', [UserController::class, 'store']); 
-            Route::get('/delete/{id}', [UserController::class, 'destroy']); 
+            Route::post('/store', [UserController::class, 'store'])->name('users.store'); 
+            Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy'); 
         });
         Route::prefix('role')->group(function () { 
-            Route::get('/', [RoleController::class, 'index']); 
-            Route::get('/edit/{id}', [RoleController::class, 'edit']); 
+            Route::get('/', [RoleController::class, 'index'])->name('roles.index'); 
+            Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('roles.edit'); 
             Route::put('/update/{role}', [RoleController::class, 'update'])->name('roles.update'); 
-            Route::post('/store', [RoleController::class, 'store']); 
-            Route::get('/delete/{id}', [RoleController::class, 'destroy']); 
+            Route::post('/store', [RoleController::class, 'store'])->name('roles.store'); 
+            Route::get('/delete/{id}', [RoleController::class, 'destroy'])->name('roles.destroy'); 
         });
         Route::prefix('permission')->group(function () { 
-            Route::get('/', [PermissionController::class, 'index']); 
-            Route::get('/edit/{id}', [PermissionController::class, 'edit']); 
+            Route::get('/', [PermissionController::class, 'index'])->name('permissions.index'); 
+            Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('permissions.edit'); 
             Route::put('/update/{permission}', [PermissionController::class, 'update'])->name('permissions.update'); 
-            Route::post('/store', [PermissionController::class, 'store']); 
-            Route::get('/delete/{id}', [PermissionController::class, 'destroy']); 
+            Route::post('/store', [PermissionController::class, 'store'])->name('permissions.store'); 
+            Route::get('/delete/{id}', [PermissionController::class, 'destroy'])->name('permissions.destroy'); 
         });
         Route::prefix('config')->group(function () { 
             Route::get('/', [SettingController::class, 'index'])->name('setting.index'); 
@@ -66,13 +68,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/delete/{id}', [SettingController::class, 'destroy'])->name('setting.delete'); 
 
             Route::prefix('slider')->group(function () { 
-                Route::get('/', [HomeSliderController::class, 'index']); 
-                Route::get('/new', [HomeSliderController::class, 'create']); 
-                Route::get('/detail/{slider}', [HomeSliderController::class, 'show']); 
-                Route::get('/edit/{id}', [HomeSliderController::class, 'edit']); 
+                Route::get('/', [HomeSliderController::class, 'index'])->name('slider.index'); 
+                Route::get('/new', [HomeSliderController::class, 'create'])->name('slider.create'); 
+                Route::get('/detail/{slider}', [HomeSliderController::class, 'show'])->name('slider.show'); 
+                Route::get('/edit/{id}', [HomeSliderController::class, 'edit'])->name('slider.edit'); 
                 Route::put('/update/{slider}', [HomeSliderController::class, 'update'])->name('slider.update'); 
-                Route::post('/store', [HomeSliderController::class, 'store']); 
-                Route::get('/delete/{id}', [HomeSliderController::class, 'destroy']); 
+                Route::post('/store', [HomeSliderController::class, 'store'])->name('slider.store'); 
+                Route::get('/delete/{id}', [HomeSliderController::class, 'destroy'])->name('slider.destroy'); 
             });
             Route::prefix('branch')->group(function () { 
                 Route::get('/', [BranchController::class, 'index']); 
@@ -131,11 +133,17 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/rooms/availability', [RoomAvailabilityController::class, 'allRooms'])->name('availability.all');
         Route::get('/rooms/availability/events', [RoomAvailabilityController::class, 'getAllCalendarEvents'])->name('availability.all-events');
-        });
+    });
 
-        Route::post('rooms/datatable', [RoomController::class, 'datatable'])
+    Route::post('rooms/datatable', [RoomController::class, 'datatable'])
         ->name('rooms.datatable');
- 
+
+    // Checkout Routes
+    Route::prefix('checkout')->group(function () {
+        Route::get('/', [CheckoutController::class, 'index'])->name('cart.checkout');
+        Route::post('/process', [CheckoutController::class, 'process'])->name('checkout.process');
+        Route::get('/success/{orderId}', [CheckoutController::class, 'success'])->name('checkout.success');
+    });
 });
  
 // Frontend Routes
@@ -144,9 +152,31 @@ Route::controller(RoomController::class)->group(function () {
     Route::get('/rooms/{room}', 'show')->name('frontend.rooms.show');
 });
 
-Route::get('/provinces', [LocationController::class, 'getProvinces']);
-Route::get('/regencies/{province_id}', [LocationController::class, 'getRegencies']);
+Route::get('/provinces', [LocationController::class, 'getProvinces'])->name('locations.provinces');
+Route::get('/regencies/{province_id}', [LocationController::class, 'getRegencies'])->name('locations.regencies');
 
 Route::get('/search-rooms', [App\Http\Controllers\SearchController::class, 'index'])->name('search.rooms');
+
+// Cart Routes (Public)
+Route::prefix('cart')->group(function () {
+    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('cart.addToCart');
+    Route::get('/', [CartController::class, 'getCartPage'])->name('cart.index');
+    Route::put('/{cartId}/quantity', [CartController::class, 'updateQuantity'])->name('cart.update.quantity');
+    Route::delete('/{cartId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::delete('/', [CartController::class, 'clearCart'])->name('cart.clear');
+    Route::post('/apply-voucher', [CartController::class, 'applyVoucher'])->name('cart.apply.voucher');
+});
+
+// Checkout Routes (Requires Authentication)
+Route::middleware('auth')->prefix('checkout')->group(function () {
+    Route::get('/', [CheckoutController::class, 'index'])->name('cart.checkout');
+    Route::post('/process', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::get('/success/{orderId}', [CheckoutController::class, 'success'])->name('checkout.success');
+});
+
+// API routes
+Route::get('/api/hotels', [App\Http\Controllers\ApiController::class, 'getHotels'])->name('api.hotels');
+Route::get('/api/branches/{branchId}/room-prices', [App\Http\Controllers\ApiController::class, 'getRoomPrices'])->name('api.room-prices');
 
 require __DIR__.'/auth.php';

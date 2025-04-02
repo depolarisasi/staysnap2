@@ -6,6 +6,15 @@
     <title>LuxHotel - @yield('title')</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet" />
+    <style>
+        /* Custom styles for cart icon badge */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            z-index: 10;
+        }
+    </style>
     @yield('styles')
     @vite('resources/css/app.css')
     @livewireStyles  

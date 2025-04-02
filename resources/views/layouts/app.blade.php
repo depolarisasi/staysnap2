@@ -97,6 +97,10 @@
 			});
 			</script>
 			
+		<!-- Scripts -->
+		<script src="{{ asset('js/app.js') }}"></script>
+		<script src="{{ asset('js/date-info.js') }}"></script>
+		@stack('scripts')
 	</body>
 	<!--end::Body-->
  

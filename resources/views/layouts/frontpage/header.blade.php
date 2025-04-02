@@ -41,9 +41,16 @@
     
     <!-- Navbar Right -->
     <flux:navbar class="me-4">
-        <flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
-        <flux:navbar.item class="max-lg:hidden" icon="cog-6-tooth" href="#" label="Settings" />
-        <flux:navbar.item class="max-lg:hidden" icon="information-circle" href="#" label="Help" />
+        <div class="relative">
+            <flux:navbar.item icon="shopping-cart" href="{{ route('cart.index') }}" label="Cart" />
+            @php
+                $cartSummary = app(\App\Services\CartService::class)->getCartSummary();
+                $itemCount = $cartSummary['item_count'] ?? 0;
+            @endphp
+            <span id="cartBadge" class="cart-badge absolute -top-2 -right-2 bg-yellow-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" style="{{ $itemCount > 0 ? '' : 'display: none;' }}">
+                {{ $itemCount }}
+            </span>
+        </div>
     </flux:navbar>
     
     <!-- Profile Dropdown -->
