@@ -1,7 +1,6 @@
 <!-- Search Form -->
-<div class="max-w-7xl mx-auto px-4 py-2 w-full">
-    <div class="bg-white rounded-3xl shadow overflow-visible border border-gray-200 search-form-container">
-        <div class="p-4 md:p-6">
+<div class="max-w-7xl mx-auto px-4 py-2 w-full rounded-3xl shadow overflow-visible border border-gray-200 search-form-container">
+        <div class="p-2 md:p-4">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 items-center">
                 <!-- 1) Input Hotel -->
                 <div class="md:col-span-3">
@@ -45,6 +44,5 @@
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
+        </div> 
 </div> 

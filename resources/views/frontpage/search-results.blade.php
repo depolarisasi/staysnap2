@@ -140,8 +140,8 @@
                         @endforeach
                     </div>
                 </div>
- 
-    </div>  
+
+            </div>  
 
     <!-- Search Form -->
     @include('partials.search-form')
@@ -286,7 +286,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
-                                        </button>
+                                            </button>
                                     </div>
                                 </div>
                             @endforeach
@@ -322,12 +322,12 @@
                             @if(session('cart'))
                                 <a href="{{ route('cart.checkout') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg px-4 py-2 font-medium text-center transition">
                                     Book Now
-                                </a>
-                            @else
+                            </a>
+                        @else
                                 <button disabled class="bg-gray-300 text-gray-500 rounded-lg px-4 py-2 font-medium cursor-not-allowed">
                                     Book Now
-                                </button>
-                            @endif
+                        </button>
+                        @endif
                         </div>
                     </div>
                 </div>
@@ -665,8 +665,8 @@
                         </a>
                         <a href="{{ route('cart.checkout') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg px-4 py-2 font-medium text-center transition">
                             Book Now
-                        </a>
-                    `;
+                    </a>
+                `;
                 }
                 
                 // Update badge saat sidebar diperbarui jika ada item
@@ -699,8 +699,8 @@
                         </a>
                         <button disabled class="bg-gray-300 text-gray-500 rounded-lg px-4 py-2 font-medium cursor-not-allowed">
                             Book Now
-                        </button>
-                    `;
+                    </button>
+                `;
                 }
             }
         })

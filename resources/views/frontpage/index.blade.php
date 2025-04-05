@@ -141,9 +141,7 @@
     .search-form-label {
       font-size: 0.65rem !important;
     }
-    .search-form-container {
-      margin-bottom: 4rem;
-    }
+     
   }
 
   /* Ukuran teks pada search form */
@@ -164,9 +162,9 @@
         
         <!-- Search Form -->
         <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-full max-w-7xl px-4">
-            <div class="bg-white rounded-3xl shadow overflow-visible border border-gray-200 search-form-container">
+            <div class="bg-white rounded-3xl mb-6 shadow overflow-visible border border-gray-200 search-form-container">
                 @include('partials.search-form')
-            </div>
+          </div>
         </div>
     </div>  
 

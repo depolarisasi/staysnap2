@@ -22,16 +22,42 @@
 									<!--end::Subtitle=-->
 								</div>
 								<!--begin::Heading--> 
+                                
+                                <!--begin::Error message-->
+                                @if ($errors->any())
+                                <div class="alert alert-danger mb-8">
+                                    <div class="d-flex flex-column">
+                                        <h4 class="mb-1 text-danger">Login Gagal</h4>
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                                @endif
+                                <!--end::Error message-->
+                                
 								<!--begin::Input group=-->
 								<div class="fv-row mb-8">
 									<!--begin::Email-->
-									<input type="text" placeholder="Email" name="email" class="form-control bg-transparent" />
+									<input type="text" placeholder="Email" name="email" class="form-control bg-transparent @error('email') is-invalid @enderror" value="{{ old('email') }}" />
+                                    @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
 									<!--end::Email-->
 								</div>
 								<!--end::Input group=-->
 								<div class="fv-row mb-3">
 									<!--begin::Password-->
-									<input type="password" placeholder="Password" name="password" class="form-control bg-transparent" /> 
+									<input type="password" placeholder="Password" name="password" class="form-control bg-transparent @error('password') is-invalid @enderror" />
+                                    @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
 								</div>
 								<!--end::Input group=--> 
 								<!--end::Input group=-->

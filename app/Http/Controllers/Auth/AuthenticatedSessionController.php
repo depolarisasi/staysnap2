@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -25,19 +26,27 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        try {
+            $request->authenticate();
 
-        $request->session()->regenerate();
+            $request->session()->regenerate();
 
-        // Ambil user yang sudah login
-        $user = $request->user();
-        
-        // Cek role dan redirect sesuai kondisi
-        if($user->hasRole('Customer')) {
-            return redirect()->to('/');
+            // Ambil user yang sudah login
+            $user = $request->user();
+            
+            // Cek role dan redirect sesuai kondisi
+            if($user->hasRole('Customer')) {
+                return redirect()->to('/');
+            }
+            
+            return redirect('/management');
+        } catch (ValidationException $e) {
+            // Tambahkan SweetAlert untuk login gagal
+            alert()->error('Error', 'Login Gagal');
+            
+            // Lempar kembali exception agar Laravel dapat menampilkan error validation
+            throw $e;
         }
-        
-        return redirect('/management');
     }
 
     /**
