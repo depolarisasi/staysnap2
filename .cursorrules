@@ -1,0 +1,79 @@
+# Cursor Rules untuk StaySnap
+
+## Pola Implementasi
+
+### Model
+- Semua model menggunakan namespace `App\Models`
+- Relasi antar model didefinisikan dengan jelas dengan metode Eloquent
+- Gunakan trait ketika perlu berbagi fungsionalitas
+- Model utama: Branch, Room, User, Transaction, Cart
+
+### Controller
+- Controller ditempatkan sesuai dengan fitur atau domain
+- Service class digunakan untuk logika bisnis kompleks
+- Controller menggunakan dependency injection
+- Hindari logic berat dalam controller, pindahkan ke service class
+
+### Livewire
+- Komponen Livewire digunakan untuk interaktivitas UI
+- Gunakan Livewire untuk form dan operasi CRUD
+- Setiap komponen harus fokus pada satu tanggung jawab
+- Gunakan property dan method yang jelas dan deskriptif
+
+### View
+- Template Blade digunakan untuk semua view
+- Gunakan komponen dan partial untuk kode yang dapat digunakan kembali
+- Layout konsisten dengan header, footer, dan sidebar yang sama
+- Gunakan Tailwind CSS untuk styling
+
+### Route
+- Route dikelompokkan berdasarkan domain atau fitur
+- Gunakan middleware untuk kontrol akses
+- Nama route yang konsisten (contoh: 'branch.show', 'room.index')
+- Gunakan resource routes ketika sesuai
+
+## Konvensi Penamaan
+
+### File
+- Controller: PascalCase, diakhiri dengan "Controller" (BranchController)
+- Model: PascalCase, singular (Branch, Room)
+- Migration: snake_case, deskriptif (create_branches_table)
+- View: kebab-case (branch-detail, room-list)
+- Component: PascalCase (BranchCard, RoomList)
+
+### Database
+- Tabel: snake_case, plural (branches, rooms)
+- Kolom: snake_case, deskriptif (created_at, room_type)
+- Foreign key: singular_model_id (branch_id, user_id)
+- Pivot table: singular_model_singular_model (branch_tag)
+
+## Workflow Pengembangan
+1. Buat/update model dan migrasi
+2. Buat/update controller dan route
+3. Buat/update view dan komponen Livewire
+4. Uji fitur dan fungsionalitas
+5. Refactor dan optimalisasi
+
+## Penanganan Error
+- Gunakan try/catch untuk menangani error API
+- Log error dengan level yang sesuai
+- Gunakan flash message untuk menampilkan error ke pengguna
+- Validasi input di level Livewire dan/atau request
+
+## Aturan CSS
+- Gunakan utility class Tailwind CSS sebisa mungkin
+- Hindari custom CSS kecuali benar-benar diperlukan
+- Gunakan warna dan spacing yang konsisten
+- Responsif untuk berbagai ukuran layar
+
+## Tips Performa
+- Eager load relasi untuk menghindari N+1 query
+- Gunakan caching untuk query yang sering digunakan
+- Optimalisasi ukuran gambar
+- Gunakan pagination untuk kumpulan data besar
+
+## Security Guidelines
+- Validasi semua input user
+- Gunakan Laravel Sanctum untuk API
+- Hindari query yang rentan terhadap SQL injection
+- Implementasikan role-based access control 
