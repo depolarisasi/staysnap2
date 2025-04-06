@@ -49,14 +49,17 @@
 - [x] **Form pencarian dengan modal untuk pemilihan tanggal dan guest**
 - [x] **API endpoint untuk mendapatkan harga kamar**
 - [x] **Halaman hasil pencarian dengan daftar kamar tersedia**
+- [x] **Skeleton loading state untuk meningkatkan UX saat pencarian kamar**
+- [x] **Fungsi "Add to Cart" dari halaman hasil pencarian**
+- [x] **Perbaikan bug dan syntax error pada form pencarian**
+- [x] **Desain modern form pencarian dengan warna aksen biru**
 
 ## Features in Progress
 
 ### Frontend Development
-- [ ] **Penyempurnaan search form dengan validasi dan UI yang lebih baik**
+- [ ] **Penyempurnaan lebih lanjut pada search form dengan validasi yang lebih komprehensif**
 - [ ] **Integrasi pencarian dengan ketersediaan kamar yang akurat**
-- [ ] **Implementasi fungsi "Add to Cart" dari halaman hasil pencarian**
-- [ ] **Filter untuk hasil pencarian (amenities, price range, dll)**
+- [ ] **Filter tambahan untuk hasil pencarian (amenities, price range, dll)**
 - [ ] Halaman keranjang belanja (Cart)
 - [ ] Halaman checkout dan pembayaran
 - [ ] Halaman konfirmasi pemesanan
@@ -115,6 +118,9 @@
 - Search results belum menampilkan ketersediaan secara akurat
 - Pembatasan akses berbasis branch perlu pengujian lebih lanjut
 - Harga kamar terendah perlu optimasi untuk performa
+- Format harga "50M" pada datepicker yang tidak sesuai (FIXED)
+- Syntax error pada search-scripts.blade.php (FIXED)
+- Redirect ke halaman cart setelah "Add to Cart" (FIXED)
 
 ## Timeline
 - **Sprint 1 (Selesai)**: Core Infrastructure, Branch Management

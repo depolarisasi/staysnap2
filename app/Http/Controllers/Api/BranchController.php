@@ -31,6 +31,14 @@ class BranchController extends Controller
             'regencies' => $regencies
         ]);
     }
+
+    public function getBranchById($branchId)
+    {
+        $branches = Branch::find($branchId); 
+       
+        
+        return response()->json($branches);
+    }
     
     /**
      * Mendapatkan harga kamar untuk tanggal tertentu berdasarkan branch_id

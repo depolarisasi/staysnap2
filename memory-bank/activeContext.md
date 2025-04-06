@@ -6,6 +6,7 @@
 - Proses reservasi, termasuk pencarian kamar, booking, dan pembayaran
 - Implementasi mekanisme pembayaran dan pengelolaan transaksi
 - **Pengembangan form pencarian untuk ketersediaan kamar**
+- **Perbaikan bug dan peningkatan UX pada form pencarian**
 
 ## Recent Changes
 - Pengembangan panel admin untuk manajemen hotel dan kamar
@@ -13,6 +14,11 @@
 - Penambahan sistem ketersediaan kamar dinamis berbasis tanggal
 - Pengembangan manajemen harga kamar dinamis berbasis tanggal
 - **Pengembangan form pencarian hotel dan kamar tanpa menggunakan Livewire**
+- **Perbaikan syntax error pada search-scripts.blade.php yang menyebabkan error "Uncaught SyntaxError: expected expression, got '}'"**
+- **Perbaikan format harga pada datepicker yang sebelumnya menampilkan "50M"**
+- **Perbaikan fungsi AddToCart agar tidak melakukan redirect ke halaman cart**
+- **Penambahan skeleton loading state untuk meningkatkan UX saat pencarian dan saat menambahkan kamar ke cart**
+- **Pembaruan UI dengan menggunakan warna aksen biru untuk konsistensi desain**
 
 ## Implementasi Sistem Pencarian Saat Ini
 
@@ -34,6 +40,8 @@ Sistem pencarian kamar terdiri dari tiga file utama:
 4. Pengguna memilih jumlah tamu (dewasa dan anak-anak)
 5. Pengguna mengklik "Check Availability"
 6. SearchController memproses permintaan dan menampilkan hasil pencarian
+7. **Saat hasil pencarian loading, sistem menampilkan skeleton loading state**
+8. **Pengguna dapat menambahkan kamar ke cart dan menerima notifikasi berhasil tanpa redirect**
 
 ### Relasi Model yang Diimplementasikan
 - `Room`: Model kamar dengan harga dasar dan stok
@@ -63,15 +71,19 @@ Sistem pencarian kamar terdiri dari tiga file utama:
 - Pengembangan sistem berbasis komponen untuk UI yang konsisten
 - Implementasi relasi model yang jelas untuk mempermudah query dan reporting
 - Prioritas pada UX yang intuitif untuk proses pencarian dan booking
+- **Menggunakan skeleton loading state untuk meningkatkan perceived performance**
+- **Menjaga konsistensi UI dengan menggunakan warna aksen biru di seluruh aplikasi**
 
 ## Tantangan Saat Ini
 - Memastikan akurasi ketersediaan kamar saat booking
 - Mengelola booking untuk periode yang sama oleh beberapa user secara bersamaan
 - Optimalisasi proses booking dari pencarian hingga pembayaran
 - Mengembangkan UI yang responsif dan user-friendly
+- **Memperbaiki bug dan meningkatkan performa sistem pencarian**
 
 ## Feedback and Adjustments
 - Iterasi cepat berdasarkan feedback dari pengujian internal
 - Penyesuaian UI berdasarkan pengalaman pengguna
 - Perbaikan bug dan penambahan fitur secara bertahap
-- Pemantauan performa sistem secara berkelanjutan 
+- Pemantauan performa sistem secara berkelanjutan
+- **Perbaikan UI untuk meningkatkan konsistensi dan estetika aplikasi** 

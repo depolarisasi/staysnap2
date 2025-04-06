@@ -24,4 +24,5 @@ Route::middleware('auth:sanctum')->group(function() {
 });
 
 Route::get('/branches', [App\Http\Controllers\Api\BranchController::class, 'index']);
+Route::get('/branches/{branchId}', [App\Http\Controllers\Api\BranchController::class, 'getBranchById']);
 Route::get('/branches/{branchId}/room-prices', [App\Http\Controllers\Api\BranchController::class, 'getRoomPrices']);

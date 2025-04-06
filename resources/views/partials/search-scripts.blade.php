@@ -228,24 +228,29 @@
 
     // Fungsi utilitas untuk memformat harga dengan konsisten
     function formatPrice(price, format = 'default') {
-        // Validasi input
+        // Validasi input dan debug
+        console.log(`Formatting price: ${price}, format: ${format}, type: ${typeof price}`);
+        
         if (!price || price === '-' || price === null || isNaN(parseFloat(price)) || parseFloat(price) <= 0) {
             return '-';
         }
         
-        // Convert to number
+        // Convert to number - pastikan selalu angka
         let numPrice = 0;
         if (typeof price === 'string') {
-            // Remove all non-digit characters and convert to integer
-            numPrice = parseInt(price.replace(/[^\d]/g, ''));
+            // Remove all non-digit characters and convert to float
+            numPrice = parseFloat(price.replace(/[^\d.]/g, ''));
         } else {
-            numPrice = parseInt(price);
+            numPrice = parseFloat(price);
         }
 
         // Validasi lagi setelah konversi
         if (isNaN(numPrice) || numPrice <= 0) {
+            console.warn(`Invalid price after conversion: ${price} -> ${numPrice}`);
             return '-';
         }
+        
+        console.log(`Converted price: ${numPrice}`);
         
         // Format harga sesuai parameter
         switch(format) {
@@ -261,10 +266,25 @@
                 }).format(numPrice);
                 
             case 'compact': // Format dengan K dan M (123K, 1.2M)
+                // Debuging nilai harga
+                console.log(`Formatting ${numPrice} to compact format`);
+                
                 if (numPrice >= 1000000) {
-                    return (numPrice / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+                    const millions = numPrice / 1000000;
+                    // Jika tepat 1 juta atau kelipatan 1 juta, tampilkan tanpa desimal
+                    if (millions % 1 === 0) {
+                        return millions + 'M';
+                    }
+                    // Jika tidak, bulatkan ke 1 desimal
+                    return millions.toFixed(1).replace(/\.0$/, '') + 'M';
                 } else if (numPrice >= 1000) {
-                    return (numPrice / 1000).toFixed(0) + 'K';
+                    const thousands = numPrice / 1000;
+                    // Jika tepat 1 ribu atau kelipatan 1 ribu, tampilkan tanpa desimal
+                    if (thousands % 1 === 0) {
+                        return thousands + 'K';
+                    }
+                    // Jika tidak, bulatkan ke 1 desimal
+                    return thousands.toFixed(1).replace(/\.0$/, '') + 'K';
                 } else {
                     return numPrice.toString();
                 }
@@ -332,14 +352,39 @@
 
     // Function to select a hotel
     function selectHotel(hotelId) {
-        const hotel = hotels.find(h => h.id === hotelId);
+        // Temukan hotel dari data yang sudah ada
+        const hotel = allHotels.find(h => h.id == hotelId) || hotels.find(h => h.id == hotelId);
+        
         if (!hotel) {
             console.error('Hotel not found:', hotelId);
+            // Jika hotel tidak ditemukan dalam cache, coba fetch dari server
+            fetch(`/api/branches/${hotelId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        // Panggil kembali selectHotel dengan data baru
+                        selectHotelWithData(data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching hotel data:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Gagal memilih hotel, silakan coba lagi',
+                    });
+                });
             return;
         }
+        
+        // Jika hotel ditemukan, gunakan data tersebut
+        selectHotelWithData(hotel);
+    }
 
+    // Helper function untuk memproses data hotel yang dipilih
+    function selectHotelWithData(hotel) {
         // Update selected hotel data
-        selectedHotelId = hotelId;
+        selectedHotelId = hotel.id;
         selectedHotelName = hotel.branch_name;
 
         // Update hotel button text
@@ -351,6 +396,12 @@
                     <div class="font-medium">${hotel.branch_name}</div>
                 </div>
             `;
+        }
+        
+        // Update selected hotel text jika ada
+        const selectedHotelText = document.getElementById('selectedHotelText');
+        if (selectedHotelText) {
+            selectedHotelText.textContent = hotel.branch_name;
         }
 
         // Close hotel modal
@@ -367,8 +418,17 @@
 
         // Update URL parameters
         const url = new URL(window.location.href);
-        url.searchParams.set('hotel_id', hotelId);
+        url.searchParams.set('hotel_id', hotel.id);
         window.history.pushState({}, '', url);
+        
+        // Pre-fetch room prices untuk mempercepat pemilihan tanggal
+        fetchRoomPrices(hotel.id)
+            .then(data => {
+                console.log('Room prices pre-fetched successfully');
+            })
+            .catch(error => {
+                console.error('Error pre-fetching room prices:', error);
+            });
     }
 
     // Variables
@@ -872,12 +932,17 @@
             const startDateParam = today.toISOString().split('T')[0];
             const endDateParam = oneYearLater.toISOString().split('T')[0];
             
+            console.log(`Fetching room prices for hotel ${hotelId} from ${startDateParam} to ${endDateParam}`);
+            
             const response = await fetch(`/api/branches/${hotelId}/room-prices?start_date=${startDateParam}&end_date=${endDateParam}`);
             const data = await response.json();
             
+            console.log('Room prices API response:', data);
+            
             // Save price data
             roomPrices = data.prices || {};
-            roomPrices.room_base_price = data.room_base_price;
+            // Pastikan room_base_price adalah angka
+            roomPrices.room_base_price = parseFloat(data.room_base_price);
             
             return data;
         } catch (error) {
@@ -1008,15 +1073,23 @@
                     if (dayDate >= today) {
                         // Format date to YYYY-MM-DD
                         const dateKey = formatDate(dayDate, 'iso');
-
+                        
                         // Get price from API data if available, or show base price from Rooms
                         let price = "-";
+                        let rawPrice = null;
+                        
                         if (roomPrices[dateKey] && roomPrices[dateKey].lowest) {
-                            // Format price to K and M
-                            price = formatPrice(roomPrices[dateKey].lowest, 'compact');
+                            rawPrice = parseFloat(roomPrices[dateKey].lowest);
+                            console.log(`Date ${dateKey} has price: ${rawPrice}`);
                         } else if (roomPrices.room_base_price) {
-                            // Use room_base_price if no specific price available
-                            price = formatPrice(roomPrices.room_base_price, 'compact');
+                            rawPrice = parseFloat(roomPrices.room_base_price);
+                            console.log(`Date ${dateKey} using base price: ${rawPrice}`);
+                        }
+                        
+                        // Format price to K and M if we have a valid price
+                        if (rawPrice && !isNaN(rawPrice) && rawPrice > 0) {
+                            price = formatPrice(rawPrice, 'compact');
+                            console.log(`Formatted price for ${dateKey}: ${price}`);
                         }
                         
                         // Save day number
@@ -1066,4 +1139,7 @@
             updateDateDisplay(startDate, endDate);
         }
     }
-</script> 
+    
+        
+    
+</script>

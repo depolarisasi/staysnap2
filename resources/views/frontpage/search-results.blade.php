@@ -82,6 +82,76 @@
     .carousel-slide.active {
         opacity: 1;
     }
+    
+    /* Modern Room Styling */
+    .room-card {
+        transition: all 0.3s ease;
+    }
+    
+    .room-card:hover {
+        transform: translateY(-2px);
+    }
+    
+    /* Filter Buttons */
+    .filter-button {
+        transition: all 0.2s ease;
+    }
+    
+    .filter-button.active {
+        background-color: #ebf5ff;
+        border-color: #3b82f6;
+        color: #2563eb;
+    }
+    
+    /* Responsive fixes */
+    @media (max-width: 768px) {
+        .gallery-main {
+            height: 300px;
+        }
+        
+        .room-card {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 1rem;
+        }
+    }
+    
+    /* Search Form Container */
+    .search-form-container {
+        background-color: white;
+        margin-top: -2rem;
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Beautiful Cart Styling */
+    .cart-sidebar {
+        transition: all 0.3s ease;
+    }
+    
+    .cart-item {
+        border-bottom: 1px solid #f3f4f6;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .cart-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    
+    /* Animated elements */
+    .animate-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: .5;
+        }
+    }
 </style>
 @endsection
 
@@ -151,95 +221,189 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <!-- Room List -->
             <div class="lg:col-span-8">
-                <div class="p-4 border rounded-lg shadow-md bg-white">
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100">
                     <!-- Filter Section -->
-                    <div class="flex justify-between items-center mb-4">
-                        <div>
-                            <span class="text-sm font-semibold">Filter Kamar</span>
+                    <div class="flex flex-wrap justify-between items-center p-4 border-b border-gray-100">
+                        <div class="mb-2 md:mb-0">
+                            <span class="text-sm font-medium text-gray-700">Filter Kamar:</span>
                             <div class="inline-flex space-x-2 ml-2">
-                                <button onclick="filterRooms('breakfast')" class="px-4 py-2 border rounded-full text-sm">Include Breakfast</button>
-                                <button onclick="filterRooms('no-breakfast')" class="px-4 py-2 border rounded-full text-sm">Without Breakfast</button>
+                                <button onclick="filterRooms('breakfast')" class="px-3 py-1 border border-gray-200 rounded-full text-xs font-medium text-gray-700 hover:bg-blue-50 hover:border-blue-200 transition-all">
+                                    Include Breakfast
+                                </button>
+                                <button onclick="filterRooms('no-breakfast')" class="px-3 py-1 border border-gray-200 rounded-full text-xs font-medium text-gray-700 hover:bg-blue-50 hover:border-blue-200 transition-all">
+                                    Without Breakfast
+                                </button>
                             </div>
                         </div>
                         <div>
-                            <span class="text-sm font-semibold">Tampilan Harga</span>
-                            <a href="#" class="text-blue-500 text-sm ml-2">Total harga (termasuk pajak & biaya)</a>
+                            <span class="text-xs font-medium text-gray-600">Tampilan Harga:</span>
+                            <a href="#" class="text-blue-600 text-xs ml-1 hover:underline">Total (termasuk pajak & biaya)</a>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-6">
+                    <!-- Room Cards -->
+                    <div class="divide-y divide-gray-100">
                         @foreach($rooms as $room)
-                            <div class="p-4 border rounded-lg shadow-sm bg-white">
-                                <div class="flex justify-between items-start">
-                                    <h2 class="text-lg font-bold">{{ $room->name }}</h2>
-                                    @if($room->availability->is_available)
-                                        <span class="text-xs bg-green-500 text-white px-2 py-1 rounded-full">Tersedia</span>
-                                    @else
-                                        <span class="text-xs bg-red-500 text-white px-2 py-1 rounded-full">Tidak Tersedia</span>
-                                    @endif
-                                </div>
-
-                                <div class="flex mt-4">
-                                    <!-- Room Image -->
-                                    <div class="w-1/3">
-                                        <img src="{{ asset('storage/' . $room->photos->first()->path) }}" alt="{{ $room->name }}" class="w-full h-48 object-cover rounded-lg">
-                                    </div>
-                                    
-                                    <!-- Room Details -->
-                                    <div class="w-2/3 pl-4">
-                                        <h3 class="font-bold text-md">Detail Kamar</h3>
-                                        <ul class="text-sm text-gray-600 space-y-1 mt-1">
-                                            @foreach($room->amenities->take(3) as $amenity)
-                                                <li>&#10003; {{ $amenity->name }}</li>
-                                            @endforeach
-                                        </ul>
-                                        
-                                        <div class="mt-2">
-                                            <button onclick="showRoomAmenities({{ $room->id }})" class="text-blue-500 text-sm">
-                                                Lihat Semua Fasilitas
-                                            </button>
-                                        </div>
-                                        
-                                        <div class="mt-2">
-                                            <button onclick="showRoomPolicy({{ $room->id }})" class="text-blue-500 text-sm">
-                                                Lihat Kebijakan Kamar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Price Section -->
-                                <div class="mt-4 p-4 border rounded-lg bg-gray-50">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs font-semibold">Total Harga untuk {{ \Carbon\Carbon::parse($startDate)->diffInDays(\Carbon\Carbon::parse($endDate)) }} malam</span>
+                            <div class="room-card hover:bg-gray-50 transition-colors duration-200">
+                                <div class="p-5">
+                                    <!-- Room Header -->
+                                    <div class="flex justify-between items-start mb-4">
+                                        <h2 class="text-lg font-bold text-gray-800">{{ $room->name }}</h2>
                                         @if($room->availability->is_available)
-                                            <span class="text-xs bg-green-500 text-white px-2 py-1 rounded-full">{{ $room->availability->available_rooms }} kamar tersedia</span>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                Tersedia
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                Tidak Tersedia
+                                            </span>
                                         @endif
                                     </div>
-                                    
-                                    <div class="text-2xl font-bold text-yellow-500 mt-2">
-                                        Rp {{ number_format($room->availability->total_price, 0, ',', '.') }}
+
+                                    <!-- Room Content -->
+                                    <div class="flex flex-col md:flex-row">
+                                        <!-- Room Image -->
+                                        <div class="w-full md:w-1/3 flex-shrink-0 mb-4 md:mb-0">
+                                            <div class="relative aspect-[4/3] rounded-lg overflow-hidden">
+                                                <img 
+                                                    src="{{ asset('storage/' . $room->photos->first()->path) }}" 
+                                                    alt="{{ $room->name }}" 
+                                                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                                    onerror="this.src='/images/default-room.jpg'"
+                                                >
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Room Details -->
+                                        <div class="w-full md:w-2/3 md:pl-5">
+                                            <!-- Room Features -->
+                                            <div class="mb-3">
+                                                <h3 class="text-sm font-medium text-gray-700 mb-2">Fasilitas Kamar</h3>
+                                                <div class="grid grid-cols-2 gap-2">
+                                                    @foreach($room->amenities->take(6) as $amenity)
+                                                        <div class="flex items-center">
+                                                            <svg class="w-4 h-4 text-green-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                            </svg>
+                                                            <span class="text-xs text-gray-600">{{ $amenity->name }}</span>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                                
+                                                @if($room->amenities->count() > 6)
+                                                    <button 
+                                                        onclick="showRoomAmenities({{ $room->id }})" 
+                                                        class="text-blue-600 text-xs mt-2 hover:underline flex items-center"
+                                                    >
+                                                        <span>Lihat Semua Fasilitas</span>
+                                                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                                        </svg>
+                                                    </button>
+                                                @endif
+                                            </div>
+                                            
+                                            <!-- Room Policies -->
+                                            <div>
+                                                <button 
+                                                    onclick="showRoomPolicy({{ $room->id }})" 
+                                                    class="text-blue-600 text-xs hover:underline flex items-center"
+                                                >
+                                                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                    </svg>
+                                                    <span>Lihat Kebijakan Kamar</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     
-                                    <p class="text-xs text-gray-600 mt-1">Termasuk Pajak & Biaya</p>
-                                    
-                                    @if($room->availability->is_available)
-                                        <button onclick="addToCart({{ $room->id }})" 
-                                            class="mt-3 w-full bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg flex items-center justify-center space-x-2 transition-colors">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-                                            </svg>
-                                            <span>Pilih Kamar</span>
-                                        </button>
-                                    @else
-                                        <button class="mt-3 w-full bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed" disabled>
-                                            Tidak Tersedia
-                                        </button>
-                                    @endif
+                                    <!-- Room Footer with Price - Modified layout to match the sample -->
+                                    <div class="mt-5 pt-4 border-t border-gray-100 flex flex-col md:flex-row md:justify-between md:items-start">
+                                        <!-- Plan and Policy Details -->
+                                        <div class="md:w-1/2">
+                                            <h4 class="text-base font-semibold text-blue-800 mb-2">Early Bird</h4>
+                                            <div class="space-y-1 mb-3">
+                                                <div class="flex items-center">
+                                                    <svg class="w-4 h-4 text-blue-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                    </svg>
+                                                    <span class="text-xs text-gray-600">{{ $room->is_refundable ? 'Refundable' : 'Non-refundable' }}</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <svg class="w-4 h-4 text-blue-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                    </svg>
+                                                    <span class="text-xs text-gray-600">{{ $room->is_reschedule ? 'Reschedulable' : 'Non-reschedulable' }}</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <svg class="w-4 h-4 text-blue-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                    </svg>
+                                                    <span class="text-xs text-gray-600">{{ $room->with_breakfast ? 'With Breakfast' : 'Without Breakfast' }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <h5 class="text-sm font-medium text-gray-700">Payment Option</h5>
+                                                <div class="flex items-center mt-1">
+                                                    <svg class="w-4 h-4 text-blue-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                    </svg>
+                                                    <span class="text-xs text-gray-600">Pay now</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Price and Booking Button -->
+                                        <div class="md:w-1/2 mt-4 md:mt-0 flex flex-col items-end">
+                                            <div class="text-right">
+                                                <div class="text-xs text-gray-500 mb-1">Total Price For {{ \Carbon\Carbon::parse($startDate)->diffInDays(\Carbon\Carbon::parse($endDate)) }} night</div>
+                                                <div class="text-2xl font-bold text-gray-800 mb-1">Rp {{ number_format($room->availability->total_price, 0, ',', '.') }}</div>
+                                                <div class="text-xs text-gray-500 mb-3">Includes Taxes & Fees</div>
+                                            </div>
+                                            
+                                            <!-- Book Button -->
+                                            @if($room->availability->is_available)
+                                                <button 
+                                                    onclick="addToCart({{ $room->id }})" 
+                                                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium text-sm transition-colors flex items-center"
+                                                >
+                                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z"></path>
+                                                        <path d="M16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+                                                    </svg>
+                                                    <span>Pilih Kamar</span>
+                                                </button>
+                                            @else
+                                                <button 
+                                                    class="bg-gray-200 text-gray-500 px-6 py-2.5 rounded-lg font-medium text-sm cursor-not-allowed" 
+                                                    disabled
+                                                >
+                                                    Tidak Tersedia
+                                                </button>
+                                            @endif
+                                            @if($room->availability->is_available)
+                                                <div class="text-xs text-gray-500 mt-1">
+                                                    {{ $room->availability->available_rooms }} kamar tersedia
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
+                    
+                    <!-- No Rooms Found -->
+                    @if(count($rooms) === 0)
+                        <div class="p-10 text-center">
+                            <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <h3 class="text-lg font-medium text-gray-700">Tidak ada kamar tersedia</h3>
+                            <p class="text-gray-500 text-sm mt-1">Silakan coba tanggal atau filter lain</p>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -371,6 +535,93 @@
 
     <!-- Search Form Modals -->
     @include('partials.search-modals')
+
+    <!-- Skeleton Loading Template (hidden by default) -->
+    <div id="roomSkeleton" class="hidden">
+        <div class="animate-pulse space-y-6">
+            <!-- Skeleton Room Card 1 -->
+            <div class="bg-white rounded-lg overflow-hidden border border-gray-100">
+                <div class="p-5">
+                    <!-- Skeleton Header -->
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="h-6 bg-gray-200 rounded w-1/3"></div>
+                        <div class="h-5 bg-gray-200 rounded-full w-16"></div>
+                    </div>
+                    
+                    <!-- Skeleton Content -->
+                    <div class="flex flex-col md:flex-row">
+                        <!-- Skeleton Image -->
+                        <div class="w-full md:w-1/3 flex-shrink-0 mb-4 md:mb-0">
+                            <div class="relative aspect-[4/3] rounded-lg bg-gray-200"></div>
+                        </div>
+                        
+                        <!-- Skeleton Details -->
+                        <div class="w-full md:w-2/3 md:pl-5">
+                            <div class="h-5 bg-gray-200 rounded w-1/4 mb-3"></div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                            </div>
+                            <div class="h-4 bg-gray-200 rounded w-32 mt-3"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Skeleton Footer -->
+                    <div class="mt-5 pt-4 border-t border-gray-100 flex flex-col md:flex-row md:justify-between md:items-center">
+                        <div class="mb-3 md:mb-0">
+                            <div class="h-4 bg-gray-200 rounded w-40 mb-2"></div>
+                            <div class="h-6 bg-gray-200 rounded w-28"></div>
+                            <div class="h-3 bg-gray-200 rounded w-32 mt-1"></div>
+                        </div>
+                        <div class="md:text-right">
+                            <div class="h-10 bg-gray-200 rounded w-full md:w-32"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Skeleton Room Card 2 -->
+            <div class="bg-white rounded-lg overflow-hidden border border-gray-100">
+                <div class="p-5">
+                    <!-- Same structure as above -->
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="h-6 bg-gray-200 rounded w-2/5"></div>
+                        <div class="h-5 bg-gray-200 rounded-full w-16"></div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row">
+                        <div class="w-full md:w-1/3 flex-shrink-0 mb-4 md:mb-0">
+                            <div class="relative aspect-[4/3] rounded-lg bg-gray-200"></div>
+                        </div>
+                        
+                        <div class="w-full md:w-2/3 md:pl-5">
+                            <div class="h-5 bg-gray-200 rounded w-1/4 mb-3"></div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                            </div>
+                            <div class="h-4 bg-gray-200 rounded w-32 mt-3"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-5 pt-4 border-t border-gray-100 flex flex-col md:flex-row md:justify-between md:items-center">
+                        <div class="mb-3 md:mb-0">
+                            <div class="h-4 bg-gray-200 rounded w-40 mb-2"></div>
+                            <div class="h-6 bg-gray-200 rounded w-28"></div>
+                            <div class="h-3 bg-gray-200 rounded w-32 mt-1"></div>
+                        </div>
+                        <div class="md:text-right">
+                            <div class="h-10 bg-gray-200 rounded w-full md:w-32"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -464,10 +715,76 @@
         });
     }
 
+    // Filter functionality
+    function filterRooms(type) {
+        // Tampilkan loading skeleton
+        showRoomLoadingSkeleton();
+        
+        // Simulasi delay loading untuk efek UX yang lebih baik
+        setTimeout(() => {
+            // Logika filter akan diimplementasikan di sini
+            // Untuk sementara, sembunyikan skeleton setelah delay
+            hideRoomLoadingSkeleton();
+        }, 800);
+    }
+    
+    // Skeleton Loading Functions
+    function showRoomLoadingSkeleton() {
+        // Simpan konten asli room list
+        const roomListContainer = document.querySelector('.divide-y.divide-gray-100');
+        if (roomListContainer) {
+            // Sembunyikan konten asli
+            roomListContainer.style.opacity = '0';
+            roomListContainer.style.height = '0';
+            roomListContainer.style.overflow = 'hidden';
+            
+            // Tampilkan skeleton
+            const skeleton = document.getElementById('roomSkeleton');
+            if (skeleton) {
+                skeleton.classList.remove('hidden');
+            }
+        }
+    }
+    
+    function hideRoomLoadingSkeleton() {
+        // Tampilkan kembali konten asli room list
+        const roomListContainer = document.querySelector('.divide-y.divide-gray-100');
+        if (roomListContainer) {
+            roomListContainer.style.opacity = '1';
+            roomListContainer.style.height = 'auto';
+            roomListContainer.style.overflow = 'visible';
+            
+            // Sembunyikan skeleton
+            const skeleton = document.getElementById('roomSkeleton');
+            if (skeleton) {
+                skeleton.classList.add('hidden');
+            }
+        }
+    }
+    
+    // Load event untuk button-button filter
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inisialisasi tampilan
+        hideRoomLoadingSkeleton();
+        
+        // Tambahkan event listener untuk button-button filter
+        const filterButtons = document.querySelectorAll('button[onclick^="filterRooms"]');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Toggle kelas active
+                filterButtons.forEach(btn => btn.classList.remove('filter-button', 'active'));
+                this.classList.add('filter-button', 'active');
+            });
+        });
+    });
+
     // Cart functionality
     let cart = [];
 
     function addToCart(roomId) {
+        // Show loading skeleton before adding to cart
+        showRoomLoadingSkeleton();
+        
         // Ambil data dari form pencarian
         const startDate = '{{ $startDate }}';
         const endDate = '{{ $endDate }}';
@@ -511,24 +828,21 @@
             return response.json();
         })
         .then(data => {
+            // Hide skeleton after response
+            hideRoomLoadingSkeleton();
+            
             if (data.success) {
                 // Update UI
                 updateCartBadge();
                 updateCartSidebar();
                 
-                // Tampilkan notifikasi sukses
+                // Tampilkan notifikasi sukses yang otomatis menutup
                 Swal.fire({
                     title: 'Berhasil!',
                     text: data.message || 'Kamar berhasil ditambahkan ke keranjang',
                     icon: 'success',
-                    confirmButtonText: 'Lanjut Belanja',
-                    showCancelButton: true,
-                    cancelButtonText: 'Lihat Keranjang',
-                    cancelButtonColor: '#3085d6'
-                }).then((result) => {
-                    if (!result.isConfirmed) {
-                        window.location.href = '{{ route("cart.index") }}';
-                    }
+                    timer: 2000,
+                    showConfirmButton: false
                 });
             } else {
                 // Tampilkan error
@@ -541,6 +855,9 @@
             }
         })
         .catch(error => {
+            // Hide skeleton on error
+            hideRoomLoadingSkeleton();
+            
             console.error('Error adding to cart:', error);
             let errorMessage = 'Terjadi kesalahan pada sistem. Silakan coba lagi.';
             
