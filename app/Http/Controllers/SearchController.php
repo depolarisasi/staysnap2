@@ -7,6 +7,7 @@ use App\Models\Branch;
 use App\Models\Room;
 use App\Models\RoomAvailability;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class SearchController extends Controller
 {
@@ -65,6 +66,20 @@ class SearchController extends Controller
                 
                 return $room;
             });
+            
+        // Ambil semua room policy yang unik dari semua kamar
+        $allPolicies = new Collection();
+        
+        foreach ($rooms as $room) {
+            foreach ($room->policies as $policy) {
+                if (!$allPolicies->contains('id', $policy->id)) {
+                    $allPolicies->push($policy);
+                }
+            }
+        }
+        
+        // Urut policies berdasarkan nama (tidak ada grouping)
+        $sortedPolicies = $allPolicies->sortBy('name');
         
         // Kirim data ke view
         return view('frontpage.search-results', [
@@ -74,7 +89,8 @@ class SearchController extends Controller
             'endDate' => $endDate,
             'adults' => $adults,
             'kids' => $kids,
-            'voucher' => $voucher
+            'voucher' => $voucher,
+            'policies' => $sortedPolicies
         ]);
     }
 } 

@@ -152,6 +152,66 @@
             opacity: .5;
         }
     }
+
+    /* Styling untuk filter pada mobile */
+    @media (max-width: 640px) {
+        /* Membuat tata letak grid untuk tombol filter pada layar kecil */
+        .policy-group-content .flex {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+        
+        /* Memastikan tombol filter memiliki lebar penuh */
+        .policy-filter {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Batasi ketinggian tag filter aktif dengan scroll */
+        #active-filter-tags {
+            max-height: 80px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        /* Styling scrollbar untuk tag filter */
+        #active-filter-tags::-webkit-scrollbar {
+            width: 3px;
+        }
+        
+        #active-filter-tags::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        
+        #active-filter-tags::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+    }
+
+    /* Styling untuk horizontal scrolling */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;     /* Firefox */
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;  /* Chrome, Safari, Opera */
+    }
+
+    /* Shadow animations */
+    .shadow-fade-in {
+        opacity: 1;
+        transition: opacity 0.3s ease;
+    }
+
+    .shadow-fade-out {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
 </style>
 @endsection
 
@@ -224,27 +284,60 @@
                 <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100">
                     <!-- Filter Section -->
                     <div class="flex flex-wrap justify-between items-center p-4 border-b border-gray-100">
-                        <div class="mb-2 md:mb-0">
+                        <div class="mb-2 md:mb-0 w-full">
                             <span class="text-sm font-medium text-gray-700">Filter Kamar:</span>
-                            <div class="inline-flex space-x-2 ml-2">
-                                <button onclick="filterRooms('breakfast')" class="px-3 py-1 border border-gray-200 rounded-full text-xs font-medium text-gray-700 hover:bg-blue-50 hover:border-blue-200 transition-all">
-                                    Include Breakfast
-                                </button>
-                                <button onclick="filterRooms('no-breakfast')" class="px-3 py-1 border border-gray-200 rounded-full text-xs font-medium text-gray-700 hover:bg-blue-50 hover:border-blue-200 transition-all">
-                                    Without Breakfast
-                                </button>
+                            
+                            <!-- Horizontal Scrolling Filter Container -->
+                            <div class="relative mt-2">
+                                <!-- Scroll Shadow Indicators -->
+                                <div class="absolute left-0 top-0 h-full w-5 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none shadow-fade-out" id="leftScrollShadow"></div>
+                                <div class="absolute right-0 top-0 h-full w-5 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" id="rightScrollShadow"></div>
+                                
+                                <!-- Scrollable Container -->
+                                <div class="overflow-x-auto py-2 flex items-center space-x-2 no-scrollbar" id="policyScrollContainer">
+                                    @foreach($policies as $policy)
+                                    <button 
+                                        id="policy-filter-{{ $policy->id }}" 
+                                        onclick="filterRoomsByPolicy('{{ $policy->id }}', '{{ $policy->name }}')" 
+                                        class="policy-filter whitespace-nowrap px-3 py-1 border border-gray-200 rounded-full text-xs font-medium text-gray-700 hover:bg-blue-50 hover:border-blue-200 transition-all"
+                                        data-policy-id="{{ $policy->id }}"
+                                    >
+                                        {{ $policy->name }}
+                                    </button>
+                                    @endforeach
+                                </div>
+                            </div>
+                            
+                            <!-- Active Filters Display -->
+                            <div id="active-filters" class="hidden mt-3 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="text-sm font-medium text-blue-800">Filter Aktif:</span>
+                                        <span id="active-filter-count" class="text-blue-800 ml-1">0</span>
+                                    </div>
+                                    <button 
+                                        onclick="resetFilters()" 
+                                        class="px-3 py-1 text-xs font-medium text-red-600 bg-white rounded-full border border-red-200 hover:bg-red-50 transition-colors"
+                                    >
+                                        Reset Semua
+                                    </button>
+                                </div>
+                                <div id="active-filter-tags" class="flex flex-wrap gap-2 mt-2"></div>
                             </div>
                         </div>
-                        <div>
-                            <span class="text-xs font-medium text-gray-600">Tampilan Harga:</span>
-                            <a href="#" class="text-blue-600 text-xs ml-1 hover:underline">Total (termasuk pajak & biaya)</a>
+                        
+                        <div class="w-full md:w-auto flex justify-end mt-3 md:mt-0">
+                            <div>
+                                <span class="text-xs font-medium text-gray-600">Tampilan Harga:</span>
+                                <a href="#" class="text-blue-600 text-xs ml-1 hover:underline">Total (termasuk pajak & biaya)</a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Room Cards -->
                     <div class="divide-y divide-gray-100">
                         @foreach($rooms as $room)
-                            <div class="room-card hover:bg-gray-50 transition-colors duration-200">
+                            <div class="room-card hover:bg-gray-50 transition-colors duration-200" data-policies='@json($room->policies->pluck("id"))'>
                                 <div class="p-5">
                                     <!-- Room Header -->
                                     <div class="flex justify-between items-start mb-4">
@@ -315,47 +408,8 @@
                                                     <span>Lihat Kebijakan Kamar</span>
                                                 </button>
                                             </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Room Footer with Price - Modified layout to match the sample -->
-                                    <div class="mt-5 pt-4 border-t border-gray-100 flex flex-col md:flex-row md:justify-between md:items-start">
-                                        <!-- Plan and Policy Details -->
-                                        <div class="md:w-1/2">
-                                            <h4 class="text-base font-semibold text-blue-800 mb-2">Early Bird</h4>
-                                            <div class="space-y-1 mb-3">
-                                                <div class="flex items-center">
-                                                    <svg class="w-4 h-4 text-blue-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                                    </svg>
-                                                    <span class="text-xs text-gray-600">{{ $room->is_refundable ? 'Refundable' : 'Non-refundable' }}</span>
-                                                </div>
-                                                <div class="flex items-center">
-                                                    <svg class="w-4 h-4 text-blue-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                                    </svg>
-                                                    <span class="text-xs text-gray-600">{{ $room->is_reschedule ? 'Reschedulable' : 'Non-reschedulable' }}</span>
-                                                </div>
-                                                <div class="flex items-center">
-                                                    <svg class="w-4 h-4 text-blue-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                                    </svg>
-                                                    <span class="text-xs text-gray-600">{{ $room->with_breakfast ? 'With Breakfast' : 'Without Breakfast' }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="mt-3">
-                                                <h5 class="text-sm font-medium text-gray-700">Payment Option</h5>
-                                                <div class="flex items-center mt-1">
-                                                    <svg class="w-4 h-4 text-blue-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                                    </svg>
-                                                    <span class="text-xs text-gray-600">Pay now</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Price and Booking Button -->
-                                        <div class="md:w-1/2 mt-4 md:mt-0 flex flex-col items-end">
+                                            <!-- Price and Booking Button -->
+                                        <div class=" mt-4 md:mt-0 flex flex-col items-end">
                                             <div class="text-right">
                                                 <div class="text-xs text-gray-500 mb-1">Total Price For {{ \Carbon\Carbon::parse($startDate)->diffInDays(\Carbon\Carbon::parse($endDate)) }} night</div>
                                                 <div class="text-2xl font-bold text-gray-800 mb-1">Rp {{ number_format($room->availability->total_price, 0, ',', '.') }}</div>
@@ -388,7 +442,9 @@
                                                 </div>
                                             @endif
                                         </div>
+                                        </div>
                                     </div>
+                                     
                                 </div>
                             </div>
                         @endforeach
@@ -500,7 +556,7 @@
     </div>
 
     <!-- Room Policy Modal -->
-    <div id="policyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div id="policyModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
         <div class="bg-white w-11/12 md:w-2/3 rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold">Room Policy</h2>
@@ -517,7 +573,7 @@
     </div>
 
     <!-- Room Amenities Modal -->
-    <div id="amenitiesModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div id="amenitiesModal" class="fixed inset-0 bg-black/50  hidden items-center justify-center z-50">
         <div class="bg-white w-11/12 md:w-2/3 rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold">Room Amenities</h2>
@@ -527,7 +583,7 @@
                     </svg>
                 </button>
             </div>
-            <div id="amenitiesContent" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div id="amenitiesContent" class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <!-- Amenities content will be loaded here -->
             </div>
         </div>
@@ -1083,8 +1139,8 @@
             const amenitiesContent = document.getElementById('amenitiesContent');
             amenitiesContent.innerHTML = room.amenities.map(amenity => `
                 <div class="p-3 border rounded-lg">
-                    <h3 class="font-semibold">${amenity.name}</h3>
-                    <p class="text-gray-600 text-sm mt-1">${amenity.description || ''}</p>
+                    <h4 class="font-semibold"><img src="{{ asset('storage/${amenity.icon}') }}" alt="${amenity.name}" class="w-6 h-6 mr-2">${amenity.name}</h4>
+                     
                 </div>
             `).join('');
             
@@ -1205,4 +1261,288 @@
 
 <!-- Search Form Scripts -->
 @include('partials.search-scripts')
+
+<!-- Filter Functionality Scripts -->
+<script>
+// Menyimpan filter yang aktif
+let activeFilters = [];
+
+// Filter kamar berdasarkan policy
+function filterRoomsByPolicy(policyId, policyName) {
+    const filterButton = document.getElementById(`policy-filter-${policyId}`);
+    const activeFiltersContainer = document.getElementById('active-filters');
+    const activeFilterCount = document.getElementById('active-filter-count');
+    const activeFilterTags = document.getElementById('active-filter-tags');
+    
+    // Toggle filter aktif/tidak aktif
+    const filterIndex = activeFilters.findIndex(f => f.id === policyId);
+    
+    if (filterIndex === -1) {
+        // Aktifkan filter
+        activeFilters.push({ id: policyId, name: policyName });
+        filterButton.classList.add('bg-blue-100', 'border-blue-300', 'text-blue-800');
+        
+        // Tambahkan tag untuk filter aktif
+        const tagElement = document.createElement('span');
+        tagElement.id = `active-tag-${policyId}`;
+        tagElement.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800';
+        tagElement.innerHTML = `
+            ${policyName}
+            <button onclick="removeFilter('${policyId}')" class="ml-1 text-blue-500 hover:text-blue-700">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        `;
+        activeFilterTags.appendChild(tagElement);
+    } else {
+        // Nonaktifkan filter
+        activeFilters.splice(filterIndex, 1);
+        filterButton.classList.remove('bg-blue-100', 'border-blue-300', 'text-blue-800');
+        
+        // Hapus tag filter aktif
+        const tagElement = document.getElementById(`active-tag-${policyId}`);
+        if (tagElement) tagElement.remove();
+    }
+    
+    // Update tampilan filter aktif
+    activeFilterCount.textContent = activeFilters.length;
+    if (activeFilters.length > 0) {
+        activeFiltersContainer.classList.remove('hidden');
+    } else {
+        activeFiltersContainer.classList.add('hidden');
+    }
+    
+    // Perbarui URL dengan filter aktif
+    updateUrlWithFilters();
+    
+    // Terapkan filter ke kamar yang ditampilkan
+    applyFilters();
+}
+
+// Hapus filter dari tombol tag
+function removeFilter(policyId) {
+    const filterButton = document.getElementById(`policy-filter-${policyId}`);
+    if (filterButton) {
+        // Trigger click event pada tombol filter untuk menghapus filter
+        filterButton.click();
+    } else {
+        // Jika tombol tidak ditemukan (mungkin dalam grup yang tersembunyi)
+        // Hapus filter secara manual
+        const filterIndex = activeFilters.findIndex(f => f.id === policyId);
+        if (filterIndex !== -1) {
+            activeFilters.splice(filterIndex, 1);
+            
+            // Hapus tag
+            const tagElement = document.getElementById(`active-tag-${policyId}`);
+            if (tagElement) tagElement.remove();
+            
+            // Update tampilan dan URL
+            const activeFiltersContainer = document.getElementById('active-filters');
+            const activeFilterCount = document.getElementById('active-filter-count');
+            
+            activeFilterCount.textContent = activeFilters.length;
+            if (activeFilters.length === 0) {
+                activeFiltersContainer.classList.add('hidden');
+            }
+            
+            updateUrlWithFilters();
+            applyFilters();
+        }
+    }
+}
+
+// Menerapkan filter pada kamar
+function applyFilters() {
+    const roomCards = document.querySelectorAll('.room-card');
+    let visibleCount = 0;
+    
+    roomCards.forEach(roomCard => {
+        let roomPolicies = [];
+        try {
+            roomPolicies = JSON.parse(roomCard.dataset.policies || '[]');
+        } catch (e) {
+            console.error('Error parsing room policies:', e);
+        }
+        
+        if (activeFilters.length === 0) {
+            // Jika tidak ada filter aktif, tampilkan semua kamar
+            roomCard.classList.remove('hidden');
+            visibleCount++;
+            return;
+        }
+        
+        // Periksa apakah kamar memiliki semua policy yang difilter (AND logic)
+        const hasAllPolicies = activeFilters.every(filter => 
+            roomPolicies.includes(parseInt(filter.id)) || roomPolicies.includes(filter.id)
+        );
+        
+        if (hasAllPolicies) {
+            roomCard.classList.remove('hidden');
+            visibleCount++;
+        } else {
+            roomCard.classList.add('hidden');
+        }
+    });
+    
+    // Update jumlah kamar yang terlihat
+    updateRoomCounter(visibleCount, roomCards.length);
+}
+
+// Update jumlah kamar yang ditampilkan
+function updateRoomCounter(visibleCount, totalCount) {
+    // Temukan elemen yang menampilkan informasi jumlah kamar
+    const roomCounterElements = document.querySelectorAll('.text-center > h3, .text-center > p');
+    
+    if (roomCounterElements.length > 0) {
+        if (visibleCount === 0) {
+            // Jika tidak ada kamar yang terlihat, tampilkan pesan "Tidak ada kamar yang sesuai filter"
+            roomCounterElements[0].textContent = 'Tidak ada kamar yang sesuai filter';
+            roomCounterElements[1].textContent = 'Silakan coba filter lain';
+        } else {
+            // Jika ada kamar yang terlihat, update pesan
+            roomCounterElements[0].textContent = `Menampilkan ${visibleCount} dari ${totalCount} kamar`;
+            roomCounterElements[1].textContent = activeFilters.length > 0 ? 'Sesuai filter yang dipilih' : 'Tersedia untuk periode ini';
+        }
+    }
+}
+
+// Reset semua filter
+function resetFilters() {
+    activeFilters = [];
+    
+    // Reset tampilan tombol filter
+    document.querySelectorAll('.policy-filter').forEach(button => {
+        button.classList.remove('bg-blue-100', 'border-blue-300', 'text-blue-800');
+    });
+    
+    // Kosongkan container tag filter aktif
+    document.getElementById('active-filter-tags').innerHTML = '';
+    
+    // Sembunyikan section filter aktif
+    document.getElementById('active-filters').classList.add('hidden');
+    
+    // Perbarui URL (hapus parameter filter)
+    updateUrlWithFilters();
+    
+    // Tampilkan semua kamar
+    applyFilters();
+}
+
+// Update URL dengan filter yang aktif
+function updateUrlWithFilters() {
+    const url = new URL(window.location.href);
+    
+    if (activeFilters.length > 0) {
+        const filterIds = activeFilters.map(filter => filter.id).join(',');
+        url.searchParams.set('policies', filterIds);
+    } else {
+        url.searchParams.delete('policies');
+    }
+    
+    // Update URL tanpa reload halaman
+    window.history.replaceState({}, '', url);
+}
+
+// Inisialisasi filter dari URL saat halaman dimuat
+function initFiltersFromUrl() {
+    const url = new URL(window.location.href);
+    const policiesParam = url.searchParams.get('policies');
+    
+    if (policiesParam) {
+        const policyIds = policiesParam.split(',');
+        
+        // Aktifkan filter berdasarkan ID
+        policyIds.forEach(id => {
+            const filterButton = document.getElementById(`policy-filter-${id}`);
+            if (filterButton) {
+                // Dapatkan nama policy dari tombol
+                const policyName = filterButton.innerText.trim();
+                
+                // Tambahkan ke filter aktif
+                activeFilters.push({ id, name: policyName });
+                
+                // Update tampilan tombol
+                filterButton.classList.add('bg-blue-100', 'border-blue-300', 'text-blue-800');
+                
+                // Tambahkan tag untuk filter aktif
+                const activeFilterTags = document.getElementById('active-filter-tags');
+                const tagElement = document.createElement('span');
+                tagElement.id = `active-tag-${id}`;
+                tagElement.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800';
+                tagElement.innerHTML = `
+                    ${policyName}
+                    <button onclick="removeFilter('${id}')" class="ml-1 text-blue-500 hover:text-blue-700">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                `;
+                activeFilterTags.appendChild(tagElement);
+            }
+        });
+        
+        // Tampilkan section filter aktif jika ada filter
+        if (activeFilters.length > 0) {
+            const activeFiltersContainer = document.getElementById('active-filters');
+            const activeFilterCount = document.getElementById('active-filter-count');
+            
+            activeFiltersContainer.classList.remove('hidden');
+            activeFilterCount.textContent = activeFilters.length;
+            
+            // Terapkan filter
+            applyFilters();
+        }
+    }
+}
+
+// Fungsi untuk mengelola scroll shadow
+function updateScrollShadows() {
+    const scrollContainer = document.getElementById('policyScrollContainer');
+    const leftShadow = document.getElementById('leftScrollShadow');
+    const rightShadow = document.getElementById('rightScrollShadow');
+    
+    if (!scrollContainer || !leftShadow || !rightShadow) return;
+    
+    // Check if scroll is possible (content width > container width)
+    const hasScroll = scrollContainer.scrollWidth > scrollContainer.clientWidth;
+    
+    // Left shadow visibility
+    if (scrollContainer.scrollLeft <= 10) {
+        leftShadow.classList.add('shadow-fade-out');
+        leftShadow.classList.remove('shadow-fade-in');
+    } else {
+        leftShadow.classList.add('shadow-fade-in');
+        leftShadow.classList.remove('shadow-fade-out');
+    }
+    
+    // Right shadow visibility
+    if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 10 || !hasScroll) {
+        rightShadow.classList.add('shadow-fade-out');
+        rightShadow.classList.remove('shadow-fade-in');
+    } else {
+        rightShadow.classList.add('shadow-fade-in');
+        rightShadow.classList.remove('shadow-fade-out');
+    }
+}
+
+// Inisialisasi halaman
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup scroll shadows
+    const scrollContainer = document.getElementById('policyScrollContainer');
+    if (scrollContainer) {
+        // Initial check
+        updateScrollShadows();
+        
+        // Add scroll listener
+        scrollContainer.addEventListener('scroll', updateScrollShadows);
+        
+        // Update on resize
+        window.addEventListener('resize', updateScrollShadows);
+    }
+    
+    // Inisialisasi dari URL
+    initFiltersFromUrl();
+});
+</script>
 @endsection 

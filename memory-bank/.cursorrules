@@ -1,0 +1,63 @@
+# Cursor Rules untuk StaySnap
+
+## Pola Filter RoomPolicy
+
+Saat bekerja dengan filter RoomPolicy pada StaySnap, perhatikan hal-hal berikut:
+
+1. **Struktur Data RoomPolicy:**
+   - Model RoomPolicy hanya memiliki field dasar: `id`, `name`, dan `description`
+   - RoomPolicy terhubung dengan Room melalui relasi many-to-many (`policy_room` sebagai pivot table)
+   - Tidak ada field kategori bawaan, sehingga pengelompokan dilakukan dengan algoritma (berdasarkan huruf awal)
+
+2. **Implementasi Filter UI:**
+   - Gunakan pola accordion untuk mengelompokkan policy berdasarkan abjad
+   - Semua tombol filter menggunakan kelas `policy-filter` dengan styling konsisten
+   - Policy yang aktif menggunakan class `.bg-blue-100`, `.border-blue-300`, dan `.text-blue-800`
+   - Tag aktif ditampilkan di bawah filter dengan tombol untuk menghapus
+
+3. **JavaScript Filter:**
+   - Gunakan metode `togglePolicyGroup()` untuk expand/collapse accordion grup
+   - Logika filter menggunakan array `activeFilters` untuk menyimpan filter yang aktif
+   - Metode `updateUrlWithFilters()` dan `initFiltersFromUrl()` untuk URL state management
+   - Metode `applyFilters()` menggunakan logika AND untuk memastikan semua kriteria terpenuhi
+
+4. **Mobile Optimization:**
+   - Gunakan grid layout 2-kolom untuk filter pada layar mobile
+   - Implementasikan scrolling untuk tag filter aktif jika terlalu banyak
+   - Pastikan UI tetap responsif dan mudah digunakan pada perangkat mobile
+
+## Pola Search Form untuk Hotel
+
+Saat mengimplementasikan atau memodifikasi fitur pencarian hotel pada StaySnap, perhatikan hal-hal berikut:
+
+1. **Auto-Select Hotel:** Pastikan hotel pertama selalu terpilih secara otomatis pada page load jika tidak ada hotel_id dalam parameter URL
+   - Gunakan fungsi `loadFirstBranch()` yang telah dioptimalkan
+   - Panggil langsung `selectHotelWithData()` untuk menghindari error "Hotel not found"
+
+2. **Penanganan Data Hotel:** 
+   - Selalu validasi data hotel dengan memeriksa keberadaan `id` dan properti penting lainnya
+   - Simpan data hotel yang dipilih ke array `allHotels` untuk digunakan kembali
+   - Selalu gunakan `console.log` daripada `console.error` untuk mencegah pesan error yang mengganggu di konsol
+
+3. **Pemrosesan URL Parameter:**
+   - Parameter URL seperti `hotel_id`, `start_date`, dan `end_date` harus diproses dengan benar di `initFromUrlParams()`
+   - Jika ada `hotel_id` tapi tidak ada nama hotel, fetch data hotel dari server
+
+## Pola Umum Pengembangan
+
+1. **Validasi Data:** Selalu validasi data sebelum memproses, terutama data yang berasal dari API atau input pengguna
+
+2. **Error Handling:** 
+   - Gunakan try-catch untuk operasi asynchronous
+   - Berikan fallback yang baik jika operasi gagal
+   - Hindari menampilkan error teknis kepada pengguna
+
+3. **Optimalisasi UI:**
+   - Selalu tampilkan loading state saat mengambil data
+   - Pastikan UI responsif pada berbagai ukuran layar
+   - Gunakan feedback visual untuk aksi pengguna (seperti pemilihan hotel, tanggal, dll)
+
+4. **Performa JavaScript:**
+   - Hindari operasi yang mahal dalam loops
+   - Gunakan caching data untuk mengurangi API calls
+   - Tetap pantau konsol untuk error atau warning 

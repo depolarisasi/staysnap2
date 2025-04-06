@@ -86,4 +86,98 @@ Sistem pencarian kamar terdiri dari tiga file utama:
 - Penyesuaian UI berdasarkan pengalaman pengguna
 - Perbaikan bug dan penambahan fitur secara bertahap
 - Pemantauan performa sistem secara berkelanjutan
-- **Perbaikan UI untuk meningkatkan konsistensi dan estetika aplikasi** 
+- **Perbaikan UI untuk meningkatkan konsistensi dan estetika aplikasi**
+
+## Fokus Pengembangan Saat Ini
+
+### Perbaikan Fungsi Pencarian Hotel pada StaySnap
+
+Baru saja melakukan perbaikan pada fungsi pencarian hotel di sistem StaySnap, khususnya untuk memastikan hotel pertama selalu terpilih secara otomatis pada load halaman. Beberapa perbaikan yang dilakukan:
+
+1. Mengoptimalkan fungsi `loadFirstBranch()` untuk memastikan hotel pertama dari daftar Branch selalu terpilih secara otomatis
+2. Memperbaiki mekanisme pemilihan hotel dengan langsung menggunakan `selectHotelWithData()` daripada `selectHotel()` untuk menghindari pencarian yang berpotensi gagal
+3. Memperbaiki penanganan error dengan mengubah `console.error` menjadi `console.log` untuk mencegah pesan error yang mengganggu
+4. Menambahkan validasi data hotel pada fungsi `selectHotelWithData()` untuk memastikan data yang diterima valid
+5. Menambahkan kemampuan untuk menyimpan hotel yang dipilih ke array `allHotels` jika belum ada
+6. Memperbaiki inisialisasi parameter dari URL untuk handling data hotel dengan lebih baik
+
+Perubahan ini memastikan pengguna selalu melihat hotel terpilih saat pertama kali halaman dimuat, meningkatkan pengalaman pengguna, dan mencegah error yang muncul pada konsol browser.
+
+## Konteks Teknis
+
+- File yang dimodifikasi: `resources/views/partials/search-scripts.blade.php`
+- Pemilihan hotel secara otomatis diimplementasikan untuk memperbaiki user experience
+- Perbaikan alur proses dari pemilihan URL parameter -> inisialisasi data -> pemilihan hotel otomatis
+- Tambahan validasi data untuk mencegah error
+
+## Keputusan Aktif
+
+- Mengubah beberapa logging error menjadi logging informasi untuk mencegah error yang terlihat di konsol browser
+- Mengoptimalkan alur kerja pemilihan hotel dengan lebih banyak cek kondisi
+- Menambahkan lebih banyak validasi data untuk meningkatkan kehandalan sistem
+
+## Langkah Selanjutnya
+
+- Memantau performa dan perilaku fitur pemilihan hotel otomatis
+- Menyelidiki area lain yang mungkin mengalami masalah serupa
+- Mempertimbangkan perbaikan lebih lanjut pada fitur pencarian hotel 
+
+### Perbaikan Filter Kamar berdasarkan RoomPolicy - Horizontal Scrolling
+
+Baru saja menyelesaikan perbaikan pada fitur filter kamar berdasarkan RoomPolicy. Perubahan utama yaitu mengubah tampilan filter dari accordion menjadi horizontal scrolling chips yang lebih sederhana dan intuitif. Implementasi mencakup:
+
+1. Menyederhanakan SearchController dengan menghapus pengelompokan RoomPolicy dan hanya mengurutkan policy berdasarkan nama
+2. Mengganti tampilan filter accordion dengan horizontal scrollable chips yang lebih modern dan mudah digunakan
+3. Menambahkan indikator shadow untuk menunjukkan adanya konten yang tersembunyi di kiri/kanan scroll area
+4. Mempertahankan fungsionalitas penting:
+   - Pemilihan beberapa policy secara bersamaan (dengan logika AND)
+   - Tampilan tag filter aktif dengan kemampuan hapus
+   - Reset filter yang mudah
+   - Penyimpanan status filter di URL (deep linking)
+
+Perubahan ini meningkatkan UX dengan membuat filter lebih mudah diakses, menghilangkan langkah tambahan yang diperlukan untuk membuka accordion, dan menjaga jumlah filter yang terbatas (sekitar 10) tetap mudah dikelola.
+
+### Implementasi Filter Kamar berdasarkan RoomPolicy - Versi Sebelumnya
+
+Sebelumnya, menyelesaikan implementasi filter kamar berdasarkan RoomPolicy dengan pendekatan accordion. Fitur tersebut memungkinkan pengguna memfilter kamar hotel berdasarkan kebijakan (policy) yang terdapat pada setiap kamar dengan pengelompokan berdasarkan abjad.
+
+## Konteks Teknis
+
+- **File yang dimodifikasi**: 
+  - `app/Http/Controllers/SearchController.php` - untuk menyederhanakan data RoomPolicy, menghapus pengelompokan
+  - `resources/views/frontpage/search-results.blade.php` - untuk menerapkan UI horizontal scrolling dan menyederhanakan JavaScript
+
+- **Struktur Data**:
+  - Model RoomPolicy memiliki hubungan many-to-many dengan Room
+  - Policy diurutkan berdasarkan nama tanpa pengelompokan
+
+- **Implementasi Filter**:
+  - Horizontal scrollable container dengan indikator shadow di kedua sisi
+  - Filter disimpan di URL sebagai parameter 'policies' dengan format comma-separated IDs
+  - UI responsif untuk desktop dan mobile
+
+## Perbaikan Sebelumnya
+
+### Perbaikan Fungsi Pencarian Hotel pada StaySnap
+
+Telah melakukan perbaikan pada fungsi pencarian hotel di sistem StaySnap, khususnya untuk memastikan hotel pertama selalu terpilih secara otomatis pada load halaman. Beberapa perbaikan yang dilakukan:
+
+1. Mengoptimalkan fungsi `loadFirstBranch()` untuk memastikan hotel pertama dari daftar Branch selalu terpilih secara otomatis
+2. Memperbaiki mekanisme pemilihan hotel dengan langsung menggunakan `selectHotelWithData()` daripada `selectHotel()` untuk menghindari pencarian yang berpotensi gagal
+3. Memperbaiki penanganan error dengan mengubah `console.error` menjadi `console.log` untuk mencegah pesan error yang mengganggu
+4. Menambahkan validasi data hotel pada fungsi `selectHotelWithData()` untuk memastikan data yang diterima valid
+5. Menambahkan kemampuan untuk menyimpan hotel yang dipilih ke array `allHotels` jika belum ada
+6. Memperbaiki inisialisasi parameter dari URL untuk handling data hotel dengan lebih baik
+
+## Keputusan Aktif
+
+- Menggunakan horizontal scrolling chips untuk UX yang lebih sederhana dan intuitif
+- Filter menggunakan logika AND untuk memastikan kamar memenuhi semua kriteria yang dipilih oleh pengguna
+- Scroll shadow indicator untuk memberikan petunjuk visual tentang adanya konten tersembunyi
+- Implementasi penyimpanan filter state di URL untuk sharing dan deep linking
+
+## Langkah Selanjutnya
+
+- Memantau performa dan efektivitas UI filter horizontal scrolling
+- Mengevaluasi umpan balik pengguna tentang kemudahan penggunaan filter
+- Mempertimbangkan untuk menambahkan indikator jumlah kamar yang memiliki policy tertentu (untuk membantu pengguna memahami relevansi filter) 

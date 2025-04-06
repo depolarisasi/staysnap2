@@ -356,7 +356,7 @@
         const hotel = allHotels.find(h => h.id == hotelId) || hotels.find(h => h.id == hotelId);
         
         if (!hotel) {
-            console.error('Hotel not found:', hotelId);
+            console.log('Hotel not found in cache, fetching from server:', hotelId);
             // Jika hotel tidak ditemukan dalam cache, coba fetch dari server
             fetch(`/api/branches/${hotelId}`)
                 .then(response => response.json())
@@ -383,9 +383,22 @@
 
     // Helper function untuk memproses data hotel yang dipilih
     function selectHotelWithData(hotel) {
+        if (!hotel || !hotel.id) {
+            console.error('Invalid hotel data:', hotel);
+            return;
+        }
+
         // Update selected hotel data
         selectedHotelId = hotel.id;
         selectedHotelName = hotel.branch_name;
+
+        console.log('Selecting hotel:', hotel.branch_name, 'ID:', hotel.id);
+
+        // Tambahkan hotel ke daftar hotels jika belum ada
+        if (allHotels.length === 0 || !allHotels.some(h => h.id == hotel.id)) {
+            console.log('Adding hotel to allHotels array');
+            allHotels.push(hotel);
+        }
 
         // Update hotel button text
         const hotelButton = document.getElementById('hotelButton');
@@ -407,14 +420,7 @@
         // Close hotel modal
         closeHotelModal();
 
-        // Show success message
-        Swal.fire({
-            icon: 'success',
-            title: 'Hotel Dipilih',
-            text: `Anda telah memilih ${hotel.branch_name}`,
-            timer: 1500,
-            showConfirmButton: false
-        });
+        
 
         // Update URL parameters
         const url = new URL(window.location.href);
@@ -447,7 +453,10 @@
         
         // Auto load first branch if no hotel selected
         if (!selectedHotelId) {
+            console.log('No hotel selected, loading first branch...');
             loadFirstBranch();
+        } else {
+            console.log('Hotel already selected from URL:', selectedHotelId);
         }
     });
 
@@ -493,10 +502,13 @@
         
         // If hotel is already selected, update button text and prefetch prices
         if (selectedHotelId) {
+            console.log('Hotel ID from URL:', selectedHotelId);
+            
+            // Periksa apakah hotel name sudah diatur dari controller
             const hotelName = document.getElementById('selectedHotelText')?.textContent;
             if (hotelName && hotelName !== 'Pilih Hotel') {
                 // Hotel name already set from controller, prefetch room prices
-                console.log('Hotel already selected:', hotelName, 'ID:', selectedHotelId);
+                console.log('Hotel already selected from controller:', hotelName, 'ID:', selectedHotelId);
                 
                 // Pre-fetch room prices for faster date modal opening
                 fetchRoomPrices(selectedHotelId)
@@ -506,7 +518,24 @@
                     .catch(error => {
                         console.error('Error pre-fetching room prices:', error);
                     });
+            } else {
+                // Jika ada hotel_id tapi tidak ada nama hotel, fetch data hotel
+                console.log('Hotel ID exists but no name found, fetching hotel data');
+                fetch(`/api/branches/${selectedHotelId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) { 
+                            selectHotelWithData(data);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching hotel data:', error);
+                        // Reset selectedHotelId jika fetch gagal
+                        selectedHotelId = null;
+                    });
             }
+        } else {
+            console.log('No hotel ID found in URL parameters');
         }
     }
     
@@ -635,7 +664,14 @@
 
     // Auto load first branch
     async function loadFirstBranch() {
+        // Periksa jika hotel sudah dipilih dari URL atau data lain
+        if (selectedHotelId) {
+            console.log('Hotel already selected from URL or other source:', selectedHotelId);
+            return;
+        }
+        
         try {
+            console.log('Loading first branch...');
             const response = await fetch('{{ route("api.hotels") }}');
             
             if (!response.ok) {
@@ -644,11 +680,16 @@
             
             const data = await response.json();
             
+            // Simpan data hotels ke variabel global
+            allHotels = data;
+            
             if (data && data.length > 0) {
                 // Select first hotel
                 const firstHotel = data[0];
                 console.log('Auto-selecting first hotel:', firstHotel.branch_name);
-                selectHotel(firstHotel.id, firstHotel.branch_name);
+                
+                // Gunakan langsung selectHotelWithData untuk menghindari pencarian di data yang sudah ada
+                selectHotelWithData(firstHotel);
             } else {
                 console.warn('No hotels available for auto-selection');
             }
@@ -937,7 +978,7 @@
             const response = await fetch(`/api/branches/${hotelId}/room-prices?start_date=${startDateParam}&end_date=${endDateParam}`);
             const data = await response.json();
             
-            console.log('Room prices API response:', data);
+         
             
             // Save price data
             roomPrices = data.prices || {};
